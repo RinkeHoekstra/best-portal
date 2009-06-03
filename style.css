@@ -341,3 +341,11 @@ div.terms {
 	margin-bottom: .5em;
 	padding: .5em;
 }
+
+#explanation {
+	border: 1px solid green;
+	background-color: #efe;
+	margin-top: .5em;
+	margin-bottom: .5em;
+	padding: .5em;
+}
