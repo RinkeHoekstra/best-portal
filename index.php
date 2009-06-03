@@ -38,7 +38,9 @@ function pasteQuery(query) {
 		<div id="page">
 			<?php include "disclaimer.php"; ?>
 			<div id="explanation">
-			Selecting one or more terms from the Laymen vocabulary will retrieve corresponding terms from the Tort vocabulary. The fingerprint defined for these terms is then used to generate three <a href="http://lucene.apache.org/solr">Solr</a> queries. The 'tort query' contains phrases from the fingerprint, the 'weighed tort query' adds weights to the phrases, and the 'mixed query' adds labels for the laymen terms that were selected.
+			Selecting one or more terms from the Laymen vocabulary will retrieve corresponding terms from the Tort vocabulary. The fingerprint defined for these terms is then used to generate three <a href="http://lucene.apache.org/solr">Solr</a> queries. The 'tort query' contains phrases from the fingerprint, the 'weighed tort query' adds weights to the phrases, and the 'mixed query' adds labels for the laymen terms that were selected.<br/> 
+			
+			Try selecting 'dier' (animal) for a relatively sensible mapping. More mappings will follow.
 			</div>
 			<div id="sourceTerms">
 				<h2>
