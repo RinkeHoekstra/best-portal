@@ -333,3 +333,11 @@ div.terms {
 #log_res {
 	overflow: auto;
 }
+
+#disclaimer {
+	border: 1px solid red;
+	background-color: #fee;
+	margin-top: .5em;
+	margin-bottom: .5em;
+	padding: .5em;
+}

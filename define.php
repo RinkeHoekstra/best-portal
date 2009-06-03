@@ -48,6 +48,7 @@
 		</div>
 	</div>
 	<div id="page">
+		<?php include "disclaimer.php"; ?>
 		<div style="display: block; margin-bottom: 2em;">
 		<form id="mappingForm" method="post" action="addmapping.php">
 		<div id="sourceTerms">

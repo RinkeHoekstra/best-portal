@@ -36,6 +36,7 @@ function pasteQuery(query) {
 			</div>
 		</div>
 		<div id="page">
+			<?php include "disclaimer.php"; ?>
 			<div id="sourceTerms">
 				<h2>
 					Laymen Vocabulary
