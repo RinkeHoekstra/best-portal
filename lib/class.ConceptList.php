@@ -31,7 +31,7 @@ class ConceptList {
 	
 	
 	public function makeList($scheme,$onChange,$name='conceptlist'){
-		$sparql_query = $this->ns->sparql."SELECT ?concept ?label WHERE {?concept a skos:Concept . ?concept skos:prefLabel ?label . ?concept skos:inScheme ".$scheme." . } ORDER BY ?label ";
+		$sparql_query = $this->ns->sparql."SELECT DISTINCT ?concept ?label WHERE {?concept a skos:Concept . ?concept skos:prefLabel ?label . ?concept skos:inScheme ".$scheme." . } ORDER BY ?label ";
 		
 		
 		$this->getSelectBlock($sparql_query,$onChange,$name);
