@@ -30,7 +30,7 @@ $turtle .= " a best:Query.";
 
 $context = "<http://query.context>";
 
-$sc->tellSesame($turtle,$context);
+$sc->tellSesame($turtle,$context,'turtle');
 
 $cl = new ConceptList();
 $ns = new Namespaces();
