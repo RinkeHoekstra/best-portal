@@ -4,7 +4,7 @@
 class Namespaces {
 	
 	public $sparql;
-	
+	public $ontologies;
 
 	
 	function __construct(){
@@ -20,6 +20,20 @@ class Namespaces {
 		$this->sparql .= "PREFIX metalex: <http://www.metalex.eu/schema#> \n";
 		$this->sparql .= "PREFIX rnl:   <http://www.rechtspraak.nl/rdf#> \n";
 		$this->sparql .= "PREFIX query: <http://www.best-project.nl/owl/query#> \n\n";
+		
+		
+		
+		$this->ontologies = array(
+			0 => array ('url' => 'http://www.best-project.nl/owl/tort-ontology.n3', 'format' => 'turtle'),
+			1 => array ('url' => 'http://www.best-project.nl/owl/laymen-ontology.n3', 'format' => 'turtle'),
+			2 => array ('url' => 'http://www.best-project.nl/owl/tort-vocabulary.n3', 'format' => 'turtle'),
+			3 => array ('url' => 'http://www.best-project.nl/owl/laymen-vocabulary.n3', 'format' => 'turtle'),
+			4 => array ('url' => 'http://www.best-project.nl/owl/mapping.n3', 'format' => 'turtle'),
+			5 => array ('url' => 'http://www.best-project.nl/owl/metalex.n3', 'format' => 'turtle'),
+			6 => array ('url' => 'http://www.best-project.nl/owl/best.n3', 'format' => 'turtle'),
+			7 => array ('url' => 'http://www.best-project.nl/owl/verdicts.owl', 'format' => 'rdfxml'),
+			8 => array ('url' => 'http://www.best-project.nl/owl/rechtspraak.owl', 'format' => 'rdfxml')
+		);
 	}
 	
 	

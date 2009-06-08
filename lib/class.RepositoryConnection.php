@@ -45,10 +45,10 @@ class RepositoryConnection {
 	
 	
 
-	public function tell($data,$context='<http://foo.bar>'){
+	public function tell($data,$context='<http://foo.bar>',$format='turtle'){
 		
 		if($this->mode == 'sesame') {
-			$this->tellSesame($data,$context);
+			$this->tellSesame($data,$context,$format);
 		} else if ($this->mode == 'clio') {
 			$this->tellClio($data);
 		} else {
@@ -57,11 +57,15 @@ class RepositoryConnection {
 	}
 	
 	
-	public function tellSesame($data,$context){
+	public function tellSesame($data,$context,$format){
 		$enc_context = urlencode($context);
 		$req =& new HTTP_Request($this->repourl.'/statements?context='.$enc_context.'&baseURI='.$enc_context);
 		$req->setMethod(HTTP_REQUEST_METHOD_POST);
-		$req->addHeader('Content-Type', 'application/x-turtle;charset=UTF-8');
+		if($format=='turtle') {
+			$req->addHeader('Content-Type', 'application/x-turtle;charset=UTF-8');
+		} else if ($format=='rdfxml') {
+			$req->addHeader('Content-Type', 'application/rdf+xml;charset=UTF-8');
+		}
 		$req->setBody(utf8_encode($data));
 		$req->sendRequest();
 		if($req->getResponseCode()!=204)
@@ -115,6 +119,42 @@ class RepositoryConnection {
 	
 	/* TODO */
 	public function askSesame($query) {
+		
+	}
+	
+	public function clearSesame() {
+		$enc_context = urlencode($context);
+		$req =& new HTTP_Request($this->repourl.'/statements');
+		$req->setMethod(HTTP_REQUEST_METHOD_DELETE);
+		$req->sendRequest();
+		if($req->getResponseCode()!=204)
+		{
+			throw new Exception ('Response error: '.$req->getResponseCode().$req->getResponseBody());
+		}
+	}
+	
+	public function fillSesame($ontologies){
+		foreach($ontologies as $onto) {
+	        // create curl resource
+	        $ch = curl_init();
+        
+	        // set url
+	        curl_setopt($ch, CURLOPT_URL, $onto['url']);
+        
+	        //return the transfer as a string
+	        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        
+	        // $output contains the output string
+	        $output = curl_exec($ch);
+			
+			print "<p>Adding ".$onto['url']." in format ".$onto['format']." ... </p>";
+			$this->tellSesame($output,'<'.$onto['url'].'>',$onto['format']);
+			print "<p>... done.</p>";
+        
+	        // close curl resource to free up system resources
+	        curl_close($ch);	
+	
+		}
 		
 	}
 	
