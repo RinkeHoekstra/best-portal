@@ -36,7 +36,7 @@ class Namespaces {
 			8 => array ('url' => 'http://www.best-project.nl/owl/rechtspraak.owl', 'format' => 'rdfxml')
 		);
 		
-		$this->customMappingContext = "<http://custom.mapping>"
+		$this->customMappingContext = "<http://custom.mapping>";
 	}
 	
 	
