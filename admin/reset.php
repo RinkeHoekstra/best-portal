@@ -8,13 +8,13 @@ $ns = new Namespaces();
 $rc = new RepositoryConnection("http://localhost:8080/openrdf-sesame/repositories/best");
 
 
-print "<p>Clearing Sesame repository...</p>";
+print "<p>Clearing Sesame repository...</p>\n";
 $rc->clearSesame();
-print "<p>... done.</p>";
+print "<p>... done.</p>\n\n";
 
-print "<p>Uploading ontologies...</p>";
+print "<p>Uploading ontologies... (this may take a while)</p>\n";
 $rc->fillSesame($ns->ontologies);
-print "<p>... done.</p>";
+print "<p>... done uploading.</p>\n\n";
 
 
 

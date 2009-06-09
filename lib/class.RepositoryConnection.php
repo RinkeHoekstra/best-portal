@@ -147,9 +147,9 @@ class RepositoryConnection {
 	        // $output contains the output string
 	        $output = curl_exec($ch);
 			
-			print "<p>Adding ".$onto['url']." in format ".$onto['format']." ... </p>";
+			print "<p>Adding ".$onto['url']." in format ".$onto['format']." ... </p>\n";
 			$this->tellSesame($output,'<'.$onto['url'].'>',$onto['format']);
-			print "<p>... done.</p>";
+			print "<p>... done.</p>\n";
         
 	        // close curl resource to free up system resources
 	        curl_close($ch);	
