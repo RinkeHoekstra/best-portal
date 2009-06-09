@@ -11,7 +11,7 @@ $mappings = $rc->fetchContextSesame($ns->customMappingContext);
 $outfile = "mappings-".date('Ymd-His').".n3";
 
 if($handle = fopen($outfile,"w")){
-	echo "\nWriting output to Turtle file (in UTF-8) ".$target;
+	echo "\nWriting output to Turtle file ".$outfile."(in UTF-8) ".$target;
 	fputs($handle,utf8_encode($mappings));
 	echo "... done.\n";
 	fclose($handle);
