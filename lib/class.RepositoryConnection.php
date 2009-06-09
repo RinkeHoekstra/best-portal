@@ -122,8 +122,23 @@ class RepositoryConnection {
 		
 	}
 	
-	public function clearSesame() {
+	public function fetchContextSesame($context) {
 		$enc_context = urlencode($context);
+		$req =& new HTTP_Request($this->repourl.'/statements?context='.$enc_context);		
+		$req->setMethod(HTTP_REQUEST_METHOD_GET);
+		$req->addHeader('Accept','application/x-turtle');
+		
+		$req->sendRequest();
+		
+		if($req->getResponseCode()!=204)
+		{
+			throw new Exception ('Response error: '.$req->getResponseCode().$req->getResponseBody());
+		}
+		
+		return $req->getResponseBody();		
+	}
+	
+	public function clearSesame() {
 		$req =& new HTTP_Request($this->repourl.'/statements');
 		$req->setMethod(HTTP_REQUEST_METHOD_DELETE);
 		$req->sendRequest();

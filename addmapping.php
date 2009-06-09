@@ -48,9 +48,9 @@ $turtle .= " )\n\t\t ] .";
 
 print "<pre>".htmlentities($turtle)."</pre>";
 
-$context = "<http://custom.mapping>";
+$context = $ns->customMappingContext;
 
-$sc->tellSesame($turtle,$context);
+$sc->tellSesame($turtle,$context,'turtle');
 
 print "<p>Created ".$mapping_class." in context ".htmlentities($context)."</p>";
 } else print "<p>No terms selected</p>";

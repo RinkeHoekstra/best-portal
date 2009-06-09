@@ -6,6 +6,7 @@ class Namespaces {
 	public $sparql;
 	public $ontologies;
 
+	public $customMappingContext;
 	
 	function __construct(){
 		$this->sparql  = "PREFIX owl:  <http://www.w3.org/2002/07/owl#> \n";
@@ -34,6 +35,8 @@ class Namespaces {
 			7 => array ('url' => 'http://www.best-project.nl/owl/verdicts.owl', 'format' => 'rdfxml'),
 			8 => array ('url' => 'http://www.best-project.nl/owl/rechtspraak.owl', 'format' => 'rdfxml')
 		);
+		
+		$this->customMappingContext = "<http://custom.mapping>"
 	}
 	
 	
