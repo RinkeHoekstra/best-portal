@@ -11,7 +11,7 @@ $in=$_POST["includenarrower"];
 // print "<pre>".$concepts."</pre>";
 
 
-
+$ns = new Namespaces();
 
 if (count($laymenconcepts)>0 && count($tortconcepts)>0){
 
