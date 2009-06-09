@@ -65,7 +65,7 @@ class RepositoryConnection {
 			$req->addHeader('Content-Type', 'application/x-turtle;charset=UTF-8');
 		} else if ($format=='rdfxml') {
 			$req->addHeader('Content-Type', 'application/rdf+xml;charset=UTF-8');
-		}
+		} else $req->addHeader('Content-Type', 'application/x-turtle;charset=UTF-8');
 		$req->setBody(utf8_encode($data));
 		$req->sendRequest();
 		if($req->getResponseCode()!=204)
