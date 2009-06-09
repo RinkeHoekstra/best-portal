@@ -70,6 +70,8 @@ class RepositoryConnection {
 		$req->sendRequest();
 		if($req->getResponseCode()!=204)
 		{
+			print $context;
+			print $data;
 			throw new Exception ('Response error: '.$req->getResponseCode().$req->getResponseBody());
 		} 
 	}
