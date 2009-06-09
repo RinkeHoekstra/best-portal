@@ -7,8 +7,14 @@ $ns = new Namespaces();
 
 $rc = new RepositoryConnection("http://localhost:8080/openrdf-sesame/repositories/best");
 
-print "<pre>";
-print $rc->fetchContextSesame($ns->customMappingContext);
-print "</pre>";
+$mappings = $rc->fetchContextSesame($ns->customMappingContext);
+$outfile = "mappings-".date('Ymd-His').".n3";
+
+if($handle = fopen($outfile,"w")){
+	echo "\nWriting output to Turtle file (in UTF-8) ".$target;
+	fputs($handle,utf8_encode($mappings));
+	echo "... done.\n";
+	fclose($handle);
+}
 
 ?>
