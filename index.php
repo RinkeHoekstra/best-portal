@@ -8,12 +8,12 @@
 <html>
 <head>
 	<title>
-		BEST Project Define Mapping
+		BEST Portal
 	</title>
 	<link rel="stylesheet" href="style.css" type="text/css" media="screen">
 	
-	<script type="text/javascript" src="js/mootools.js"></script>
-	<script type="text/javascript" src="js/sendform.js"></script>
+	<!-- <script type="text/javascript" src="js/mootools.js"></script> -->
+	<!-- <script type="text/javascript" src="js/sendform.js"></script> -->
 	<script type="text/javascript" src="js/mapping.js"></script>
 	
 	<!-- <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.7.0/build/fonts/fonts-min.css" /> -->
@@ -24,30 +24,110 @@
 
 
 
+	<script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/yahoo/yahoo-min.js"></script>
 
 	<script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/yahoo-dom-event/yahoo-dom-event.js"></script>
 
 
+
+	<script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/event/event-min.js"></script>
+	<script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/connection/connection-min.js"></script>
 	<script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/dragdrop/dragdrop-min.js"></script>
 	<script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/container/container-min.js"></script>
 	<script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/element/element-min.js"></script>
 	<script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/button/button-min.js"></script>
 	<script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/tabview/tabview-min.js"></script>
 
+	
+	
+
 
 	
 	<script type="text/javascript">
+	
+	YAHOO.namespace("example.container");
+
 	function pasteQuery(query) {
 			var obj = document.getElementById('q');
 			obj.value = query;
 			}	
 	
 	
-YAHOO.namespace("example.container");
+
+
+	var div = document.getElementById('log_res');
+
+
+
+
+
+
+	function onFormSubmit(p_oEvent) {
+		var handleSuccess = function(o){
+
+			if(o.responseText !== undefined){
+				// div.innerHTML = "Transaction id: " + o.tId;
+				// div.innerHTML += "HTTP status: " + o.status;
+				// div.innerHTML += "Status code message: " + o.statusText;
+				// div.innerHTML += "<li>HTTP headers: <ul>" + o.getAllResponseHeaders + "</ul></li>";
+				div.innerHTML = o.responseText;
+				// div.innerHTML += "Argument object: " + o.argument;
+			}
+		}
+
+		var handleFailure = function(o){
+
+			if(o.responseText !== undefined){
+				div.innerHTML = "Transaction id: " + o.tId;
+				div.innerHTML += "HTTP status: " + o.status;
+				div.innerHTML += "Status code message: " + o.statusText;
+				div.innerHTML += "<li>HTTP headers: <ul>" + o.getAllResponseHeaders + "</ul></li>";
+				div.innerHTML += "Response text: " + o.responseText;
+				div.innerHTML += "Argument object: " + o.argument;
+			}
+		}
+
+		var callback =
+		{
+		  success: handleSuccess,
+		  failure: handleFailure,
+		  argument: ['foo','bar']
+		};		
+		
+		
+		var bSubmit = window.confirm("Are you sure you want to submit this form?");
+		YAHOO.util.Event.preventDefault(p_oEvent);
+
+        // YAHOO.util.Event.preventDefault(p_oEvent);
+		var div = document.getElementById('log_res');
+		// argument formId can be the id or name attribute value of the
+		// HTML form, or an HTML form object.
+		var formObject = document.getElementById('mappingForm');
+
+		// This example facilitates a POST transaction.  The POST data(HTML form)
+		// are initialized when calling setForm(), and it is automatically
+		// included when calling asyncRequest.
+		window.setTimeout(function() {
+        		YAHOO.util.Connect.setForm(formObject);
+				var request = YAHOO.util.Connect.asyncRequest('POST', '/best-portal/addmapping.php', callback);
+			}, 200);
+	}
+	
+
 
 function init() {
 	
 	var tabView = new YAHOO.widget.TabView('besttabs');
+	
+
+
+        // Create a Button using an existing <input> element as a data source
+
+	var oMappingSubmitButton = new YAHOO.widget.Button("submitbutton", { value: "Create Mapping" });
+	 
+	YAHOO.util.Event.on("mappingForm", "submit", onFormSubmit);
+    
+	
     
     YAHOO.example.container.explanationmm = new YAHOO.widget.Panel("explmm", {
         visible: false,
@@ -109,7 +189,7 @@ function init() {
 			BEST Portal
 		</div>
 		<div class="bannersubheading">
-			BATNA Establishment using SemanticWeb Technology
+			BATNA Establishment using Semantic Web Technology
 		</div>
 	</div>
 	
@@ -117,8 +197,8 @@ function init() {
 		<?php include "disclaimer.php"; ?>
 	<div id="besttabs" class="yui-navset">
 	    <ul class="yui-nav">
-	        <li><a href="#searchtab"><em>Search</em></a></li>
-	        <li class="selected"><a href="#definetab"><em>Define mapping</em></a></li>
+	        <li class="selected"><a href="#searchtab"><em>Search</em></a></li>
+	        <li ><a href="#definetab"><em>Define mapping</em></a></li>
 	    </ul>            
 	    <div class="yui-content">
 	<div id="searchtab">
@@ -131,9 +211,6 @@ function init() {
 						<h2>
 							Laymen Vocabulary
 						</h2>
-						<p>
-							Select multiple terms in this list to produce analogous terms from the Tort vocabulary
-						</p>
 						<div id="concepts">
 							<?php $cl = new ConceptList();  $cl->makeList($laymen_scheme,'showMapping(this)','conceptlist'); ?>
 						</div>
@@ -142,9 +219,6 @@ function init() {
 						<h2>
 							Mapping
 						</h2>
-						<p>
-							The following terms from the Tort vocabulary are related to the Laymen term(s) you selected:
-						</p>
 						<div id="mapping"></div>
 					</div>
 					<div id="direct-results">
@@ -223,7 +297,7 @@ function init() {
 			<a id="showexplref">Explain Refinements</a>
 		</fieldset>
 			
-		<form id="mappingForm" method="post" action="addmapping.php">
+		<form id="mappingForm" name="mappingForm" method="post" action="addmapping.php">
 		<div id="termlists">
 		<div id="sourceTerms">
 			<h2>
@@ -248,8 +322,8 @@ function init() {
 		<div id="mappingmode" class="yui-buttongroup">
 			<input id="skos-nwbr" type="radio" name="skos-nwbr" value="SKOS Narrower/Broader" /> 
 			<input id="skos-exact" type="radio" name="skos-exact" value="SKOS Exact" />
-			<input id="owl-sc" type="radio" name="skos-sc" value="OWL Sub Class" checked/>
-			<input id="owl-ec" type="radio" name="skos-ec" value="OWL Equivalent Class" />
+			<input id="owl-sc" type="radio" name="owl-sc" value="OWL Sub Class" checked/>
+			<input id="owl-ec" type="radio" name="owl-ec" value="OWL Equivalent Class" />
 		</div>
 		</fieldset>
 		<fieldset id="refinementfieldset">
@@ -260,10 +334,10 @@ function init() {
 			</div>
 			<input id="includenarrower" type="radio" name="includenarrower" value="Include Narrower" checked/>
 		</fieldset>
-		<fieldset>
+		<fieldset id="mappingfieldset">
 			<legend>Create Mapping</legend>
 			<div style="float: right;">
-				Add the mapping to the repository: <input type="submit" value="Create Mapping" id="submitbutton"/>  
+				Add the mapping to the repository: <input type="submit" value="Create Mapping" id="submitbutton" name="submitbutton" onClick="onFormSubmit();"/>  
 			</div>		
 		</fieldset>
 
