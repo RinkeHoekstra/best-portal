@@ -78,7 +78,7 @@ body{	height: 100%; text-align:center;}
 #header #demo a{background:url('images/header-demo.png') no-repeat;}	
 #header #report a{background:url('images/header-report.png') no-repeat;}
 
-#page{text-align:left; margin:auto; width:600px;}
+#page{text-align:left; margin:auto; width:800px;}
 
 /*THE REPORT IS A #TEXTPAGE*/
 #textpage{text-align:left; margin:auto; padding-bottom: 20px; width:800px;}
@@ -204,7 +204,7 @@ em {font-weight: bold; }
 	  padding-left: 10px;
 	  padding-right: 5px;
 	  padding-top: 10px;
-      width: 600px;
+      width: 800px;
 	  height: 120px;
       border-bottom:1px solid #000;
 	  background: white;
@@ -244,7 +244,7 @@ div.terms {
 	border:1px solid #bbb;
 	background: white;
 	padding-left: 1em;
-	width: 280px;
+	width: 330px;
 	height: 290px;
 	  font-family: "Lucida Grande",Lucida,Verdana,sans-serif;
 }
@@ -272,12 +272,17 @@ div.terms {
 
 #sourceTerms {
 	float: left;
-	width: 300px;
+	width: 350px;
+}
+
+#targetTerms {
+	float: right;
+	width: 350px;
 }
 
 #mappedTerms {
-	float: left;
-	width: 300px;
+	float: right;
+	width: 350px;
 }
 
 #solr {
@@ -319,7 +324,7 @@ div.terms {
 
 
 
-#log {
+/*#log {
 	float: left;
 	padding: 0.5em;
 	margin-left: 10px;
@@ -328,10 +333,12 @@ div.terms {
 	border-left-color: #e4e4e4;
 	border-top-color: #e4e4e4;
 	margin-top: 10px;
-}
+}*/
  
 #log_res {
 	overflow: auto;
+	width: 740px;
+	background-color: white;
 }
 
 #disclaimer {
@@ -342,10 +349,27 @@ div.terms {
 	padding: .5em;
 }
 
-#explanation {
+/*#explanation {
 	border: 1px solid green;
 	background-color: #efe;
 	margin-top: .5em;
 	margin-bottom: .5em;
 	padding: .5em;
 }
+*/
+
+#termlists {
+	margin-bottom: 1em;
+	display: block;
+}
+
+
+#conjunctiondisjunction {
+	float: left;
+}
+
+#includenarrower {
+	float: right;
+	
+}
+
