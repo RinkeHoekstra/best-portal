@@ -105,14 +105,14 @@ class ConceptList {
 		
 	}
 
-	public function getQueryString($sparql_query,$name,$value_fn='concept',$label_fn='label') {
+	public function getQueryString($sparql_query,$id,$name,$value_fn='concept',$label_fn='label') {
 		// print "<p>".$sparql_query."</p>";
 		
 		$rows = $this->store->query($sparql_query, 'rows');
 
 		if (!$this->store->getErrors()) {
 			if(count($rows)>0){
-			print "[<a href='javascript:pasteQuery(\"(";
+			print "<button value='(";
 			$qs = "";
 			$oldvalue = "";
 			foreach($rows as $row) {
@@ -120,19 +120,19 @@ class ConceptList {
 				$value = $row[$value_fn];
 				
 				if($value == $oldvalue || $oldvalue == "") {
-					$qs .= "\\\"".$label."\\\" OR ";
+					$qs .= "\"".$label."\" OR ";
 					$oldvalue = $value;
 				} else {
 					$qs = rtrim($qs,"OR ");
-					$qs .= ") AND (\\\"".$label."\\\" OR ";
+					$qs .= ") AND (\"".$label."\" OR ";
 					$oldvalue = $value;
 				}
 			}		
 			
 			$qs = rtrim($qs,"OR ");
-			$qs .=  ")\"";
-			print $qs.");' class='queryString'>".$name."</a>]";
-			} else { print "[".$name."]";} 
+			$qs .=  ")'";
+			print $qs." name='".$id."' id='".$id."' >".$name."</button>";
+			} else { print "<button name='".$id."' id='".$id."'  disabled>".$name."</button>";} 
 			
 		} else {
 			foreach($this->store->getErrors() as $error) {
@@ -144,7 +144,7 @@ class ConceptList {
 	}
 	
 	
-	public function getWeightedQueryString($sparql_query,$name,$value_fn='concept',$label_fn='label',$weight_fn='weight') {
+	public function getWeightedQueryString($sparql_query,$id,$name,$value_fn='concept',$label_fn='label',$weight_fn='weight') {
 		// print "<p>".$sparql_query."</p>";
 		
 		$rows = $this->store->query($sparql_query, 'rows');
@@ -152,7 +152,7 @@ class ConceptList {
 		if (!$this->store->getErrors()) {
 
 			if(count($rows)>0){
-			print "[<a href='javascript:pasteQuery(\"(";
+			print "<button value='(";
 			$qs = "";
 			$oldvalue = "";
 			foreach($rows as $row) {
@@ -161,19 +161,19 @@ class ConceptList {
 				$weight = $row[$weight_fn]/100;
 				
 				if($value == $oldvalue || $oldvalue == "") {
-					$qs .= "\\\"".$label."\\\"^".$weight." OR ";
+					$qs .= "\"".$label."\"^".$weight." OR ";
 					$oldvalue = $value;
 				} else {
 					$qs = rtrim($qs,"OR ");
-					$qs .= ") AND (\\\"".$label."\\\"^".$weight." OR ";
+					$qs .= ") AND (\"".$label."\"^".$weight." OR ";
 					$oldvalue = $value;
 				}
 			}		
 			
 			$qs = rtrim($qs,"OR ");
-			$qs .=  ")\"";
-			print $qs.");' class='queryString'>".$name."</a>]";
-			} else { print "[".$name."]";} 
+			$qs .=  ")'";
+			print $qs." name='".$id."' id='".$id."' >".$name."</button>";
+			} else { print "<button name='".$id."' id='".$id."'  disabled>".$name."</button>";} 
 
 			
 		} else {

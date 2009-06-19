@@ -285,13 +285,13 @@ div.terms {
 	width: 350px;
 }
 
-#solr {
+/*#solr {
 	clear: both;
 	position: relative;
 	top: 2em;
 	border-top: 1px solid black;
 }
-
+*/
 
 
 .solrquery {
@@ -373,3 +373,10 @@ div.terms {
 	
 }
 
+#queries {
+	clear: both;
+}
+
+#besttabs .yui-content {
+    background-color: #fdfdfd; /* make the body color of a tab-view white */
+}

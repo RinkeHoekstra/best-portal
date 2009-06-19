@@ -12,31 +12,24 @@
 	</title>
 	<link rel="stylesheet" href="style.css" type="text/css" media="screen">
 	
-	<!-- <script type="text/javascript" src="js/mootools.js"></script> -->
-	<!-- <script type="text/javascript" src="js/sendform.js"></script> -->
 	<script type="text/javascript" src="js/mapping.js"></script>
 	
-	<!-- <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.7.0/build/fonts/fonts-min.css" /> -->
-	<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.7.0/build/container/assets/skins/sam/container.css" />
 
-	<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.7.0/build/button/assets/skins/sam/button.css" />
-	<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.7.0/build/tabview/assets/skins/sam/tabview.css" />
-
-
-
-	<script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/yahoo/yahoo-min.js"></script>
-
-	<script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/yahoo-dom-event/yahoo-dom-event.js"></script>
+	<link rel="stylesheet" type="text/css" href="js/yui/container/assets/skins/sam/container.css" />
+	<link rel="stylesheet" type="text/css" href="js/yui/button/assets/skins/sam/button.css" />
+	<link rel="stylesheet" type="text/css" href="js/yui/tabview/assets/skins/sam/tabview.css" />
 
 
 
-	<script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/event/event-min.js"></script>
-	<script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/connection/connection-min.js"></script>
-	<script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/dragdrop/dragdrop-min.js"></script>
-	<script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/container/container-min.js"></script>
-	<script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/element/element-min.js"></script>
-	<script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/button/button-min.js"></script>
-	<script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/tabview/tabview-min.js"></script>
+	<script type="text/javascript" src="js/yui/yahoo/yahoo-min.js"></script>
+	<script type="text/javascript" src="js/yui/yahoo-dom-event/yahoo-dom-event.js"></script>
+	<script type="text/javascript" src="js/yui/event/event-min.js"></script>
+	<script type="text/javascript" src="js/yui/connection/connection-min.js"></script>
+	<script type="text/javascript" src="js/yui/dragdrop/dragdrop-min.js"></script>
+	<script type="text/javascript" src="js/yui/container/container-min.js"></script>
+	<script type="text/javascript" src="js/yui/element/element-min.js"></script>
+	<script type="text/javascript" src="js/yui/button/button-min.js"></script>
+	<script type="text/javascript" src="js/yui/tabview/tabview-min.js"></script>
 
 	
 	
@@ -47,10 +40,6 @@
 	
 	YAHOO.namespace("example.container");
 
-	function pasteQuery(query) {
-			var obj = document.getElementById('q');
-			obj.value = query;
-			}	
 	
 	
 
@@ -95,7 +84,7 @@
 		};		
 		
 		
-		var bSubmit = window.confirm("Are you sure you want to submit this form?");
+		var bSubmit = window.confirm("Are you sure you want to submit this mapping?");
 		YAHOO.util.Event.preventDefault(p_oEvent);
 
         // YAHOO.util.Event.preventDefault(p_oEvent);
@@ -169,12 +158,16 @@ function init() {
     YAHOO.util.Event.addListener("showexplform", "click", YAHOO.example.container.explanationform.show, YAHOO.example.container.explanationform, true);
     YAHOO.util.Event.addListener("hideexplform", "click", YAHOO.example.container.explanationform.hide, YAHOO.example.container.explanationform, true);
 
-	var oSubmitButton = new YAHOO.widget.Button("submitbutton");
+	var oSubmitButton = new YAHOO.widget.Button("search");
+
+
 	
 	var oMappingmodeButtonGroup = new YAHOO.widget.ButtonGroup("mappingmode"); 
 	var oConjDisjButtonGroup = new YAHOO.widget.ButtonGroup("conjunctiondisjunction");
-
 	var oNarrowerButton = new YAHOO.widget.Button("includenarrower");
+
+
+
 	}
 	
 	YAHOO.util.Event.addListener(window, "load", init);
@@ -198,7 +191,9 @@ function init() {
 	<div id="besttabs" class="yui-navset">
 	    <ul class="yui-nav">
 	        <li class="selected"><a href="#searchtab"><em>Search</em></a></li>
-	        <li ><a href="#definetab"><em>Define mapping</em></a></li>
+	        <li><a href="#definetab"><em>Define mapping</em></a></li>
+			<li><a href="#testtab"><em>Tests</em></a></li>
+			<li><a href="#logtab"><em>Log</em></a></li>
 	    </ul>            
 	    <div class="yui-content">
 	<div id="searchtab">
@@ -215,28 +210,34 @@ function init() {
 							<?php $cl = new ConceptList();  $cl->makeList($laymen_scheme,'showMapping(this)','conceptlist'); ?>
 						</div>
 					</div>
-					<div id="mappedTerms">
-						<h2>
-							Mapping
-						</h2>
-						<div id="mapping"></div>
+					<div id="results">
+						<div id="mappedTerms">
+							<h2>
+								Mapping
+							</h2>
+							<div id="mapping"></div>
+						</div>
+						<fieldset id="queries">
+							<legend>Generated Queries</legend>
+						</fieldset>
+						<fieldset id="directresults">
+							<legend>Direct Results</legend>
+						</fieldset>
 					</div>
-					<div id="direct-results">
-					</div>
-					<div id="solr">
-						<h2>
+					<fieldset id="solr">
+						<legend>
 							Solr Query
-						</h2>
-						<p>
+						</legend>
+						<!-- <p>
 							You can add the generated Solr query (just click on it), choose a prepared Example, or type your query using the <a href="http://lucene.apache.org/java/2_4_1/queryparsersyntax.html">Lucene Query Syntax</a>. Press 'Submit Query' to view the results.
-						</p>
-						<p>
+						</p> -->
+						<!-- <p>
 							Example Queries: [<a href='javascript:pasteQuery("dier%20OR%20/"eigen%20energie/"%20OR%20gedraging%20OR%20gedrag");'>dier</a>] [<a href='javascript:pasteQuery("dier^0.7%20OR%20/"eigen%20energie/"^1%20OR%20gedraging^0.28%20OR%20gedrag^0.20");'>dier (weighted)</a>] [<a href='javascript:pasteQuery("/"door%20het%20dier%20aangerichte%20schade/"%20OR%20/"in%20zijn%20macht%20zou%20hebben%20gehad/"%20OR%20/"gedraging%20van%20het%20dier/"%20OR%20/"de%20bezitter%20van%20een%20dier/"%20OR%20/"artikel%206%20179/"%20OR%20bezitter%20OR%20dier%20OR%20schade");'>BW 6:179</a>] [<a href='javascript:pasteQuery("/"door%20het%20dier%20aangerichte%20schade/"^1%20OR%20/"in%20zijn%20macht%20zou%20hebben%20gehad/"^0.71%20OR%20/"gedraging%20van%20het%20dier/"^0.71%20OR%20/"de%20bezitter%20van%20een%20dier/"^0.71%20OR%20/"artikel%206%20179/"^0.61%20OR%20bezitter^0.34%20OR%20dier^0.33%20OR%20schade^0.20");'>BW 6:179 (weighted)</a>]
-						</p>
+						</p> -->
 						<form method="get" action="http://localhost:8983/solr/select">
 							<textarea name="q" rows="4" cols="200" id="q">
 		</textarea><br>
-							<select name="qt">
+							<select name="qt" id="qt">
 								<option selected value="standard">
 									Standard Query
 								</option>
@@ -244,7 +245,7 @@ function init() {
 									MoreLikeThis Query (uses the [offset] 'match' of a standard query)
 								</option>
 							</select> MLT Offset: <input type="input" name="mlt.match.offset" value="0" size="3"><br>
-							<select name="wt">
+							<select name="wt" id="wt">
 								<option selected value="xslt">
 									Parse results through XSLT
 								</option>
@@ -252,12 +253,12 @@ function init() {
 									Raw XML results
 								</option>
 							</select><br>
-							Number of Results: <input type="input" name="rows" value="10"><br>
+							Number of Results: <input type="input" name="rows" id ="rows" value="10"><br>
 							<input type="hidden" name="indent" value="on"> <input type="hidden" name="version" value="2.2"> <input type="hidden" name="start" value="0"> <input type="hidden" name="fl" value="*,score"> <input type="hidden" name="qt" value=""> <input type="hidden" name="debugQuery" value="on"> <input type="hidden" name="explainOther" value=""> <input type="hidden" name="hl" value="on"> <input type="hidden" name="hl.fl" value="uitspraak_anoniem"> <input type="hidden" name="mlt" value="true"> <input type="hidden" name="mlt.fl" value="uitspraak_anoniem"> <input type="hidden" name="tr" value="best.xsl"> <!-- <input type="hidden" name="mlt.match.include" value="false"/> -->
 							<br>
-							<input type="submit" name="search">
+							<input type="submit" name="search" id="search" value="Submit Query"/>
 						</form>
-					</div>
+					</fieldset>
 	</div>
 
 
@@ -342,7 +343,7 @@ function init() {
 		</fieldset>
 
 		</form>
-		</div>
+
 		<fieldset>
 			<legend>Response</legend>
 			<div id="log_res"><!-- spanner --></div>
@@ -384,6 +385,10 @@ function init() {
 
 
 	</div>
+	
+	<div id="testtab"></div>
+	
+	<div id="logtab"></div>
 	
     </div>
 </div>

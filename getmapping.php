@@ -16,6 +16,15 @@ $sc = new RepositoryConnection("http://localhost:8080/openrdf-sesame/repositorie
 $cl = new ConceptList();
 $ns = new Namespaces();
 
+
+print "<div id=\"mappedTerms\">
+	<h2>
+		Mapping
+	</h2>
+	<div id=\"mapping\">";
+
+
+
 $skos_mapped_concepts_partial_query = "";
 
 foreach($qs as $q){
@@ -64,51 +73,58 @@ $cl->getDiv($sparql_query);
 
 $sparql_query = $ns->sparql."SELECT DISTINCT ?concept ?label WHERE { ?concept best:describes ".$query_instance." . ?concept skos:inScheme tv:tort-scheme .  {?concept skos:altLabel ?label} UNION {?concept skos:prefLabel ?label} .}";
 
+
+print "</div></div>";
+
 // print "<pre>".htmlentities($sparql_query)."</pre>";
-	print "<h5>Generated Queries</h5>\n";
-	print "<div class='resultlist'>";
-	print "<div class='solrquery'>";
-	$cl->getQueryString($sparql_query,"tort query (OWL)");
-	print "</div>";
+	print "<fieldset id='queries'>";
+	print "<legend>Generated Queries</legend>\n";
+	print "<div id='querybuttons' class='yui-buttongroup'>";
+	print "<p>Click a button to paste the corresponding query to the Solr Query area for inspection.</p>";
+	$cl->getQueryString($sparql_query,"tqowl","Tort Query (OWL)");
+
 	
 	$sparql_query = $ns->sparql."SELECT DISTINCT ?concept ?label WHERE { ".$skos_mapped_concepts_partial_query." ?concept skos:inScheme tv:tort-scheme .  {?concept skos:altLabel ?label} UNION {?concept skos:prefLabel ?label} .}";
 
 	// print "<pre>".htmlentities($sparql_query)."</pre>";
-		print "<div class='solrquery'>";
-		$cl->getQueryString($sparql_query,"tort query (SKOS)");
-		print "</div>";
+
+		$cl->getQueryString($sparql_query,"tqskos","Tort Query (SKOS)");
+
 
 	$sparql_query = $ns->sparql."SELECT DISTINCT ?concept ?label ?weight WHERE { ?concept best:describes ".$query_instance." . ?concept skos:inScheme tv:tort-scheme .  ?concept to:fingerprint ?fp . ?fp to:value ?label . ?fp to:weight ?weight .}";
 
-		print "<div class='solrquery'>";
-		$cl->getWeightedQueryString($sparql_query,"weighed tort query (OWL)");
-		print "</div>";
+
+		$cl->getWeightedQueryString($sparql_query,"wtqowl","Weighed Tort Query (OWL)");
+
 
 		$sparql_query = $ns->sparql."SELECT DISTINCT ?concept ?label ?weight WHERE { ".$skos_mapped_concepts_partial_query." ?concept skos:inScheme tv:tort-scheme .  ?concept to:fingerprint ?fp . ?fp to:value ?label . ?fp to:weight ?weight .}";
 
-			print "<div class='solrquery'>";
-			$cl->getWeightedQueryString($sparql_query,"weighed tort query (SKOS)");
-			print "</div>";
+
+			$cl->getWeightedQueryString($sparql_query,"wtqskos", "Weighed Tort Query (SKOS)");
+
 
 
 	$sparql_query = $ns->sparql."SELECT DISTINCT ?concept ?label WHERE { ?concept best:describes ".$query_instance." . {?concept skos:altLabel ?label} UNION {?concept skos:prefLabel ?label} .}";
 
 	// print "<pre>".htmlentities($sparql_query)."</pre>";
-		print "<div class='solrquery'>";
-		$cl->getQueryString($sparql_query,"mixed query");
-		print "</div>";
+
+		$cl->getQueryString($sparql_query,"mq","Mixed Query");
 
 
 	print "</div>";
+	print "</fieldset>";
 
 	
 	$vl = new VerdictList();
 
 $sparql_query = $ns->sparql."SELECT DISTINCT ?verdict ?src ?ljn WHERE { ?concept best:describes ".$query_instance." . ?concept skos:inScheme tv:tort-scheme . ?concept best:describes ?verdict . ?verdict a rnl:Uitspraak ; metalex:src ?src ; rnl:ljn ?ljn .}";
 
-	print "<h5>Direct Results</h5>";
+	print "<fieldset><legend>Direct Results</legend>";
+	print "<p>Click a button to inspect the text of the corresponding verdict on <a href='http://www.rechtspraak.nl'>http://www.rechtspraak.nl</a>.</p>";
 	// print "<pre>".htmlentities($sparql_query)."</pre>";
 	$vl->getVerdicts($sparql_query);
+	print "</fieldset>";
+	print "</div>";
 
 	
 	

@@ -29,6 +29,8 @@ class VerdictList {
 		$this->store = ARC2::getRemoteStore($config);
 	}
 	
+	
+
 
 	public function getVerdicts($sparql_query,$value_fn='verdict',$uri_fn='src',$id_fn='ljn') {
 		// print "<p>".$sparql_query."</p>";
@@ -36,16 +38,17 @@ class VerdictList {
 		$rows = $this->store->query($sparql_query, 'rows');
 
 		if (!$this->store->getErrors()) {
-			print "<div class='resultlist'>";
 			if(count($rows)>0){
 			foreach($rows as $row) {
 				$uri = $row[$uri_fn];
 				$id = $row[$id_fn];
 				$value = $row[$value_fn];
-				print "[<a href='".$uri."' class='verdict' id='".$value."'>".$id."</a>]";
+				print "<span id='linkbutton".$id_fn."' class='yui-button yui-link-button'>";
+				print "<span class='first-child'>";
+				print "<a href='".$uri."' class='verdict' id='".$value."'>".$id."</a>";
+				print "</span></span>";
 			}		
-			} else { print "[none]"; }
-			print "</div>";
+			} else { print ""; }
 		} else {
 			foreach($this->store->getErrors() as $error) {
 				print $error."<br/>";
