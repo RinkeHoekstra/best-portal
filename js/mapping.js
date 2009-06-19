@@ -25,11 +25,25 @@ function showMapping(id)
 }
 
 
+function onButtonClick(p_oEvent){
+	document.getElementById('q').value = this.get("value");
+}
+
 function stateChanged()
 {
 if (xmlhttp.readyState==4)
 {
-document.getElementById("mapping").innerHTML=xmlhttp.responseText;
+	document.getElementById("results").innerHTML=xmlhttp.responseText;
+	var oTQOWLButton = new YAHOO.widget.Button("tqowl");
+	oTQOWLButton.on("click", onButtonClick);
+	var oTQSKOSButton = new YAHOO.widget.Button("tqskos");
+	oTQSKOSButton.on("click", onButtonClick);
+	var oWTQOWLButton = new YAHOO.widget.Button("wtqowl");
+	oWTQOWLButton.on("click", onButtonClick);
+	var oWTQSKOSButton = new YAHOO.widget.Button("wtqskos");
+	oWTQSKOSButton.on("click", onButtonClick);
+	var oMQButton = new YAHOO.widget.Button("mq");
+	oMQButton.on("click", onButtonClick);
 }
 }
 
