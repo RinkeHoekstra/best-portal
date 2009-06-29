@@ -59,7 +59,7 @@
 				// div.innerHTML += "HTTP status: " + o.status;
 				// div.innerHTML += "Status code message: " + o.statusText;
 				// div.innerHTML += "<li>HTTP headers: <ul>" + o.getAllResponseHeaders + "</ul></li>";
-				div.innerHTML = o.responseText;
+				div.innerHTML += o.responseText;
 				// div.innerHTML += "Argument object: " + o.argument;
 			}
 		}
@@ -255,7 +255,7 @@ function init() {
 							</select><br>
 							Number of Results: <input type="input" name="rows" id ="rows" value="10"><br>
 							<input type="hidden" name="indent" value="on"> <input type="hidden" name="version" value="2.2"> <input type="hidden" name="start" value="0"> <input type="hidden" name="fl" value="*,score"> <input type="hidden" name="qt" value=""> <input type="hidden" name="debugQuery" value="on"> <input type="hidden" name="explainOther" value=""> <input type="hidden" name="hl" value="on"> <input type="hidden" name="hl.fl" value="uitspraak_anoniem"> <input type="hidden" name="mlt" value="true"> <input type="hidden" name="mlt.fl" value="uitspraak_anoniem"> <input type="hidden" name="tr" value="best.xsl"> <!-- <input type="hidden" name="mlt.match.include" value="false"/> -->
-							<br>
+							<br/>
 							<input type="submit" name="search" id="search" value="Submit Query"/>
 						</form>
 					</fieldset>
@@ -344,10 +344,7 @@ function init() {
 
 		</form>
 
-		<fieldset>
-			<legend>Response</legend>
-			<div id="log_res"><!-- spanner --></div>
-		</fieldset>
+
 		
 		<div id="explmm" style="visibility: hidden;">
 			<div class="hd">Mapping Modes</div>
@@ -386,9 +383,22 @@ function init() {
 
 	</div>
 	
-	<div id="testtab"></div>
+	<div id="testtab">
+		<div id="explanation">
+				<p>This tab will contain a number of tests that will allow us to compare the actual behavior of the system to its desired behavior (i.e. results provided by legal experts).
+				</p>
+		</div>
+		
+		
+	</div>
 	
-	<div id="logtab"></div>
+	<div id="logtab">
+		<fieldset>
+			<legend>Mapping Log</legend>
+			<div id="log_res"><!-- spanner --></div>
+		</fieldset>
+		
+	</div>
 	
     </div>
 </div>

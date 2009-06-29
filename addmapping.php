@@ -60,9 +60,13 @@ if($subc!="" || $eqc!="") {
 
 	foreach($laymenconcepts as $lt){
 		if($lt != ""){
-			$turtle .=" [ a owl:Restriction ; owl:hasValue <".urldecode($lt).">; owl:onProperty best:described_by ] ";
-			if($in == 'on'){
+			if($in != ""){
+				$turtle .= " [ a\t owl:Class; owl:unionOf (";
+				$turtle .=" [ a owl:Restriction ; owl:hasValue <".urldecode($lt).">; owl:onProperty best:described_by ] ";
 				$turtle .= " [ a owl:Restriction ; owl:someValuesFrom  [ a owl:Restriction ; owl:hasValue <".urldecode($lt)."> ; owl:onProperty skos:broader ]  ; owl:onProperty best:described_by ] ";
+				$turtle .= " ) ] ";
+			} else {
+				$turtle .=" [ a owl:Restriction ; owl:hasValue <".urldecode($lt).">; owl:onProperty best:described_by ] ";
 			}
 		}
 	}

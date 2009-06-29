@@ -62,7 +62,7 @@ textarea {width:600px;height:250px;padding:5px;}
 
 /* STRUCTURE */
 html{ height: 100%;}
-body{	height: 100%; text-align:center;}
+body{	height: 100%; text-align:center; background: white;}
 
 #header{height:60px; width:100%; margin: 0 0 10px 0; background: url('images/header-bg.png') repeat-x;}
 #header h1{
@@ -78,7 +78,7 @@ body{	height: 100%; text-align:center;}
 #header #demo a{background:url('images/header-demo.png') no-repeat;}	
 #header #report a{background:url('images/header-report.png') no-repeat;}
 
-#page{text-align:left; margin:auto; width:800px;}
+#page{text-align:left; margin:auto; width:800px; background: white;}
 
 /*THE REPORT IS A #TEXTPAGE*/
 #textpage{text-align:left; margin:auto; padding-bottom: 20px; width:800px;}
@@ -188,11 +188,11 @@ body{	height: 100%; text-align:center;}
 #progressbar-text { margin: -22px 0 0; text-align:center;}
 
 
-td.name { font-size:90%; background: lightgrey;}
-td { vertical-align: top; font-size: 90%; }
+td.name { font-size:100%; background: #eee;}
+td { vertical-align: top; font-size: 100%; padding-top: 1ex; padding-left: 1ex;}
 ul { margin: 0px; margin-left: 1em; padding: 0px; }
 .note { font-size:80%; padding-bottom: 1em;}
-.doc { margin-top: 1em; border-top: solid grey 1px; }
+.doc { margin-top: 1em;  }
 .exp { display: none; font-family: monospace; white-space: pre; }
 div.resultlist { font-size: 80%; }
 div.query {font-size: 80%;}
@@ -377,6 +377,6 @@ div.terms {
 	clear: both;
 }
 
-#besttabs .yui-content {
+#besttabs .yui-content, #searchresults .yui-content {
     background-color: #fdfdfd; /* make the body color of a tab-view white */
 }

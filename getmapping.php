@@ -25,6 +25,7 @@ print "<div id=\"mappedTerms\">
 
 
 
+// Build query for SKOS mapping
 $skos_mapped_concepts_partial_query = "";
 
 foreach($qs as $q){
@@ -33,6 +34,9 @@ foreach($qs as $q){
 	}
 }
 $skos_mapped_concepts_partial_query = rtrim($skos_mapped_concepts_partial_query,"UNION ");
+
+
+
 
 $sparql_query = $ns->sparql."SELECT DISTINCT ?concept ?label WHERE { ";
 $sparql_query .= $skos_mapped_concepts_partial_query;
@@ -103,12 +107,13 @@ print "</div></div>";
 			$cl->getWeightedQueryString($sparql_query,"wtqskos", "Weighed Tort Query (SKOS)");
 
 
+// Laymen query
 
-	$sparql_query = $ns->sparql."SELECT DISTINCT ?concept ?label WHERE { ?concept best:describes ".$query_instance." . {?concept skos:altLabel ?label} UNION {?concept skos:prefLabel ?label} .}";
+	$sparql_query = $ns->sparql."SELECT DISTINCT ?concept ?label WHERE { ?concept best:describes ".$query_instance." . ?concept skos:inScheme lv:laymen-scheme . {?concept skos:altLabel ?label} UNION {?concept skos:prefLabel ?label} .}";
+	
+	
+		$cl->getQueryString($sparql_query,"mq","Laymen Query");
 
-	// print "<pre>".htmlentities($sparql_query)."</pre>";
-
-		$cl->getQueryString($sparql_query,"mq","Mixed Query");
 
 
 	print "</div>";
