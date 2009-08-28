@@ -1,88 +1,60 @@
 <html>
-	<head>
+
+<head>
+	
+	<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.7.0/build/fonts/fonts-min.css" />
+	<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.7.0/build/treeview/assets/skins/sam/treeview.css" />
+	<script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/yahoo-dom-event/yahoo-dom-event.js"></script>
+	<script type="text/javascript" src="http://yui.yahooapis.com/2.7.0/build/treeview/treeview-min.js"></script>
+
+	
+
+	<!-- Optional dependency source file --> 
+	<script src="http://yui.yahooapis.com/2.5.2/build/animation/animation-min.js" type="text/javascript"></script>
+
+	<!-- Optional dependency source file to decode contents of yuiConfig markup attribute--> 
+	<script src = "http://yui.yahooapis.com/2.7.0/build/json/json-min.js" ></script>
+
+	<!-- TreeView source file --> 
+	<script src = "http://yui.yahooapis.com/2.7.0/build/treeview/treeview-min.js" ></script>
+
 	</head>
-	<body>
+
+<body class="yui-skin-sam">
+
+	<script type="text/javascript">
+	
+		var tree;
+		
+
+		(function() {
+			var treeInit = function() {
+				tree = new YAHOO.widget.TreeView("laymenTree");
+
+				// tree.subscribe("clickEvent",tree.onEventToggleHighlight); 
+				// tree.setNodesProperty("propagateHighlightUp",true);
+				// tree.setNodesProperty("propagateHighlightDown",true);
+				tree.render();
+
+
+			};
+
+			//Add an onDOMReady handler to build the tree when the document is ready
+		    YAHOO.util.Event.onDOMReady(treeInit);
+
+		})();
+
+	</script>
+	
+	<div id='laymenTree' class="ygtv-checkbox">
 <?php
-	require_once "lib/class.RepositoryConnection.php";
-	require_once "lib/namespaces.php";
-	require_once "lib/arc/ARC2.php";
-	
-	
-	
-	// /* configuration */ 
-	// $config = array(
-	//   /* remote endpoint */
-	//   'remote_store_endpoint' => 'http://localhost:8080/openrdf-sesame/repositories/test',
-	// );
-	// 
-	// /* instantiation */
-	// $store = ARC2::getRemoteStore($config);
-	// 
-	// $sparql_query = $sparql_prefixes."SELECT ?x WHERE {?x rdf:type skos:Concept. }";
-	// 
-	// $rows = $store->query($sparql_query, 'rows');
-	// 
-	// if (!$store->getErrors()) {
-	// 	print "<ul>";
-	// 	foreach($rows as $row) {
-	// 		$val = $row['x'];
-	// 		print "<li> ?x = ".$val."</li>";
-	// 	}		
-	// 	print "</ul>";
-	// } else {
-	// 	foreach($store->getErrors() as $error) {
-	// 		print $error."<br/>";
-	// 	}
-	// 	throw new Exception("Errors! ".$store->getErrors());
-	// }
-	// 
-	// 
-	// /* configuration */ 
-	// $config_clio = array(
-	//   /* remote endpoint */
-	//   'remote_store_endpoint' => 'http://localhost:3020/beta/servlets/evaluateQuery',
-	// );
-	// 
-	// /* instantiation */
-	// $store_clio = ARC2::getRemoteStore($config_clio);
-	// 
-	// $sparql_query = $sparql_prefixes."SELECT ?x WHERE {?x rdf:type skos:Concept. }";
-	// 
-	// $rows = $store_clio->query($sparql_query, 'rows');
-	// 
-	// if (!$store_clio->getErrors()) {
-	// 	print "<ul>";
-	// 	foreach($rows as $row) {
-	// 		$val = $row['x'];
-	// 		print "<li> ?x = ".$val."</li>";
-	// 	}		
-	// 	print "</ul>";
-	// } else {
-	// 	foreach($store_clio->getErrors() as $error) {
-	// 		print $error."<br/>";
-	// 	}
-	// 	// throw new Exception("Errors! ".$store->getErrors());
-	// }	
-	
-	
-	$sc = new RepositoryConnection("http://localhost:8080/openrdf-sesame/repositories/best");
-	// $sc = new RepositoryConnection("http://localhost:3020/beta");
-	// 
-	$turtle = $prefixes."query:q-".date('Ymd-His')." best:described_by lv:dierobject.";
-	$context = "<http://foo.bar>";
-	
-	
-	$sc->tellSesame($turtle,$context);
-	
-	// print "<pre>".urlencode($sparql_query)."</pre>";
-	// // // $sc->tell($turtle,$context);
-	// // // $sc->tellClio($turtle);
-	// $result = $sc->ask($sparql,'clio');
-	
+	include_once('lib/class.ConceptTree.php');
 
+	$ct = new ConceptTree();
+	$ct->makeTree($laymen_scheme);
+?>
+	</div>
 
+</body>
 
-
-?>	
-	</body>
 </html>
