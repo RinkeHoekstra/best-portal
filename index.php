@@ -1,7 +1,7 @@
 <?php
 	
 	require_once "lib/class.ConceptList.php";
-	require_once "lib/namespaces.php";
+	require_once "lib/class.SPARQLConnection.php";
 
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
@@ -174,6 +174,12 @@ function init() {
     
 	</script>
 </head>
+
+<?php
+
+$connection = new SPARQLConnection();
+
+?>
 	
 <body class="yui-skin-sam" id="body">
 	<div id="banner">
@@ -207,7 +213,7 @@ function init() {
 							Laymen Vocabulary
 						</h2>
 						<div id="concepts">
-							<?php $cl = new ConceptList();  $cl->makeList($laymen_scheme,'showMapping(this)','conceptlist'); ?>
+							<?php $cl = new ConceptList($connection);  $cl->makeList($laymen_scheme,'showMapping(this)','conceptlist'); ?>
 						</div>
 					</div>
 					<div id="results">
@@ -305,7 +311,7 @@ function init() {
 				Laymen Vocabulary
 			</h2>
 			<div id="concepts">
-				<?php $cl = new ConceptList();  $cl->makeList($laymen_scheme,'','laymen-terms[]'); ?>
+				<?php $cl->makeList($laymen_scheme,'','laymen-terms[]'); ?>
 			</div>
 		</div>
 		<div id="targetTerms">
@@ -313,7 +319,7 @@ function init() {
 				Tort Vocabulary
 			</h2>
 			<div id="concepts">
-				<?php $cl = new ConceptList();  $cl->makeList($tort_scheme,'','tort-terms[]'); ?>
+				<?php $cl->makeList($tort_scheme,'','tort-terms[]'); ?>
 			</div>
 		</div>
 		</div>
