@@ -9,24 +9,13 @@ require_once "class.Namespaces.php";
 
 class ConceptList {
 	
-	// Repository is the url of the repository we want to connect to
-	private $repository = 'http://localhost:8080/openrdf-sesame/repositories/best';
+	private $connection;
 	private $ns;
 	private $rc;
-	private $store;
 	
-	function __construct(){
+	function __construct($c){
 		$this->ns = new Namespaces();
-		// $this->rc = new RepositoryConnection($this->repository,'sesame');
-		
-		/* configuration */ 
-		$config = array(
-		  /* remote endpoint */
-		  'remote_store_endpoint' => $this->repository ,
-		);
-
-		/* instantiation */
-		$this->store = ARC2::getRemoteStore($config);
+		$this->connection = $c;
 	}
 	
 	
@@ -37,34 +26,17 @@ class ConceptList {
 		$this->getSelectBlock($sparql_query,$onChange,$name);
 		
 	}
-	
-	// function test(){
-	// 	
-	// 	$c_query = $this->ns->sparql."CONSTRUCT { ?x best:described_by lv:dierobject } WHERE {?x a best:Query }";
-	// 	
-	// 	print "<pre>".htmlentities($c_query)."</pre>";
-	// 	
-	// 	$c_query_enc = urlencode($c_query);
-	// 	
-	// 	$graph_query = "<".$this->repository."?query=".$c_query_enc.">";
-	// 	
-	// 	$sparql_query = $this->ns->sparql."SELECT ?concept ?label WHERE { GRAPH ".$graph_query." { ?x a best:Query . ?x best:described_by ?concept . } } ?concept rdfs:label ?label . ?concept skos:inScheme tv:tort-scheme . ?lvconcept skos:inScheme lv:laymen-scheme.}";
-	// 	
-	// 	print "<pre>".htmlentities($sparql_query)."</pre>";
-	// 	
-	// 	$this->makeList($sparql_query);
-	// 	
-	// }
+
 	
 	
 	function getSelectBlock($sparql_query,$onChange,$name='conceptlist',$value_fn='concept',$label_fn='label') {
 		// print "<pre>".htmlentities($sparql_query)."</pre>";
 		
-		$rows = $this->store->query($sparql_query, 'rows');
+		$rows = $this->connection->query($sparql_query, 'rows');
 		
 		
 		
-		if (!$this->store->getErrors()) {
+
 			print "<select multiple size='10' class='conceptList' name='".$name."' onchange='".$onChange."'>\n";
 			foreach($rows as $row) {
 				$label = $row[$label_fn];
@@ -72,21 +44,14 @@ class ConceptList {
 				print "<option value='".urlencode($value)."'>".$label."</option>\n";
 			}		
 			print "</select>";
-		} else {
-			foreach($this->store->getErrors() as $error) {
-				print $error."<br/>";
-			}
-			throw new Exception("Errors! ".$this->store->getErrors());
-		}
 		
 	}
 
 	public function getDiv($sparql_query,$value_fn='concept',$label_fn='label') {
 		// print "<p>".$sparql_query."</p>";
 		
-		$rows = $this->store->query($sparql_query, 'rows');
+		$rows = $this->connection->query($sparql_query, 'rows');
 
-		if (!$this->store->getErrors()) {
 			print "<div class='resultlist'>";
 			if(count($rows)>0){
 			foreach($rows as $row) {
@@ -96,21 +61,16 @@ class ConceptList {
 			}		
 			} else { print "[none]"; }
 			print "</div>";
-		} else {
-			foreach($this->store->getErrors() as $error) {
-				print $error."<br/>";
-			}
-			throw new Exception("Errors! ".$this->store->getErrors());
-		}
+
 		
 	}
 
 	public function getQueryString($sparql_query,$id,$name,$value_fn='concept',$label_fn='label') {
 		// print "<p>".$sparql_query."</p>";
 		
-		$rows = $this->store->query($sparql_query, 'rows');
+		$rows = $this->connection->query($sparql_query, 'rows');
 
-		if (!$this->store->getErrors()) {
+
 			if(count($rows)>0){
 			print "<button value='(";
 			$qs = "";
@@ -134,12 +94,7 @@ class ConceptList {
 			print $qs." name='".$id."' id='".$id."' >".$name."</button>";
 			} else { print "<button name='".$id."' id='".$id."'  disabled>".$name."</button>";} 
 			
-		} else {
-			foreach($this->store->getErrors() as $error) {
-				print $error."<br/>";
-			}
-			throw new Exception("Errors! ".$this->store->getErrors());
-		}
+
 		
 	}
 	
@@ -147,9 +102,8 @@ class ConceptList {
 	public function getWeightedQueryString($sparql_query,$id,$name,$value_fn='concept',$label_fn='label',$weight_fn='weight') {
 		// print "<p>".$sparql_query."</p>";
 		
-		$rows = $this->store->query($sparql_query, 'rows');
+		$rows = $this->connection->query($sparql_query, 'rows');
 
-		if (!$this->store->getErrors()) {
 
 			if(count($rows)>0){
 			print "<button value='(";
@@ -176,12 +130,7 @@ class ConceptList {
 			} else { print "<button name='".$id."' id='".$id."'  disabled>".$name."</button>";} 
 
 			
-		} else {
-			foreach($this->store->getErrors() as $error) {
-				print $error."<br/>";
-			}
-			throw new Exception("Errors! ".$this->store->getErrors());
-		}
+
 		
 	}	
 	

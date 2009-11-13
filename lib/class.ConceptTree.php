@@ -1,43 +1,35 @@
 <?php
 
-require_once "namespaces.php";
-require_once "arc/ARC2.php";
+
+require_once "class.SPARQLConnection.php";
 require_once "class.Namespaces.php";
 
 
 class ConceptTree {
 	// Repository is the url of the repository we want to connect to
-	private $repository = 'http://localhost:8080/openrdf-sesame/repositories/best';
+
 	private $ns;
-	private $store;
+	private $connection;
 
 	function __construct(){
 		$this->ns = new Namespaces();
-	
-		/* configuration */ 
-		$config = array(
-		  /* remote endpoint */
-		  'remote_store_endpoint' => $this->repository ,
-		);
-
-		/* instantiation */
-		$this->store = ARC2::getRemoteStore($config);
+		$this->connection = new SPARQLConnection();
 	}
 
 
 	public function makeTree($scheme){
 		$sparql_query = $this->ns->sparql."SELECT DISTINCT ?concept ?label WHERE {?concept a skos:Concept . ?concept skos:prefLabel ?label . ?concept skos:topConceptOf ".$scheme." . } ORDER BY ?label ";
 
-		$rows = $this->store->query($sparql_query, 'rows');
+		$rows = $this->connection->query($sparql_query, 'rows');
 		
 		
 		
-		if (!$this->store->getErrors()) {
+
 			print "<ul>\n";
 			
 			$sparql_query = $this->ns->sparql."SELECT DISTINCT ?subconcept ?sublabel ?superconcept ?superlabel WHERE {?subconcept skos:broader ?superconcept . ?subconcept skos:prefLabel ?sublabel . ?superconcept skos:prefLabel ?superlabel . ?subconcept skos:inScheme ".$scheme." . ?superconcept skos:inScheme ".$scheme." . } ORDER BY ?superlabel ";
 			
-			$allrows =  $this->store->query($sparql_query, 'rows');
+			$allrows =  $this->connection->query($sparql_query, 'rows');
 			
 			foreach($rows as $row) {
 				$label = $row['label'];
@@ -49,12 +41,7 @@ class ConceptTree {
 				print "</li>\n";
 			}		
 			print "</ul>\n";
-		} else {
-			foreach($this->store->getErrors() as $error) {
-				print $error."<br/>";
-			}
-			throw new Exception("Errors! ".$this->store->getErrors());
-		}
+
 		
 	}
 	
@@ -74,6 +61,45 @@ class ConceptTree {
 			
 		}
 		print "</ul>\n";
+	}
+
+
+	public function makeCSVTree($scheme){
+		$sparql_query = $this->ns->sparql."SELECT DISTINCT ?concept ?label WHERE {?concept a skos:Concept . ?concept skos:prefLabel ?label . ?concept skos:topConceptOf ".$scheme." . } ORDER BY ?label ";
+
+		$rows = $this->connection->query($sparql_query, 'rows');
+		
+
+			
+			$sparql_query = $this->ns->sparql."SELECT DISTINCT ?subconcept ?superconcept WHERE {?subconcept skos:broader ?superconcept . ?subconcept skos:inScheme ".$scheme." . ?superconcept skos:inScheme ".$scheme." . } ";
+			
+			$allrows =  $this->connection->query($sparql_query, 'rows');
+			
+			foreach($rows as $row) {
+				$uri = $row['concept'];
+				$uriarray = explode('#',$uri);
+				$value = $uriarray[1];
+				print $value."\n";
+				
+				$this->makeCSVSubTree($uri, $allrows,1);
+			}		
+
+		
+	}
+	
+	private function makeCSVSubTree($uri,$rows,$depth){
+		foreach ($rows as $row){
+			if($row['superconcept']==$uri){
+				print str_repeat(';',$depth);
+				$suburi = $row['subconcept'];
+				$suburiarray = explode('#',$suburi);
+				$subvalue = $suburiarray[1];
+				print $subvalue."\n";
+				
+				$this->makeCSVSubTree($suburi, $rows,$depth+1);
+			}
+			
+		}
 	}
 
 

@@ -4,7 +4,7 @@
 class Namespaces {
 	
 	public $sparql;
-	public $ontologies;
+	// public $ontologies;
 
 	public $customMappingContext;
 	
@@ -18,23 +18,43 @@ class Namespaces {
 		$this->sparql .= "PREFIX tv:   <http://www.best-project.nl/owl/tort-vocabulary.owl#> \n";
 		$this->sparql .= "PREFIX to:   <http://www.best-project.nl/owl/tort-ontology.owl#> \n";
 		$this->sparql .= "PREFIX best: <http://www.best-project.nl/owl/best.owl#> \n";
+		$this->sparql .= "PREFIX bm: <http://www.best-project.nl/owl/bestmap.owl#> \n";
 		$this->sparql .= "PREFIX metalex: <http://www.metalex.eu/schema#> \n";
 		$this->sparql .= "PREFIX rnl:   <http://www.rechtspraak.nl/rdf#> \n";
+		$this->sparql .= "PREFIX mapping: <http://www.best-project.nl/owl/mapping.owl#> \n";
 		$this->sparql .= "PREFIX query: <http://www.best-project.nl/owl/query#> \n\n";
 		
 		
-		
-		$this->ontologies = array(
-			0 => array ('url' => 'http://www.best-project.nl/owl/tort-ontology.n3', 'format' => 'turtle'),
-			1 => array ('url' => 'http://www.best-project.nl/owl/laymen-ontology.n3', 'format' => 'turtle'),
-			2 => array ('url' => 'http://www.best-project.nl/owl/tort-vocabulary.n3', 'format' => 'turtle'),
-			3 => array ('url' => 'http://www.best-project.nl/owl/laymen-vocabulary.n3', 'format' => 'turtle'),
-			4 => array ('url' => 'http://www.best-project.nl/owl/mapping.n3', 'format' => 'turtle'),
-			5 => array ('url' => 'http://www.best-project.nl/owl/metalex.n3', 'format' => 'turtle'),
-			6 => array ('url' => 'http://www.best-project.nl/owl/best.n3', 'format' => 'turtle'),
-			7 => array ('url' => 'http://www.best-project.nl/owl/verdicts.owl', 'format' => 'rdfxml'),
-			8 => array ('url' => 'http://www.best-project.nl/owl/rechtspraak.owl', 'format' => 'rdfxml')
-		);
+		// Standard namespaces
+		$this->turtle  = "@prefix owl:  <http://www.w3.org/2002/07/owl#> .\n";
+		$this->turtle .= "@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .\n";
+		$this->turtle .= "@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .\n";
+		$this->turtle .= "@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .\n";
+		$this->turtle .= "@prefix skos: <http://www.w3.org/2004/02/skos/core#> .\n";
+		$this->turtle .= "@prefix lv:   <http://www.best-project.nl/owl/laymen-vocabulary.owl#> .\n";
+		$this->turtle .= "@prefix tv:   <http://www.best-project.nl/owl/tort-vocabulary.owl#> .\n";
+		$this->turtle .= "@prefix best: <http://www.best-project.nl/owl/best.owl#> .\n";
+		$this->turtle .= "@prefix bm: <http://www.best-project.nl/owl/bestmap.owl#> .\n";
+		$this->turtle .= "@prefix mapping: <http://www.best-project.nl/owl/mapping.owl#> .\n";
+		$this->turtle .= "@prefix query: <http://www.best-project.nl/owl/query#> .\n\n";	
+
+
+		$this->tort_scheme = "<http://www.best-project.nl/owl/tort-vocabulary.owl#tort-scheme>";
+		$this->laymen_scheme = "<http://www.best-project.nl/owl/laymen-vocabulary.owl#laymen-scheme>";		
+
+
+
+		// $this->ontologies = array(
+		// 	0 => array ('url' => 'http://www.best-project.nl/owl/tort-ontology.n3', 'format' => 'turtle'),
+		// 	1 => array ('url' => 'http://www.best-project.nl/owl/laymen-ontology.n3', 'format' => 'turtle'),
+		// 	2 => array ('url' => 'http://www.best-project.nl/owl/tort-vocabulary.n3', 'format' => 'turtle'),
+		// 	3 => array ('url' => 'http://www.best-project.nl/owl/laymen-vocabulary.n3', 'format' => 'turtle'),
+		// 	4 => array ('url' => 'http://www.best-project.nl/owl/mapping.n3', 'format' => 'turtle'),
+		// 	5 => array ('url' => 'http://www.best-project.nl/owl/metalex.n3', 'format' => 'turtle'),
+		// 	6 => array ('url' => 'http://www.best-project.nl/owl/best.n3', 'format' => 'turtle'),
+		// 	7 => array ('url' => 'http://www.best-project.nl/owl/verdicts.owl', 'format' => 'rdfxml'),
+		// 	8 => array ('url' => 'http://www.best-project.nl/owl/rechtspraak.owl', 'format' => 'rdfxml')
+		// );
 		
 		$this->customMappingContext = "<http://custom.mapping>";
 	}
