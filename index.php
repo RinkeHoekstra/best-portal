@@ -1,6 +1,7 @@
 <?php
 	
 	require_once "lib/class.ConceptList.php";
+	require_once "lib/class.Namespaces.php";
 	require_once "lib/class.SPARQLConnection.php";
 
 ?>
@@ -178,6 +179,7 @@ function init() {
 <?php
 
 $connection = new SPARQLConnection();
+$ns = new Namespaces();
 
 ?>
 	
@@ -213,7 +215,7 @@ $connection = new SPARQLConnection();
 							Laymen Vocabulary
 						</h2>
 						<div id="concepts">
-							<?php $cl = new ConceptList($connection);  $cl->makeList($laymen_scheme,'showMapping(this)','conceptlist'); ?>
+							<?php $cl = new ConceptList($connection);  $cl->makeList($ns->laymen_scheme,'showMapping(this)','conceptlist'); ?>
 						</div>
 					</div>
 					<div id="results">
@@ -311,7 +313,7 @@ $connection = new SPARQLConnection();
 				Laymen Vocabulary
 			</h2>
 			<div id="concepts">
-				<?php $cl->makeList($laymen_scheme,'','laymen-terms[]'); ?>
+				<?php $cl->makeList($ns->laymen_scheme,'','laymen-terms[]'); ?>
 			</div>
 		</div>
 		<div id="targetTerms">
@@ -319,7 +321,7 @@ $connection = new SPARQLConnection();
 				Tort Vocabulary
 			</h2>
 			<div id="concepts">
-				<?php $cl->makeList($tort_scheme,'','tort-terms[]'); ?>
+				<?php $cl->makeList($ns->tort_scheme,'','tort-terms[]'); ?>
 			</div>
 		</div>
 		</div>

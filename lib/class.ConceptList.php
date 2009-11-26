@@ -2,7 +2,7 @@
 
 
 
-require_once "namespaces.php";
+// require_once "namespaces.php";
 require_once "arc/ARC2.php";
 require_once "class.Namespaces.php";
 // require_once "class.RepositoryConnection.php";

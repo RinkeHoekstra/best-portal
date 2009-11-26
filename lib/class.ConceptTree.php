@@ -10,10 +10,12 @@ class ConceptTree {
 
 	private $ns;
 	private $connection;
+	private $concepts;
 
 	function __construct(){
 		$this->ns = new Namespaces();
 		$this->connection = new SPARQLConnection();
+		$this->concepts = array();
 	}
 
 
@@ -63,45 +65,132 @@ class ConceptTree {
 		print "</ul>\n";
 	}
 
+	public function init() {
+		// If the 'concepts' array is not already initialized, simply get all concepts and put them in the 'concepts' array.
+		if(empty($this->concepts)){
+			$sparql_query = $this->ns->sparql."SELECT DISTINCT ?subconcept ?superconcept ?label ?note WHERE {?subconcept skos:broader ?superconcept . ?subconcept skos:prefLabel ?label. OPTIONAL {?subconcept skos:note ?note .}} ";
+			$this->concepts =  $this->connection->query($sparql_query, 'rows');
+		}
+	}
+
 
 	public function makeCSVTree($scheme){
-		$sparql_query = $this->ns->sparql."SELECT DISTINCT ?concept ?label WHERE {?concept a skos:Concept . ?concept skos:prefLabel ?label . ?concept skos:topConceptOf ".$scheme." . } ORDER BY ?label ";
-
-		$rows = $this->connection->query($sparql_query, 'rows');
+		makeCustomTree($scheme,'',';','','');
+	}
+	public function makeCustomTree($scheme,$topconcept,$indentchar,$element,$idattr){
 		
+		$this->init();
+		
+		if($scheme!=''){
+			$sparql_query = $this->ns->sparql."SELECT DISTINCT ?concept ?label WHERE {?concept a skos:Concept . ?concept skos:prefLabel ?label . ?concept skos:topConceptOf ".$scheme." . } ORDER BY ?label ";			
+			$rows = $this->connection->query($sparql_query, 'rows');
+			// $sparql_query = $this->ns->sparql."SELECT DISTINCT ?subconcept ?superconcept WHERE {?subconcept skos:broader ?superconcept . ?subconcept skos:inScheme ".$scheme." . ?superconcept skos:inScheme ".$scheme." . } ";
+			// $allrows =  $this->connection->query($sparql_query, 'rows');
+		} else if ($topconcept!=''){
+			$sparql_query = $this->ns->sparql."SELECT DISTINCT ?concept ?label WHERE {?concept a skos:Concept . ?concept skos:prefLabel ?label . ?concept skos:broader ".$topconcept." . } ORDER BY ?label ";	
+			$rows = $this->connection->query($sparql_query, 'rows');
+			// $sparql_query = $this->ns->sparql."SELECT DISTINCT ?subconcept ?superconcept WHERE {?subconcept skos:broader ?superconcept . ?subconcept skos:broaderTransitive ".$topconcept." . ?superconcept skos:broaderTransitive ".$topconcept." . } ";
+			// $allrows =  $this->connection->query($sparql_query, 'rows');
+		}
 
-			
-			$sparql_query = $this->ns->sparql."SELECT DISTINCT ?subconcept ?superconcept WHERE {?subconcept skos:broader ?superconcept . ?subconcept skos:inScheme ".$scheme." . ?superconcept skos:inScheme ".$scheme." . } ";
-			
-			$allrows =  $this->connection->query($sparql_query, 'rows');
+		
 			
 			foreach($rows as $row) {
 				$uri = $row['concept'];
-				$uriarray = explode('#',$uri);
-				$value = $uriarray[1];
-				print $value."\n";
+				$label = $row['label'];
 				
-				$this->makeCSVSubTree($uri, $allrows,1);
-			}		
+				$uriarray = explode('#',$uri);
+				$urifrag = $uriarray[1];
+				
+				if($label=='') {
+					
+					$label = $urifrag;
+				}
 
+				if($element!=''){
+					print "<".$element." ";
+					if($idattr!=''){
+						print $idattr."='".urlencode($uri)."'";	
+					}
+					print " id = '".urlencode($urifrag)."'";
+					print " style='font-weight: bold;'>".$label."</".$element.">\n";
+				} else {
+					print $value."\n";
+				}
+				$this->makeCustomSubTree($uri, $this->concepts, 1, $indentchar,$element,$idattr);
+			}		
 		
 	}
 	
-	private function makeCSVSubTree($uri,$rows,$depth){
+	private function makeCustomSubTree($uri,$rows,$depth,$indentchar,$element,$idattr){
 		foreach ($rows as $row){
 			if($row['superconcept']==$uri){
-				print str_repeat(';',$depth);
+
 				$suburi = $row['subconcept'];
-				$suburiarray = explode('#',$suburi);
-				$subvalue = $suburiarray[1];
-				print $subvalue."\n";
+				$label = $row['label'];
+				$note = $row['note'];
 				
-				$this->makeCSVSubTree($suburi, $rows,$depth+1);
+				$suburiarray = explode('#',$suburi);
+				$suburifrag = $suburiarray[1];
+				
+				if($label=='') {
+					$label = $suburifrag;
+				}
+
+				
+
+				if($element!=''){
+					print "<".$element." ";
+					if($idattr!=''){
+						print $idattr."='".urlencode($suburi)."'";	
+					}
+					print " id = '".urlencode($suburifrag)."'";
+					print ">";
+					print str_repeat($indentchar,$depth);
+					print $label."</".$element.">\n";
+				} else {
+					print str_repeat($indentchar,$depth);
+					print $value."\n";
+				}				
+				
+				
+				// print $subvalue.$close."\n";
+				
+				$this->makeCustomSubTree($suburi, $rows,$depth+1,$indentchar,$element,$idattr);
 			}
 			
 		}
 	}
 
+
+	// <script type="text/javascript">
+	// 	YAHOO.namespace("example.container");
+	// 	YAHOO.example.container.tt1 = new YAHOO.widget.Tooltip("tt1", { context:"ctx", text:"My text was set using the 'text' configuration property" });
+	// 	YAHOO.example.container.tt1.beforeShowEvent.subscribe(function(){YAHOO.log("Tooltip one is appearing.","info","example");});
+	// 	YAHOO.example.container.tt2 = new YAHOO.widget.Tooltip("tt2", { context:"link" });
+	// </script>
+
+
+	public function makeTooltips(){
+		
+		$this->init();
+		
+		print "<script type='text/javascript'>\n";
+		print "YAHOO.namespace(\"tt.container\")\n";
+		foreach($this->concepts as $c){
+			
+			$uri = $c['subconcept'];
+			$note = $c['note'];
+			
+			$uriarray = explode('#',$uri);
+			$urifrag = $uriarray[1];
+			
+			print "YAHOO.tt.container.".urlencode($urifrag)." = new YAHOO.widget.Tooltip(\"".urlencode($urifrag)."\", { context:\"ctx\", text:\"".urlencode($note)."\" });\n";
+			
+		}
+		print "</script>\n";
+		
+	}
 
 
 }
