@@ -63,7 +63,7 @@ if (count($laymenconcepts)>0 && count($tortconcepts)>0) {
 				if ($in != "") {
 					$turtle .= " [ a\t owl:Class; owl:unionOf (";
 					$turtle .=" [ a owl:Restriction ; owl:hasValue <".urldecode($lt).">; owl:onProperty bm:about ] ";
-					$turtle .= " [ a owl:Restriction ; owl:someValuesFrom  [ a owl:Restriction ; owl:hasValue <".urldecode($lt)."> ; owl:onProperty skos:broader ]  ; owl:onProperty bm:about ] ";
+					$turtle .= " [ a owl:Restriction ; owl:someValuesFrom  [ a owl:Restriction ; owl:hasValue <".urldecode($lt)."> ; owl:onProperty skos:broaderTransitive ]  ; owl:onProperty bm:about ] ";
 					$turtle .= " ) ] ";
 				} else {
 					$turtle .=" [ a owl:Restriction ; owl:hasValue <".urldecode($lt).">; owl:onProperty bm:about ] ";

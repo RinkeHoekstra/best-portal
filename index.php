@@ -192,6 +192,9 @@ $ns = new Namespaces();
 		<div class="bannersubheading">
 			BATNA Establishment using Semantic Web Technology
 		</div>
+		<div class="copyrightnotice">
+			Copyright (c) 2009, Rinke Hoekstra, Vrije Universiteit Amsterdam
+		</div>
 	</div>
 	
 	<div id="page">
