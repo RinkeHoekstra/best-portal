@@ -245,7 +245,7 @@ $ns = new Namespaces();
 						<!-- <p>
 							Example Queries: [<a href='javascript:pasteQuery("dier%20OR%20/"eigen%20energie/"%20OR%20gedraging%20OR%20gedrag");'>dier</a>] [<a href='javascript:pasteQuery("dier^0.7%20OR%20/"eigen%20energie/"^1%20OR%20gedraging^0.28%20OR%20gedrag^0.20");'>dier (weighted)</a>] [<a href='javascript:pasteQuery("/"door%20het%20dier%20aangerichte%20schade/"%20OR%20/"in%20zijn%20macht%20zou%20hebben%20gehad/"%20OR%20/"gedraging%20van%20het%20dier/"%20OR%20/"de%20bezitter%20van%20een%20dier/"%20OR%20/"artikel%206%20179/"%20OR%20bezitter%20OR%20dier%20OR%20schade");'>BW 6:179</a>] [<a href='javascript:pasteQuery("/"door%20het%20dier%20aangerichte%20schade/"^1%20OR%20/"in%20zijn%20macht%20zou%20hebben%20gehad/"^0.71%20OR%20/"gedraging%20van%20het%20dier/"^0.71%20OR%20/"de%20bezitter%20van%20een%20dier/"^0.71%20OR%20/"artikel%206%20179/"^0.61%20OR%20bezitter^0.34%20OR%20dier^0.33%20OR%20schade^0.20");'>BW 6:179 (weighted)</a>]
 						</p> -->
-						<form method="get" action="http://localhost:8983/solr/select">
+						<form method="get" action="<?php $c=new Config(); print $c->solr_url; ?>">
 							<textarea name="q" rows="4" cols="200" id="q">
 		</textarea><br>
 							<select name="qt" id="qt">

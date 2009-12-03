@@ -9,31 +9,37 @@
 
 require_once "arc/ARC2.php";
 require_once "class.RemoteSesameStore.php";
+require_once "config/class.Config.php";
 
 class SPARQLConnection {
 	
-	
-	private $update_mode = 'sparql';
-	private $update_url = 'http://localhost:2020/update/service';
-	private $query_url = 'http://localhost:2020/sparql/read';
-	
+	private $c;
 	private $update_endpoint;
 	private $query_endpoint;
 	
 	function __construct(){
-		$update_config = array(
-		  'remote_store_endpoint' => $this->update_url ,
-		);		
+		
+		$c = new Config();
+		
+		
+	
 
-		if($this->update_mode=='sparql'){
+		if($c->update_mode=='sparql'){
+			$update_config = array(
+			  'remote_store_endpoint' => $c->update_url ,
+			);
 			$this->update_endpoint = ARC2::getRemoteStore($update_config);
 		} else {
+			$update_config = array(
+			  'remote_store_endpoint' => $c->update_url ,
+			  'target_graph' => $c->target_graph ,
+			);
 			$this->update_endpoint = new RemoteSesameStore($update_config);
 		}
 		
 		
 		$query_config = array(
-		  'remote_store_endpoint' => $this->query_url ,		
+		  'remote_store_endpoint' => $c->query_url ,		
 		);
 		
 		$this->query_endpoint = ARC2::getRemoteStore($query_config);

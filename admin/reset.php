@@ -1,11 +1,11 @@
 <?php
 
 require_once "../lib/class.RepositoryConnection.php";
-require_once "../lib/class.Namespaces.php";
+require_once "../config/class.Config.php";
 
-$ns = new Namespaces();
+$c = new Config();
 
-$rc = new RepositoryConnection("http://localhost:8080/openrdf-sesame/repositories/best");
+$rc = new RepositoryConnection($c->update_url);
 
 
 print "<p>Clearing Sesame repository...</p>\n";
@@ -13,7 +13,7 @@ $rc->clearSesame();
 print "<p>... done.</p>\n\n";
 
 print "<p>Uploading ontologies... (this may take a while)</p>\n";
-$rc->fillSesame($ns->ontologies);
+$rc->fillSesame($c->ontologies);
 print "<p>... done uploading.</p>\n\n";
 
 
