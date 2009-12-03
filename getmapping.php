@@ -113,7 +113,6 @@ class GetMapping {
 		// Add prefixes
 		$sparql_update_query = $this->ns->sparql."INSERT { ".$turtle." }";
 
-
 		// Send update query
 		$this->connection->update($sparql_update_query);
 

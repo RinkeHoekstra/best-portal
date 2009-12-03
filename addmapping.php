@@ -9,8 +9,10 @@
 require_once "lib/class.SPARQLConnection.php";
 require_once "lib/class.Namespaces.php";
 
+
 $ns = new Namespaces();
 $connection = new SPARQLConnection();
+
 
 
 $laymenconcepts=$_POST["laymen-terms"];

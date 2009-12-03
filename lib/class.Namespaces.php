@@ -4,9 +4,10 @@
 class Namespaces {
 	
 	public $sparql;
-	// public $ontologies;
+	public $turtle;
+	public $tort_scheme;
+	public $laymen_scheme;
 
-	public $customMappingContext;
 	
 	function __construct(){
 		$this->sparql  = "PREFIX owl:  <http://www.w3.org/2002/07/owl#> \n";
@@ -44,19 +45,9 @@ class Namespaces {
 
 
 
-		// $this->ontologies = array(
-		// 	0 => array ('url' => 'http://www.best-project.nl/owl/tort-ontology.n3', 'format' => 'turtle'),
-		// 	1 => array ('url' => 'http://www.best-project.nl/owl/laymen-ontology.n3', 'format' => 'turtle'),
-		// 	2 => array ('url' => 'http://www.best-project.nl/owl/tort-vocabulary.n3', 'format' => 'turtle'),
-		// 	3 => array ('url' => 'http://www.best-project.nl/owl/laymen-vocabulary.n3', 'format' => 'turtle'),
-		// 	4 => array ('url' => 'http://www.best-project.nl/owl/mapping.n3', 'format' => 'turtle'),
-		// 	5 => array ('url' => 'http://www.best-project.nl/owl/metalex.n3', 'format' => 'turtle'),
-		// 	6 => array ('url' => 'http://www.best-project.nl/owl/best.n3', 'format' => 'turtle'),
-		// 	7 => array ('url' => 'http://www.best-project.nl/owl/verdicts.owl', 'format' => 'rdfxml'),
-		// 	8 => array ('url' => 'http://www.best-project.nl/owl/rechtspraak.owl', 'format' => 'rdfxml')
-		// );
+
 		
-		$this->customMappingContext = "<http://custom.mapping>";
+		// $this->customMappingContext = "<http://custom.mapping>";
 	}
 	
 	
