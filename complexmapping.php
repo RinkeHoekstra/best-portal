@@ -4,6 +4,10 @@
 require_once 'lib/class.SPARQLConnection.php';
 require_once 'lib/class.Namespaces.php';
 require_once 'lib/class.ConceptTree.php';
+require_once "config/class.Config.php";
+
+$config = new Config();
+$ct = new ConceptTree();
 
 ?>
 
@@ -17,101 +21,121 @@ require_once 'lib/class.ConceptTree.php';
 	
 	
 	<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.8.0r4/build/fonts/fonts-min.css" />
-	<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.8.0r4/build/container/assets/skins/sam/container.css" />
-	<script type="text/javascript" src="http://yui.yahooapis.com/2.8.0r4/build/yahoo-dom-event/yahoo-dom-event.js"></script>
-	<script type="text/javascript" src="http://yui.yahooapis.com/2.8.0r4/build/container/container-min.js"></script>
+	<link rel="stylesheet" type="text/css" href="js/yui/container/assets/skins/sam/container.css" />
+	<link rel="stylesheet" type="text/css" href="js/yui/button/assets/skins/sam/button.css" />
+	<link rel="stylesheet" type="text/css" href="js/yui/tabview/assets/skins/sam/tabview.css" />
+	
+	<script type="text/javascript" src="js/yui/yahoo/yahoo-min.js"></script>
+	<script type="text/javascript" src="js/yui/yahoo-dom-event/yahoo-dom-event.js"></script>
+	<script type="text/javascript" src="js/yui/event/event-min.js"></script>
+	<script type="text/javascript" src="js/yui/connection/connection-min.js"></script>
+	<script type="text/javascript" src="js/yui/dragdrop/dragdrop-min.js"></script>
+	<script type="text/javascript" src="js/yui/container/container-min.js"></script>
+	<script type="text/javascript" src="js/yui/element/element-min.js"></script>
+	<script type="text/javascript" src="js/yui/button/button-min.js"></script>
+	<script type="text/javascript" src="js/yui/tabview/tabview-min.js"></script>	
+	
+	
 	<script type="text/javascript">
-		function showInfo(text){
-			var div = document.getElementById('info');
-			div.innerHTML=text;
-		}
-		
-		function add(id,text){
-			var div = document.getElementById('info');
-			div.innerHTML=text;
-			div.innerHTML+=id;
-		}
+		YAHOO.namespace("example.container");
+		<?php include 'js/bestportal.js'; ?>
 	</script>
-
-
 </head>
-<body class="yui-skin-sam">
 
+<body class="yui-skin-sam">
 	<h2>BestPortal: Complex Mappings Specifier (TEST)</h2>
 	
-	<div id='page'>
-		
-		<div id='info' style='width:800px; height:200px; border: 1px solid #eee; padding: 1ex;'>
-			This is were info will appear.
+	<div id='page' width='100%' style='width: 100%;'>
+		<div id='laymanlist' style='position:absolute; top: 60px; left: 10px;'>
+			<?php printLaymanConcepts($ct,$config); ?>
 		</div>
+		<div id='mapping' style='position: absolute; top: 60px; left: 420px; width: 600px; height: 800px;'>
+		<table>
+			<tr><th>Layman Case Description</th><th>Legal Case Description</th></tr>
+			<tr><td>
+				<div id='lc' style='float: left; width:250px; height:200px; border: 1px solid #bbb; padding: 5px; overflow: auto; background: white;'>
+				</div>
+			</td><td>
+				<div id='tc' style='float: right; width:250px; height:200px; border: 1px solid #bbb; padding: 5px; overflow: auto; background: white;'>
+				</div>
+			</td></tr>
+			<tr><th colspan='2' style='padding-top: 1ex;'>
+				Concept description
+			</th></tr>
+			<tr><td colspan='2'>
+				<div id='info' style='width: 585px; height: 80px; border: 1px solid #bbb; overflow: auto; background: white;'></div>
+			</td></tr>
+			<tr><th colspan='2' style='padding-top: 1ex;'>
+				Description of the Case (will be an annotation to the mapping)
+			</th></tr>
+			<tr><td colspan='2'>
+				<textarea style='width: 575px; height: 150px;'>&nbsp;</textarea><br/>
+				<a onClick="onFormSubmitACM()">submit</a>
+			</td></tr>
+			<tr><th colspan='2' style='padding-top: 1ex;'>
+				Trace log
+			</th></tr>
+			<tr><td colspan='2'>
+				<div id='log_res' style="width: 585px; height: 180px; border: 1px solid #bbb; overflow: auto; background: white;"></div>
+			</td></tr>
+		</table>
+
+		</div>
+		<div id='tortlist' style='position: absolute; top: 60px; left: 1040px;'>
+			<?php printTortConcepts($ct,$config); ?>
+		</div>
+
+
+
 <?php
-
-$c = new SPARQLConnection();
-$ns = new Namespaces();
-$ct = new ConceptTree();
-
-$ct->makeTooltips();
-
-
-
-print "<table><tr><th width='400'>Laymen Concepts</th><th width='400'>Legal Concepts</th></tr><tr><td valign='top' width='400'>";
-
-$roles = array(
-		// array('event','lv:gebeurtenis','Type gebeurtenis.'),
-		array('action', 'lv:actie','De handeling die tot de schade leidde.'),
-		array('object', 'lv:object','Het object (ding) waarop de handeling plaatshad<br/> (bijv. een dier dat bij de handeling betrokken is, of een auto die door de handeling beschadigd is'),
-		array('actor', 'lv:persoon','De persoon die de handeling verrichte, of onder wiens verantwoordelijkheid de handeling plaatshad.'),
-		array('recipient', 'lv:persoon','De persoon die de schade ondervond.'),
-		array('result', 'lv:schade','Het resultaat van de handeling (bijv. de evt. schade).'),
-		array('location', 'lv:plaats','Waar de handeling plaatsvond.'),
-		array('time', 'lv:tijdstip','Het tijdstip of de duur van de handeling.'),
-		array('situation','lv:bijzondere_omstandigheid','Een eventuele bijzondere omstandigheid die van toepassing was toen de handeling plaatshad.')
-	);
-
-
-foreach($roles as $role){
-	print "<div style='border: 1px solid #eee; padding: 1ex;'>";
-	print "<h5>".$role[0]."</h5>";	
-	print "<div>".$role[2]."</div>";
-	print "<select id='".$role[0]."'>";
-	print "<option class='concept' value='none' selected>(none)</option>";
-	
-	$ct->makeCustomTree('',$role[1],'&nbsp;&nbsp;&nbsp;','option','value');
-
-	print  "</select>";
-	print " <a onclick=\"add(document.getElementById('".$role[0]."').value,document.getElementById('".$role[0]."').text)\">[]+]</a>\n";
-	print "</div>";
-}
-
-print "</td><td valign='top' width='400'>";
-
-$roles = array(
-		array('criterium','tv:beoordelingscriterium','Het criterium (bijv. kelderluik) dat toegepast dient te worden op deze casus.'),
-		array('veroorzaker', 'tv:persoon','De veroorzaker van de schade, de belangrijkste actor binnen de casus (e.g. degene die aansprakelijk gesteld kan worden).'),
-		array('schulduitsluiting', 'tv:schulduitsluitingsgrond', 'Blabla schulduitsluiting.'),
-		array('zorgvuldigheidsnorm', 'tv:zorgvuldigheidsnorm', 'Zorgvuldigheidsnorm.')
-	);
-
-
-foreach($roles as $role){
-	print "<div style='border: 1px solid #eee; padding: 1ex;'>";
-	print "<h5>".$role[0]."</h5>";
-	print "<div>".$role[2]."</div>";
-	
-	print "<select id='".$role[0]."'>";
-	print "<option class='concept' value='none' selected>(none)</option>";
-	$ct->makeCustomTree('',$role[1],'&nbsp;&nbsp;&nbsp;','option','value');
-	print  "</select>";
-	print "</div>";
-}
-
-print "</td></tr></table>";
+	function printLaymanConcepts($ct,$config){
+		print "<table><th width='400'>Laymen Concepts</th></tr><tr><td valign='top' width='400'>";
 
 
 
 
+		while($role = current($config->layman_roles)){
+			$key = key($config->layman_roles);
+			print "<div style='border: 1px solid #eee; padding: 1ex;'>";
+			print "<h5>".$key."</h5>";	
+			print "<div>".$role[1]."</div>";
+			print "<select id='".$key."' onChange=\"addConcept('lc','".$key."')\">";
+			print "<option class='concept' value='none' selected>(none)</option>";
+
+			$ct->makeCustomTree('',$role[0],'&nbsp;&nbsp;&nbsp;','option','value');
+
+			print  "</select>";
+			print "</div>";
+			next($config->layman_roles);
+		}
+
+		print "</td></tr></table>";
+
+	}
 
 
+	function printTortConcepts($ct,$config){
+		print "<table><tr><th width='400'>Legal Concepts</th></tr><tr><td valign='top' width='400'>";
+
+
+
+
+		while($role = current($config->tort_roles)){
+			$key = key($config->tort_roles);
+			print "<div style='border: 1px solid #eee; padding: 1ex;'>";
+			print "<h5>".$key."</h5>";
+			print "<div>".$role[1]."</div>";
+
+			print "<select id='".$key."' onChange=\"addConcept('tc','".$key."')\">";
+			print "<option class='concept' value='none' selected>(none)</option>";
+			$ct->makeCustomTree('',$role[0],'&nbsp;&nbsp;&nbsp;','option','value');
+			print  "</select>";
+			print "</div>";
+			next($config->tort_roles);
+		}
+
+		print "</td></tr></table>";
+	}
 ?>
 </div>
 </body>

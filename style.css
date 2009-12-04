@@ -381,3 +381,24 @@ div.terms {
 #besttabs .yui-content, #searchresults .yui-content {
     background-color: #fdfdfd; /* make the body color of a tab-view white */
 }
+
+div.concept {
+	width: 80%;
+	padding: 1ex;
+	margin: 1ex;
+	background: #d6eff7;
+}
+
+div.mapping {
+	width: 80%;
+	padding: 1ex;
+	margin: 1ex;
+	background: #eff7d6;
+}
+
+div.query {
+	width: 80%;
+	padding: 1ex;
+	margin: 1ex;
+	background: #efd6f7;
+}

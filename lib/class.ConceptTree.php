@@ -82,12 +82,12 @@ class ConceptTree {
 		$this->init();
 		
 		if($scheme!=''){
-			$sparql_query = $this->ns->sparql."SELECT DISTINCT ?concept ?label WHERE {?concept a skos:Concept . ?concept skos:prefLabel ?label . ?concept skos:topConceptOf ".$scheme." . } ORDER BY ?label ";			
+			$sparql_query = $this->ns->sparql."SELECT DISTINCT ?concept ?label ?note WHERE {?concept a skos:Concept . ?concept skos:prefLabel ?label . ?concept skos:topConceptOf ".$scheme." . OPTIONAL {?concept skos:note ?note .}} ORDER BY ?label ";			
 			$rows = $this->connection->query($sparql_query, 'rows');
 			// $sparql_query = $this->ns->sparql."SELECT DISTINCT ?subconcept ?superconcept WHERE {?subconcept skos:broader ?superconcept . ?subconcept skos:inScheme ".$scheme." . ?superconcept skos:inScheme ".$scheme." . } ";
 			// $allrows =  $this->connection->query($sparql_query, 'rows');
 		} else if ($topconcept!=''){
-			$sparql_query = $this->ns->sparql."SELECT DISTINCT ?concept ?label WHERE {?concept a skos:Concept . ?concept skos:prefLabel ?label . ?concept skos:broader ".$topconcept." . } ORDER BY ?label ";	
+			$sparql_query = $this->ns->sparql."SELECT DISTINCT ?concept ?label WHERE {?concept a skos:Concept . ?concept skos:prefLabel ?label . ?concept skos:broader ".$topconcept." . OPTIONAL {?concept skos:note ?note .}} ORDER BY ?label ";	
 			$rows = $this->connection->query($sparql_query, 'rows');
 			// $sparql_query = $this->ns->sparql."SELECT DISTINCT ?subconcept ?superconcept WHERE {?subconcept skos:broader ?superconcept . ?subconcept skos:broaderTransitive ".$topconcept." . ?superconcept skos:broaderTransitive ".$topconcept." . } ";
 			// $allrows =  $this->connection->query($sparql_query, 'rows');
@@ -98,6 +98,7 @@ class ConceptTree {
 			foreach($rows as $row) {
 				$uri = $row['concept'];
 				$label = $row['label'];
+				$note = $row['note'];
 				
 				$uriarray = explode('#',$uri);
 				$urifrag = $uriarray[1];
@@ -112,7 +113,9 @@ class ConceptTree {
 					if($idattr!=''){
 						print $idattr."='".urlencode($uri)."'";	
 					}
-					print " id = '".urlencode($urifrag)."'";
+					print " title='".urlencode($urifrag)."'";
+					print " label='".$label."'";
+					print " alt='".$note."'";
 					print " style='font-weight: bold;'>".$label."</".$element.">\n";
 				} else {
 					print $value."\n";
@@ -144,7 +147,9 @@ class ConceptTree {
 					if($idattr!=''){
 						print $idattr."='".urlencode($suburi)."'";	
 					}
-					print " id = '".urlencode($suburifrag)."'";
+					print " title='".urlencode($suburifrag)."'";
+					print " label='".$label."'";
+					print " alt='".$note."'";
 					print ">";
 					print str_repeat($indentchar,$depth);
 					print $label."</".$element.">\n";

@@ -13,11 +13,12 @@ class Config {
 	public $target_graph;
 	
 	public $ontologies;
-	
+	public $layman_roles;
+	public $tort_roles;
 	
 	function __construct(){
 		
-		$this->portal_url = "http://localhost/best-project";
+		$this->portal_url = "http://localhost/best-portal";
 		
 		// Should be the Solr query URL
 		$this->solr_url = "http://localhost:8983/solr/select";
@@ -53,6 +54,24 @@ class Config {
 			9 => array ('url' => 'http://www.w3.org/2009/08/skos-reference/skos.rdf', 'format' => 'rdfxml')
 			// 10 => array ('url' => 'http://www.best-project.nl/owl/verdicts.owl', 'format' => 'rdfxml')
 		);
+		
+		$this->layman_roles = array(
+				'action' 	=> array('lv:actie','De handeling die tot de schade leidde.'),
+				'object' 	=> array( 'lv:object','Het object (ding) waarop de handeling plaatshad<br/> (bijv. een dier dat bij de handeling betrokken is, of een auto die door de handeling beschadigd is'),
+				'actor'  	=> array('lv:persoon','De persoon die de handeling verrichte, of onder wiens verantwoordelijkheid de handeling plaatshad.'),
+				'recipient' => array( 'lv:persoon','De persoon die de schade ondervond.'),
+				'result'	=> array('lv:schade','Het resultaat van de handeling (bijv. de evt. schade).'),
+				'location'	=> array('lv:plaats','Waar de handeling plaatsvond.'),
+				'time'	 	=> array('lv:tijdstip','Het tijdstip of de duur van de handeling.'),
+				'situation' => array('lv:bijzondere_omstandigheid','Een eventuele bijzondere omstandigheid die van toepassing was toen de handeling plaatshad.')
+		);
+
+		$this->tort_roles = array(
+				'criterium' 			=> array('tv:beoordelingscriterium','Het criterium (bijv. kelderluik) dat toegepast dient te worden op deze casus.'),
+				'veroorzaker' 			=> array('tv:persoon','De veroorzaker van de schade, de belangrijkste actor binnen de casus (e.g. degene die aansprakelijk gesteld kan worden).'),
+				'schulduitsluiting'		=> array('tv:schulduitsluitingsgrond', 'Blabla schulduitsluiting.'),
+				'zorgvuldigheidsnorm' 	=> array('tv:zorgvuldigheidsnorm', 'Zorgvuldigheidsnorm.')
+			);
 		
 	}
 
