@@ -24,9 +24,6 @@ class ConceptTree {
 
 		$rows = $this->connection->query($sparql_query, 'rows');
 		
-		
-		
-
 			print "<ul>\n";
 			
 			$sparql_query = $this->ns->sparql."SELECT DISTINCT ?subconcept ?sublabel ?superconcept ?superlabel WHERE {?subconcept skos:broader ?superconcept . ?subconcept skos:prefLabel ?sublabel . ?superconcept skos:prefLabel ?superlabel . ?subconcept skos:inScheme ".$scheme." . ?superconcept skos:inScheme ".$scheme." . } ORDER BY ?superlabel ";

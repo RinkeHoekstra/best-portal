@@ -30,7 +30,7 @@
 
 		(function() {
 			var treeInit = function() {
-				tree = new YAHOO.widget.TreeView("laymenTree");
+				tree = new YAHOO.widget.TreeView("tortTree");
 
 				// tree.subscribe("clickEvent",tree.onEventToggleHighlight); 
 				// tree.setNodesProperty("propagateHighlightUp",true);
@@ -49,7 +49,7 @@
 
 	</script>
 	
-	<div id='laymenTree' class="ygtv-checkbox">
+	<div id='tortTree' class="ygtv-checkbox">
 <?php
 	include_once('lib/class.ConceptTree.php');
 	include_once('lib/class.Namespaces.php');
@@ -57,7 +57,7 @@
 	$ns = new Namespaces();
 
 	$ct = new ConceptTree();
-	$ct->makeTree($ns->laymen_scheme);
+	$ct->makeTree($ns->tort_scheme);
 ?>
 	</div>
 	<div id="dropBox">

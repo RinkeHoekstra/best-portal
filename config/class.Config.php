@@ -67,10 +67,15 @@ class Config {
 		);
 
 		$this->tort_roles = array(
-				'criterium' 			=> array('tv:beoordelingscriterium','Het criterium (bijv. kelderluik) dat toegepast dient te worden op deze casus.'),
-				'veroorzaker' 			=> array('tv:persoon','De veroorzaker van de schade, de belangrijkste actor binnen de casus (e.g. degene die aansprakelijk gesteld kan worden).'),
-				'schulduitsluiting'		=> array('tv:schulduitsluitingsgrond', 'Blabla schulduitsluiting.'),
-				'zorgvuldigheidsnorm' 	=> array('tv:zorgvuldigheidsnorm', 'Zorgvuldigheidsnorm.')
+				'criterium' 			=> array('tv:criterium','Het criterium (bijv. kelderluik) dat toegepast dient te worden op deze casus.'),
+				'dader' 				=> array('tv:persoon','De veroorzaker van de schade, de belangrijkste actor binnen de casus (e.g. degene die aansprakelijk gesteld kan worden).'),
+				'recht'					=> array('tv:recht','Het recht dat door de daad geschonden is.'),
+				'schulduitsluiting'		=> array('tv:schulduitsluitingsgrond', 'Een eventuele schulduitsluitingsgrond op basis waarvan aansprakelijkheid in dit geval (niet) toegewezen wordt.'),
+				'rechtvaardigingsgrond'	=> array('tv:rechtvaardigingsgrond', 'De van toepassing zijnde rechtvaardigingsgrond op basis waarvan aansprakelijkheid in dit geval (niet) toegewezen wordt.'),
+				'toestand'				=> array('tv:toestand', 'De eventuele mentale/fysieke toestand van de dader die meegewogen dient te worden in het oordeel.'),
+				'vereiste'				=> array('tv:vereiste', 'De vereiste voor aansprakelijkheidstoewijzing waaraan in dit geval voldaan wordt.'),
+				'wetsbepaling'			=> array('tv:wetsbepaling', 'De op dit geval van toepassing zijnde wetsbepaling.'),
+				'uitzondering'			=> array('tv:wettelijke_uitzondering', 'Een eventueel van toepassing zijnde uitzondering op basis waarvan in dit geval (geen) aansprakelijkheid wordt toegewezen.')
 			);
 		
 	}

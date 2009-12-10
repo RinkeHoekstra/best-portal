@@ -69,7 +69,7 @@ $ct = new ConceptTree();
 				Description of the Case (will be an annotation to the mapping)
 			</th></tr>
 			<tr><td colspan='2'>
-				<textarea style='width: 575px; height: 150px;'>&nbsp;</textarea><br/>
+				<textarea name='comment' id='comment' style='width: 575px; height: 150px;'>&nbsp;</textarea><br/>
 				<a onClick="onFormSubmitACM()">submit</a>
 			</td></tr>
 			<tr><th colspan='2' style='padding-top: 1ex;'>
