@@ -41,6 +41,7 @@ class Namespaces {
 
 
 		$this->tort_scheme = "<http://www.best-project.nl/owl/tort-vocabulary.owl#tort-scheme>";
+		$this->tort_scheme_new = "<http://www.best-project.nl/owl/tort-vocabulary-new.owl#tort-scheme>";
 		$this->laymen_scheme = "<http://www.best-project.nl/owl/laymen-vocabulary.owl#laymen-scheme>";		
 
 

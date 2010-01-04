@@ -20,21 +20,25 @@ class ConceptTree {
 
 
 	public function makeTree($scheme){
-		$sparql_query = $this->ns->sparql."SELECT DISTINCT ?concept ?label WHERE {?concept a skos:Concept . ?concept skos:prefLabel ?label . ?concept skos:topConceptOf ".$scheme." . } ORDER BY ?label ";
+		$sparql_query = $this->ns->sparql."SELECT DISTINCT ?concept ?label WHERE {?concept a skos:Concept .  ?concept skos:topConceptOf ".$scheme." . OPTIONAL {?concept skos:prefLabel ?label .}} ORDER BY ?concept ";
 
 		$rows = $this->connection->query($sparql_query, 'rows');
 		
 			print "<ul>\n";
 			
-			$sparql_query = $this->ns->sparql."SELECT DISTINCT ?subconcept ?sublabel ?superconcept ?superlabel WHERE {?subconcept skos:broader ?superconcept . ?subconcept skos:prefLabel ?sublabel . ?superconcept skos:prefLabel ?superlabel . ?subconcept skos:inScheme ".$scheme." . ?superconcept skos:inScheme ".$scheme." . } ORDER BY ?superlabel ";
+			$sparql_query = $this->ns->sparql."SELECT DISTINCT ?subconcept ?sublabel ?superconcept ?superlabel WHERE {?subconcept skos:broader ?superconcept . ?subconcept skos:inScheme ".$scheme." . ?superconcept skos:inScheme ".$scheme." . OPTIONAL {?subconcept skos:prefLabel ?sublabel . ?superconcept skos:prefLabel ?superlabel .}} ORDER BY ?superconcept ";
 			
 			$allrows =  $this->connection->query($sparql_query, 'rows');
-			
+
 			foreach($rows as $row) {
 				$label = $row['label'];
 				$value = $row['concept'];
-				print "<li id='".urlencode($value)."'>".$label."\n";
-				
+				if($label) {
+					print "<li id='".urlencode($value)."'>".$label."\n";
+				} else {
+					$varray = explode('#',$value);
+					print "<li id='".urlencode($value)."'>".$varray[1]."\n";
+				}
 				$this->makeSubTree($value, $allrows);
 				
 				print "</li>\n";
@@ -51,7 +55,12 @@ class ConceptTree {
 			if($row['superconcept']==$value){
 				$sublabel = $row['sublabel'];
 				$subvalue = $row['subconcept'];
-				print "<li id='".urlencode($subvalue)."'>".$sublabel."\n";
+				if($sublabel) {
+					print "<li id='".urlencode($subvalue)."'>".$sublabel."\n";
+				} else {
+					$varray = explode('#',$subvalue);
+					print "<li id='".urlencode($subvalue)."'>".$varray[1]."\n";
+				}
 				
 				$this->makeSubTree($subvalue, $rows);
 				
