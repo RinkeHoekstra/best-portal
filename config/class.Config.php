@@ -51,7 +51,8 @@ class Config {
 			6 => array ('url' => 'http://www.best-project.nl/owl/best.n3', 'format' => 'turtle'),
 			7 => array ('url' => 'http://www.best-project.nl/owl/test-mappings.n3', 'format' => 'turtle'),
 			8 => array ('url' => 'http://www.best-project.nl/owl/rechtspraak.owl', 'format' => 'rdfxml'),
-			9 => array ('url' => 'http://www.w3.org/2009/08/skos-reference/skos.rdf', 'format' => 'rdfxml')
+			9 => array ('url' => 'http://www.w3.org/2009/08/skos-reference/skos.rdf', 'format' => 'rdfxml'),
+			10 => array ('url' => 'http://www.best-project.nl/owl/tort-vocabulary-new.n3', 'format' => 'turtle'),
 			// 10 => array ('url' => 'http://www.best-project.nl/owl/verdicts.owl', 'format' => 'rdfxml')
 		);
 		
