@@ -57,7 +57,7 @@
 	$ns = new Namespaces();
 
 	$ct = new ConceptTree();
-	$ct->makeTree($ns->tort_scheme);
+	$ct->makeTree($ns->tort_scheme_new);
 ?>
 	</div>
 	<div id="dropBox">
