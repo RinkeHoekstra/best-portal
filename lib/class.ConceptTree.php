@@ -18,6 +18,14 @@ class ConceptTree {
 		$this->concepts = array();
 	}
 
+	private function printConcept($value, $label){		
+		if($label) {
+			print "<li id='".urlencode($value)."'>".$label."\n";
+		} else {
+			$varray = explode('#',$value);
+			print "<li id='".urlencode($value)."'>".$varray[1]."\n";
+		}
+	}
 
 	public function makeTree($scheme){
 		$sparql_query = $this->ns->sparql."SELECT DISTINCT ?concept ?label WHERE {?concept a skos:Concept .  ?concept skos:topConceptOf ".$scheme." . OPTIONAL {?concept skos:prefLabel ?label .}} ORDER BY ?concept ";
@@ -33,19 +41,14 @@ class ConceptTree {
 			foreach($rows as $row) {
 				$label = $row['label'];
 				$value = $row['concept'];
-				if($label) {
-					print "<li id='".urlencode($value)."'>".$label."\n";
-				} else {
-					$varray = explode('#',$value);
-					print "<li id='".urlencode($value)."'>".$varray[1]."\n";
-				}
+				
+				
+				$this->printConcept($value,$label);
 				$this->makeSubTree($value, $allrows);
 				
 				print "</li>\n";
 			}		
 			print "</ul>\n";
-
-		
 	}
 	
 	private function makeSubTree($value,$rows){
@@ -55,12 +58,8 @@ class ConceptTree {
 			if($row['superconcept']==$value){
 				$sublabel = $row['sublabel'];
 				$subvalue = $row['subconcept'];
-				if($sublabel) {
-					print "<li id='".urlencode($subvalue)."'>".$sublabel."\n";
-				} else {
-					$varray = explode('#',$subvalue);
-					print "<li id='".urlencode($subvalue)."'>".$varray[1]."\n";
-				}
+				$this->printConcept($subvalue,$sublabel);
+
 				
 				$this->makeSubTree($subvalue, $rows);
 				
