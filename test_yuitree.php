@@ -51,8 +51,8 @@
 	
 	<div id='tortTree' class="ygtv-checkbox">
 <?php
-	include_once('lib/class.ConceptTree.php');
-	include_once('lib/class.Namespaces.php');
+	include_once('../lib/class.ConceptTree.php');
+	include_once('../lib/class.Namespaces.php');
 	
 	$ns = new Namespaces();
 

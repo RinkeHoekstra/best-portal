@@ -90,9 +90,10 @@ class GetComplexMapping{
 		// Add prefixes
 		$sparql_update_query = $this->ns->sparql."INSERT { ".$turtle." }";
 		
+		print "pre 1";
 		// Send update query
 		$this->connection->update($sparql_update_query);
-
+		print "1";
 		// Get all legal terms acquired through OWL-Based mapping
 		$sparql_query = $this->ns->sparql."SELECT DISTINCT ?concept ?label ?note WHERE { ?concept bm:describes ".$query_instance." . ?concept skos:inScheme tv:tort-scheme . ?concept skos:prefLabel ?label . OPTIONAL {?concept skos:note ?note .}}";
 

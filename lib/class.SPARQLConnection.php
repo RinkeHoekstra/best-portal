@@ -9,7 +9,7 @@
 
 require_once "arc/ARC2.php";
 require_once "class.RemoteSesameStore.php";
-require_once "config/class.Config.php";
+// require_once "../config/class.Config.php";
 
 class SPARQLConnection {
 	
