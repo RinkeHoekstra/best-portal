@@ -23,6 +23,7 @@ class Namespaces {
 		$this->sparql .= "PREFIX metalex: <http://www.metalex.eu/schema#> \n";
 		$this->sparql .= "PREFIX rnl:   <http://www.rechtspraak.nl/rdf#> \n";
 		$this->sparql .= "PREFIX mapping: <http://www.best-project.nl/owl/mapping.owl#> \n";
+		$this->sparql .= "PREFIX mtv:	<http://www.best-project.nl/owl/merged-tort-vocabulary.owl#> \n";
 		$this->sparql .= "PREFIX query: <http://www.best-project.nl/owl/query#> \n\n";
 		
 		
@@ -37,6 +38,7 @@ class Namespaces {
 		$this->turtle .= "@prefix best: <http://www.best-project.nl/owl/best.owl#> .\n";
 		$this->turtle .= "@prefix bm: <http://www.best-project.nl/owl/bestmap.owl#> .\n";
 		$this->turtle .= "@prefix mapping: <http://www.best-project.nl/owl/mapping.owl#> .\n";
+		$this->turtle .= "@prefix mtv:	<http://www.best-project.nl/owl/merged-tort-vocabulary.owl#> .\n";
 		$this->turtle .= "@prefix query: <http://www.best-project.nl/owl/query#> .\n\n";	
 
 

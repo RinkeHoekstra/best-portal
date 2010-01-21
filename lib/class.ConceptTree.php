@@ -19,8 +19,9 @@ class ConceptTree {
 	}
 
 	private function printConcept($value, $label){		
+		
 		if($label) {
-			print "<li id='".urlencode($value)."'>".$label."\n";
+			print "<li id='".urlencode($value)."'><strong>".$label."</strong>\n";
 		} else {
 			$varray = explode('#',$value);
 			print "<li id='".urlencode($value)."'>".$varray[1]."\n";
@@ -37,41 +38,100 @@ class ConceptTree {
 			$sparql_query = $this->ns->sparql."SELECT DISTINCT ?subconcept ?sublabel ?superconcept ?superlabel WHERE {?subconcept skos:broader ?superconcept . ?subconcept skos:inScheme ".$scheme." . ?superconcept skos:inScheme ".$scheme." . OPTIONAL {?subconcept skos:prefLabel ?sublabel . ?superconcept skos:prefLabel ?superlabel .}} ORDER BY ?superconcept ";
 			$allrows =  $this->connection->query($sparql_query, 'rows');
 			
-			// $sparql_query = $this->ns->sparql."SELECT DISTINCT ?concept ?relconcept WHERE {?concept skos:related ?relconcept.}";
-			// $relrows = $this->connection->query($sparql_query, 'rows');
-			// 
-			// print_r($relrows);
+			$sparql_query = $this->ns->sparql."SELECT DISTINCT ?concept ?l WHERE {?concept skos:related ?relconcept. ?relconcept skos:prefLabel ?l . ?concept skos:inScheme ".$scheme." .}";
+			$relrowsma = $this->connection->query($sparql_query, 'rows');
+
+			$sparql_query = $this->ns->sparql."SELECT DISTINCT ?concept ?n WHERE {?concept skos:note ?n . ?concept skos:inScheme ".$scheme.". }";
+			$notesa = $this->connection->query($sparql_query, 'rows');
+			
+			
+			
+			// print_r($relrowsma);
+			
+			$relrows = array();
+			
+			foreach($relrowsma as $rr){
+				$key = $rr['concept'];
+				$value = $rr['l'];
+				$relrows[$key][] = $value;
+			}
+			
+			$noterows = array();
+			
+			foreach($notesa as $note){
+				$key = $note['concept'];
+				$value = $note['n'];
+				$noterows[$key][] = $value;
+			}
 
 			foreach($rows as $row) {
 				$label = $row['label'];
 				$value = $row['concept'];
 				
-				
 				$this->printConcept($value,$label);
-				$this->makeSubTree($value, $allrows);
+
+				print "<ul>\n";				
+				$related = $relrows[$value];
+				$notes = $noterows[$value];
+				if($related || $notes){
+					print "<li><em>Notities</em>\n<ul>\n";
+					if($related){
+						foreach($related as $r){
+							print "<li><span><strong>Gerelateerd aan: </strong>".$r."</span></li>\n";
+						}
+					}
+
+					if($notes){
+						foreach($notes as $n){
+							print "<li><span><strong>Beschrijving: </strong>".$n."</span></li>\n";
+						}
+					}
+					print "</ul></li>\n";
+				}
 				
+				
+				$this->makeSubTree($value, $allrows,$relrows,$noterows);
+				print "</ul>\n";
 				print "</li>\n";
 			}		
 			print "</ul>\n";
 	}
 	
-	private function makeSubTree($value,$rows){
-		print "<ul>\n";
+	private function makeSubTree($value,$rows,$relrows,$noterows){
 		foreach ($rows as $row){
 			
 			if($row['superconcept']==$value){
 				$sublabel = $row['sublabel'];
 				$subvalue = $row['subconcept'];
+				
 				$this->printConcept($subvalue,$sublabel);
+				print "<ul>\n";				
+				$related = $relrows[$subvalue];
+				$notes = $noterows[$subvalue];
+				if($related || $notes){
+					print "<li><em>Notities</em>\n<ul>\n";
+					if($related){
+						foreach($related as $r){
+							print "<li><span><strong>Is gerelateerd aan: </strong>".$r."</span></li>\n";
+						}
 
+					}
+
+					if($notes){
+
+						foreach($notes as $n){
+							print "<li><span><strong>Beschrijving: </strong>".$n."</span></li>\n";
+						}
+					}
+					print "</ul></li>\n";
+				}
 				
-				$this->makeSubTree($subvalue, $rows);
-				
+				$this->makeSubTree($subvalue, $rows, $relrows, $noterows);
+				print "</ul>\n";				
 				print "</li>\n";
 			}
 			
 		}
-		print "</ul>\n";
 	}
 
 	public function init() {
@@ -175,6 +235,10 @@ class ConceptTree {
 			
 		}
 	}
+
+
+
+
 
 
 	// <script type="text/javascript">
