@@ -137,7 +137,7 @@ class ConceptTree {
 	public function init() {
 		// If the 'concepts' array is not already initialized, simply get all concepts and put them in the 'concepts' array.
 		if(empty($this->concepts)){
-			$sparql_query = $this->ns->sparql."SELECT DISTINCT ?subconcept ?superconcept ?label ?note WHERE {?subconcept skos:broader ?superconcept . ?subconcept skos:prefLabel ?label. OPTIONAL {?subconcept skos:note ?note .}} ";
+			$sparql_query = $this->ns->sparql."SELECT DISTINCT ?subconcept ?superconcept ?label WHERE {?subconcept skos:broader ?superconcept . ?subconcept skos:prefLabel ?label.} ";
 			$this->concepts =  $this->connection->query($sparql_query, 'rows');
 		}
 	}
@@ -151,12 +151,12 @@ class ConceptTree {
 		$this->init();
 		
 		if($scheme!=''){
-			$sparql_query = $this->ns->sparql."SELECT DISTINCT ?concept ?label ?note WHERE {?concept a skos:Concept . ?concept skos:prefLabel ?label . ?concept skos:topConceptOf ".$scheme." . OPTIONAL {?concept skos:note ?note .}} ORDER BY ?label ";			
+			$sparql_query = $this->ns->sparql."SELECT DISTINCT ?concept ?label WHERE {?concept a skos:Concept . ?concept skos:prefLabel ?label . ?concept skos:topConceptOf ".$scheme." . } ORDER BY ?label ";			
 			$rows = $this->connection->query($sparql_query, 'rows');
 			// $sparql_query = $this->ns->sparql."SELECT DISTINCT ?subconcept ?superconcept WHERE {?subconcept skos:broader ?superconcept . ?subconcept skos:inScheme ".$scheme." . ?superconcept skos:inScheme ".$scheme." . } ";
 			// $allrows =  $this->connection->query($sparql_query, 'rows');
 		} else if ($topconcept!=''){
-			$sparql_query = $this->ns->sparql."SELECT DISTINCT ?concept ?label WHERE {?concept a skos:Concept . ?concept skos:prefLabel ?label . ?concept skos:broader ".$topconcept." . OPTIONAL {?concept skos:note ?note .}} ORDER BY ?label ";	
+			$sparql_query = $this->ns->sparql."SELECT DISTINCT ?concept ?label WHERE {?concept a skos:Concept . ?concept skos:prefLabel ?label . ?concept skos:broader ".$topconcept." . } ORDER BY ?label ";	
 			$rows = $this->connection->query($sparql_query, 'rows');
 			// $sparql_query = $this->ns->sparql."SELECT DISTINCT ?subconcept ?superconcept WHERE {?subconcept skos:broader ?superconcept . ?subconcept skos:broaderTransitive ".$topconcept." . ?superconcept skos:broaderTransitive ".$topconcept." . } ";
 			// $allrows =  $this->connection->query($sparql_query, 'rows');

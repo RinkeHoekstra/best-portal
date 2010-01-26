@@ -69,15 +69,15 @@ class Config {
 		);
 
 		$this->tort_roles = array(
-				'criterium' 			=> array('tv:criterium','Het criterium (bijv. kelderluik) dat toegepast dient te worden op deze casus.'),
-				'dader' 				=> array('tv:persoon','De veroorzaker van de schade, de belangrijkste actor binnen de casus (e.g. degene die aansprakelijk gesteld kan worden).'),
-				'recht'					=> array('tv:recht','Het recht dat door de daad geschonden is.'),
-				'schulduitsluiting'		=> array('tv:schulduitsluitingsgrond', 'Een eventuele schulduitsluitingsgrond op basis waarvan aansprakelijkheid in dit geval (niet) toegewezen wordt.'),
+				'aansprakelijke_persoon' => array('tv:aansprakelijke_persoon','De potentieel aansprakelijke persoon, bijv. de veroorzaker van de schade, de belangrijkste actor binnen de casus.'),
+				'onrechtmatigheidsgrond'=> array('tv:grond_voor_onrechtmatigheid','De grond op basis waarvan een doen of nalaten als onrechtmatig kan worden benoemd, en eventuele factoren die hierbij een rol spelen.'),
+				'zorgvuldigheidsnorm'	=> array('tv:zorgvuldigheidsnorm', 'De geschonden zorgvuldigheidsnorm, of gerelateerde factoren, die bijdragen aan de onrechtmatigheid van de daad.'),
 				'rechtvaardigingsgrond'	=> array('tv:rechtvaardigingsgrond', 'De van toepassing zijnde rechtvaardigingsgrond op basis waarvan aansprakelijkheid in dit geval (niet) toegewezen wordt.'),
-				'toestand'				=> array('tv:toestand', 'De eventuele mentale/fysieke toestand van de dader die meegewogen dient te worden in het oordeel.'),
-				'vereiste'				=> array('tv:vereiste', 'De vereiste voor aansprakelijkheidstoewijzing waaraan in dit geval voldaan wordt.'),
-				'wetsbepaling'			=> array('tv:wetsbepaling', 'De op dit geval van toepassing zijnde wetsbepaling.'),
-				'uitzondering'			=> array('tv:wettelijke_uitzondering', 'Een eventueel van toepassing zijnde uitzondering op basis waarvan in dit geval (geen) aansprakelijkheid wordt toegewezen.')
+				'vermindering_schadevergoeding' => array('tv:grond_vermindering_schadevergoedingsplicht', 'Een eventuele grond op basis waarvan de schadevergoedingsplicht kan worden verminderd.'),
+				'grond_toerekening_aan_dader' => array('tv:grond_toerekening_aan_dader', 'De grond op basis waarvan de onrechtmatige daad aan dader wordt toegerekend.'),
+				'nadere_eisen_risicoaansprakelijkheid' => array('tv:nadere_eisen_risicoaansprakelijkheid','Meer specifieke eisen op basis waarvan (in dien van toepassing) risico aansprakelijkheid kan worden toegewezen.'),
+				'bevrijdende_omstandigheid'		=> array('tv:bevrijdende_omstandigheden_risicoaansprakelijkheid', 'Een eventuele bevrijdende omstandigheid op basis waarvan eventuele risicoaansprakelijkheid in dit geval (niet) toegewezen wordt.'),
+				'schulduitsluiting'		=> array('tv:schulduitsluitingsgrond', 'Een eventuele schulduitsluitingsgrond op basis waarvan aansprakelijkheid in dit geval (niet) toegewezen wordt.')
 			);
 		
 	}

@@ -90,18 +90,19 @@ class GetComplexMapping{
 		// Add prefixes
 		$sparql_update_query = $this->ns->sparql."INSERT { ".$turtle." }";
 		
-		print "pre 1";
+		// print "pre 1";
 		// Send update query
 		$this->connection->update($sparql_update_query);
-		print "1";
+		// print "1";
 		// Get all legal terms acquired through OWL-Based mapping
-		$sparql_query = $this->ns->sparql."SELECT DISTINCT ?concept ?label ?note WHERE { ?concept bm:describes ".$query_instance." . ?concept skos:inScheme tv:tort-scheme . ?concept skos:prefLabel ?label . OPTIONAL {?concept skos:note ?note .}}";
+		$sparql_query = $this->ns->sparql."SELECT DISTINCT ?concept ?label ?note WHERE { ?concept bm:describes ".$query_instance." . ?concept skos:inScheme ".$this->ns->tort_scheme_new." . ?concept skos:prefLabel ?label . OPTIONAL {?concept skos:note ?note }}";
 
 		print "<h5>Legal Terms</h5>\n";
+		// print htmlentities($sparql_query);
 		$this->cl->getDiv($sparql_query, 'concept');
 		
-		// Get all legal terms acquired through OWL-Based mapping
-		$sparql_query = $this->ns->sparql."SELECT DISTINCT ?mapping ?label ?note WHERE { ".$query_instance." a ?mapping. ?mapping rdfs:subClassOf bm:Mapping . ?mapping skos:prefLabel ?label . OPTIONAL {?mapping skos:note ?note .}}";
+		// Get all mappings acquired through OWL-Based mapping
+		$sparql_query = $this->ns->sparql."SELECT DISTINCT ?mapping ?label WHERE { ".$query_instance." a ?mapping. ?mapping rdfs:subClassOf bm:Mapping . ?mapping skos:prefLabel ?label . }";
 
 		print "<h5>Applicable Mappings</h5>\n";
 		$this->cl->getDiv($sparql_query, 'mapping', 'mapping');
@@ -112,14 +113,23 @@ class GetComplexMapping{
 		print "<h5>Applicable Queries</h5>\n";
 
 
-		$sparql_query = $this->ns->sparql."SELECT DISTINCT ?concept ?label ?weight WHERE { ?concept bm:describes ".$query_instance." . ?concept skos:inScheme tv:tort-scheme .  ?concept to:fingerprint ?fp . ?fp to:value ?label . ?fp to:weight ?weight .}";
+		$sparql_query = $this->ns->sparql."SELECT DISTINCT ?concept ?label ?weight WHERE { ?concept bm:describes ".$query_instance." . ?concept skos:inScheme ".$this->ns->tort_scheme_new." .  ?concept to:fingerprint ?fp . ?fp to:value ?label . ?fp to:weight ?weight .}";
 		
 		print "<div class='query'>";
-		$this->cl->getPlainWeightedQueryString($sparql_query, "wtqowl", "Weighed Tort Query (OWL)");
+		$this->cl->getPlainWeightedQueryStringAND($sparql_query, "wtqaowl", "Weighed Tort Query (AND)");
 		print "</div>";
+
+		print "<div class='query'>";
+		$this->cl->getPlainWeightedQueryStringOR($sparql_query, "wtqoowl", "Weighed Tort Query (OR)");
+		print "</div>";
+		
+		print "<div class='query'>";
+		$this->cl->getPlainQueryString($sparql_query, "qaowl", "Tort Query (AND)");
+		print "</div>";
+		
 		// Laymen query
 
-		$sparql_query = $this->ns->sparql."SELECT DISTINCT ?concept ?label WHERE { ?concept bm:describes ".$query_instance." . ?concept skos:inScheme lv:laymen-scheme . {?concept skos:altLabel ?label} UNION {?concept skos:prefLabel ?label} .}";
+		$sparql_query = $this->ns->sparql."SELECT DISTINCT ?concept ?label WHERE { ?concept bm:describes ".$query_instance." . ?concept skos:inScheme ".$this->ns->laymen_scheme." . {?concept skos:altLabel ?label} UNION {?concept skos:prefLabel ?label} .}";
 
 		print "<div class='query'>";
 		$this->cl->getPlainQueryString($sparql_query, "mq", "Laymen Query");

@@ -198,7 +198,8 @@ ul { margin: 0px; margin-left: 1em; padding: 0px; }
 div.resultlist { font-size: 80%; }
 div.query {font-size: 80%;}
 em {font-weight: bold; }
-.text {display: none; font-family: monospace; white-space: pre;}
+.text {display: none; font-family: monospace; white-space: pre-wrap;}
+.uitspraak {display: none; font-family: monospace; width: 600px; white-space: pre-wrap;}
 .monospace {font-size: 90%; font-family: monospace; }
 
 #banner {

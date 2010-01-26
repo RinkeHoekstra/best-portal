@@ -24,6 +24,7 @@ $ct = new ConceptTree();
 	<link rel="stylesheet" type="text/css" href="js/yui/container/assets/skins/sam/container.css" />
 	<link rel="stylesheet" type="text/css" href="js/yui/button/assets/skins/sam/button.css" />
 	<link rel="stylesheet" type="text/css" href="js/yui/tabview/assets/skins/sam/tabview.css" />
+	<link rel="stylesheet" type="text/css" href="style.css" />
 	
 	<script type="text/javascript" src="js/yui/yahoo/yahoo-min.js"></script>
 	<script type="text/javascript" src="js/yui/yahoo-dom-event/yahoo-dom-event.js"></script>
@@ -49,7 +50,7 @@ $ct = new ConceptTree();
 		<div id='laymanlist' style='position:absolute; top: 60px; left: 10px;'>
 			<?php printLaymanConcepts($ct,$config); ?>
 		</div>
-		<div id='mapping' style='position: absolute; top: 60px; left: 420px; width: 600px; height: 800px;'>
+		<div id='mapping' style='position: absolute; top: 60px; left: 370px; width: 600px; height: 800px;'>
 		<table>
 			<tr><th>Layman Case Description</th><th>Legal Case Description</th></tr>
 			<tr><td>
@@ -81,7 +82,7 @@ $ct = new ConceptTree();
 		</table>
 
 		</div>
-		<div id='tortlist' style='position: absolute; top: 60px; left: 1040px;'>
+		<div id='tortlist' style='position: absolute; top: 60px; left: 990px;'>
 			<?php printTortConcepts($ct,$config); ?>
 		</div>
 
@@ -89,7 +90,7 @@ $ct = new ConceptTree();
 
 <?php
 	function printLaymanConcepts($ct,$config){
-		print "<table><th width='400'>Laymen Concepts</th></tr><tr><td valign='top' width='400'>";
+		print "<table><th width='350'>Laymen Concepts</th></tr><tr><td valign='top' width='350'>";
 
 
 
@@ -99,7 +100,7 @@ $ct = new ConceptTree();
 			print "<div style='border: 1px solid #eee; padding: 1ex;'>";
 			print "<h5>".$key."</h5>";	
 			print "<div>".$role[1]."</div>";
-			print "<select id='".$key."' onChange=\"addConcept('lc','".$key."')\">";
+			print "<select id='".$key."' onChange=\"addConcept('lc','".$key."')\" style='width: 300px'>";
 			print "<option class='concept' value='none' selected>(none)</option>";
 
 			$ct->makeCustomTree('',$role[0],'&nbsp;&nbsp;&nbsp;','option','value');
@@ -115,7 +116,7 @@ $ct = new ConceptTree();
 
 
 	function printTortConcepts($ct,$config){
-		print "<table><tr><th width='400'>Legal Concepts</th></tr><tr><td valign='top' width='400'>";
+		print "<table><tr><th width='350'>Legal Concepts</th></tr><tr><td valign='top' width='350'>";
 
 
 
@@ -126,7 +127,7 @@ $ct = new ConceptTree();
 			print "<h5>".$key."</h5>";
 			print "<div>".$role[1]."</div>";
 
-			print "<select id='".$key."' onChange=\"addConcept('tc','".$key."')\">";
+			print "<select id='".$key."' onChange=\"addConcept('tc','".$key."')\" style='width: 300px'>";
 			print "<option class='concept' value='none' selected>(none)</option>";
 			$ct->makeCustomTree('',$role[0],'&nbsp;&nbsp;&nbsp;','option','value');
 			print  "</select>";

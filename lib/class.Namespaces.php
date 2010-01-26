@@ -16,7 +16,7 @@ class Namespaces {
 		$this->sparql .= "PREFIX xsd:  <http://www.w3.org/2001/XMLSchema#> \n";
 		$this->sparql .= "PREFIX skos: <http://www.w3.org/2004/02/skos/core#> \n";
 		$this->sparql .= "PREFIX lv:   <http://www.best-project.nl/owl/laymen-vocabulary.owl#> \n";
-		$this->sparql .= "PREFIX tv:   <http://www.best-project.nl/owl/tort-vocabulary.owl#> \n";
+		$this->sparql .= "PREFIX tv:   <http://www.best-project.nl/owl/tort-vocabulary-new.owl#> \n";
 		$this->sparql .= "PREFIX to:   <http://www.best-project.nl/owl/tort-ontology.owl#> \n";
 		$this->sparql .= "PREFIX best: <http://www.best-project.nl/owl/best.owl#> \n";
 		$this->sparql .= "PREFIX bm: <http://www.best-project.nl/owl/bestmap.owl#> \n";
@@ -34,7 +34,7 @@ class Namespaces {
 		$this->turtle .= "@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .\n";
 		$this->turtle .= "@prefix skos: <http://www.w3.org/2004/02/skos/core#> .\n";
 		$this->turtle .= "@prefix lv:   <http://www.best-project.nl/owl/laymen-vocabulary.owl#> .\n";
-		$this->turtle .= "@prefix tv:   <http://www.best-project.nl/owl/tort-vocabulary.owl#> .\n";
+		$this->turtle .= "@prefix tv:   <http://www.best-project.nl/owl/tort-vocabulary-new.owl#> .\n";
 		$this->turtle .= "@prefix best: <http://www.best-project.nl/owl/best.owl#> .\n";
 		$this->turtle .= "@prefix bm: <http://www.best-project.nl/owl/bestmap.owl#> .\n";
 		$this->turtle .= "@prefix mapping: <http://www.best-project.nl/owl/mapping.owl#> .\n";
