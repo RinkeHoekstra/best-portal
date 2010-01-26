@@ -58,26 +58,26 @@ class Config {
 		);
 		
 		$this->layman_roles = array(
-				'action' 	=> array('lv:actie','De handeling die tot de schade leidde.'),
-				'object' 	=> array( 'lv:object','Het object (ding) waarop de handeling plaatshad<br/> (bijv. een dier dat bij de handeling betrokken is, of een auto die door de handeling beschadigd is'),
-				'actor'  	=> array('lv:persoon','De persoon die de handeling verrichte, of onder wiens verantwoordelijkheid de handeling plaatshad.'),
-				'recipient' => array( 'lv:persoon','De persoon die de schade ondervond.'),
-				'result'	=> array('lv:schade','Het resultaat van de handeling (bijv. de evt. schade).'),
-				'location'	=> array('lv:plaats','Waar de handeling plaatsvond.'),
-				'time'	 	=> array('lv:tijdstip','Het tijdstip of de duur van de handeling.'),
-				'situation' => array('lv:bijzondere_omstandigheid','Een eventuele bijzondere omstandigheid die van toepassing was toen de handeling plaatshad.')
+				'best:action' 	=> array('Handeling','lv:actie','De handeling die tot de schade leidde.'),
+				'best:actor'  	=> array('Actor','lv:persoon','De persoon die de handeling verrichte, of onder wiens verantwoordelijkheid de handeling plaatshad.'),
+				'best:object' 	=> array('Object','lv:object','Het object (ding) waarop de handeling plaatshad<br/> (bijv. een dier dat bij de handeling betrokken is, of een auto die door de handeling beschadigd is'),
+				'best:recipient' => array('Ontvanger','lv:persoon','De persoon die de schade ondervond.'),
+				'best:result'	=> array('Gevolg','lv:schade','Het gevolg van de handeling (bijv. de evt. schade).'),
+				'best:location'	=> array('Locatie','lv:plaats','Waar de handeling plaatsvond.'),
+				'best:time'	 	=> array('Tijd','lv:tijdstip','Het tijdstip of de duur van de handeling.'),
+				'best:situation' => array('Situatie','lv:bijzondere_omstandigheid','Een eventuele bijzondere omstandigheid die van toepassing was toen de handeling plaatshad.')
 		);
 
 		$this->tort_roles = array(
-				'aansprakelijke_persoon' => array('tv:aansprakelijke_persoon','De potentieel aansprakelijke persoon, bijv. de veroorzaker van de schade, de belangrijkste actor binnen de casus.'),
-				'onrechtmatigheidsgrond'=> array('tv:grond_voor_onrechtmatigheid','De grond op basis waarvan een doen of nalaten als onrechtmatig kan worden benoemd, en eventuele factoren die hierbij een rol spelen.'),
-				'zorgvuldigheidsnorm'	=> array('tv:zorgvuldigheidsnorm', 'De geschonden zorgvuldigheidsnorm, of gerelateerde factoren, die bijdragen aan de onrechtmatigheid van de daad.'),
-				'rechtvaardigingsgrond'	=> array('tv:rechtvaardigingsgrond', 'De van toepassing zijnde rechtvaardigingsgrond op basis waarvan aansprakelijkheid in dit geval (niet) toegewezen wordt.'),
-				'vermindering_schadevergoeding' => array('tv:grond_vermindering_schadevergoedingsplicht', 'Een eventuele grond op basis waarvan de schadevergoedingsplicht kan worden verminderd.'),
-				'grond_toerekening_aan_dader' => array('tv:grond_toerekening_aan_dader', 'De grond op basis waarvan de onrechtmatige daad aan dader wordt toegerekend.'),
-				'nadere_eisen_risicoaansprakelijkheid' => array('tv:nadere_eisen_risicoaansprakelijkheid','Meer specifieke eisen op basis waarvan (in dien van toepassing) risico aansprakelijkheid kan worden toegewezen.'),
-				'bevrijdende_omstandigheid'		=> array('tv:bevrijdende_omstandigheden_risicoaansprakelijkheid', 'Een eventuele bevrijdende omstandigheid op basis waarvan eventuele risicoaansprakelijkheid in dit geval (niet) toegewezen wordt.'),
-				'schulduitsluiting'		=> array('tv:schulduitsluitingsgrond', 'Een eventuele schulduitsluitingsgrond op basis waarvan aansprakelijkheid in dit geval (niet) toegewezen wordt.')
+				'best:aansprakelijke_persoon' => array('Aansprakelijke Persoon','tv:aansprakelijke_persoon','De potentieel aansprakelijke persoon, bijv. de veroorzaker van de schade, de belangrijkste actor binnen de casus.'),
+				'best:onrechtmatigheidsgrond'=> array('Onrechtmatigheidsgrond','tv:grond_voor_onrechtmatigheid','De grond op basis waarvan een doen of nalaten als onrechtmatig kan worden benoemd, en eventuele factoren die hierbij een rol spelen.'),
+				'best:zorgvuldigheidsnorm'	=> array('Zorgvuldigheidsnorm','tv:zorgvuldigheidsnorm', 'De geschonden zorgvuldigheidsnorm, of gerelateerde factoren, die bijdragen aan de onrechtmatigheid van de daad.'),
+				'best:rechtvaardigheidsgrond'	=> array('Rechtvaardigingsgrond','tv:rechtvaardigingsgrond', 'De van toepassing zijnde rechtvaardigingsgrond op basis waarvan aansprakelijkheid in dit geval (niet) toegewezen wordt.'),
+				'best:vermindering_schadevergoeding' => array('Vermindering schadevergoeding','tv:grond_vermindering_schadevergoedingsplicht', 'Een eventuele grond op basis waarvan de schadevergoedingsplicht kan worden verminderd.'),
+				'best:grond_toerekening_aan_dader' => array('Grond toerekening aan dader','tv:grond_toerekening_aan_dader', 'De grond op basis waarvan de onrechtmatige daad aan dader wordt toegerekend.'),
+				'best:nadere_eisen_risicoaansprakelijkheid' => array('Nadere eisen risicoaansprakelijkheid','tv:nadere_eisen_risicoaansprakelijkheid','Meer specifieke eisen op basis waarvan (in dien van toepassing) risico aansprakelijkheid kan worden toegewezen.'),
+				'best:bevrijdende_omstandigheid' => array('Bevrijdende omstandigheid','tv:bevrijdende_omstandigheden_risicoaansprakelijkheid', 'Een eventuele bevrijdende omstandigheid op basis waarvan eventuele risicoaansprakelijkheid in dit geval (niet) toegewezen wordt.'),
+				'best:schulduitsluiting' => array('Schulduitsluiting','tv:schulduitsluitingsgrond', 'Een eventuele schulduitsluitingsgrond op basis waarvan aansprakelijkheid in dit geval (niet) toegewezen wordt.')
 			);
 		
 	}

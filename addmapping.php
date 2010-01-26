@@ -163,7 +163,7 @@ if (count($laymenconcepts)>0 && count($tortconcepts)>0) {
 		foreach($t_roles as $r){
 			foreach($_POST[$r] as $url){
 				if ($url != "") {
-					$turtle .= " [ a owl:Restriction ; owl:hasValue <".urldecode($url).">; owl:onProperty best:".$r." ] ";
+					$turtle .= " [ a owl:Restriction ; owl:hasValue <".urldecode($url).">; owl:onProperty ".$r." ] ";
 				}
 				$tort_comment .= $r." has value ".urldecode($url)."\n";
 			}
@@ -181,8 +181,8 @@ if (count($laymenconcepts)>0 && count($tortconcepts)>0) {
 		foreach ($l_roles as $r) {
 			foreach($_POST[$r] as $url){
 				$turtle .= " [ a\t owl:Class; owl:unionOf (";
-				$turtle .=" [ a owl:Restriction ; owl:hasValue <".urldecode($url).">; owl:onProperty best:".$r." ] ";
-				$turtle .= " [ a owl:Restriction ; owl:someValuesFrom  [ a owl:Restriction ; owl:hasValue <".urldecode($url)."> ; owl:onProperty skos:broaderTransitive ]  ; owl:onProperty best:".$r." ] ";
+				$turtle .=" [ a owl:Restriction ; owl:hasValue <".urldecode($url).">; owl:onProperty ".$r." ] ";
+				$turtle .= " [ a owl:Restriction ; owl:someValuesFrom  [ a owl:Restriction ; owl:hasValue <".urldecode($url)."> ; owl:onProperty skos:broaderTransitive ]  ; owl:onProperty ".$r." ] ";
 				$turtle .= " ) ] ";
 
 				$layman_comment .= $r." has value ".urldecode($url)." (or narrower)\n";

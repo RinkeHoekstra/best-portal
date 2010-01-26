@@ -82,7 +82,7 @@ class GetComplexMapping{
 		$turtle = $query_instance;
 		foreach ($this->roles as $r) {
 			foreach($this->values[$r] as $c) {
-				$turtle .=" best:".$r." <".urldecode($c).">; ";
+				$turtle .=" ".$r." <".urldecode($c).">; ";
 			}
 		}
 		$turtle .= " a best:Query; best:timestamp \"".$timestamp."\"^^xsd:dateTime .";
@@ -102,7 +102,7 @@ class GetComplexMapping{
 		$this->cl->getDiv($sparql_query, 'concept');
 		
 		// Get all mappings acquired through OWL-Based mapping
-		$sparql_query = $this->ns->sparql."SELECT DISTINCT ?mapping ?label WHERE { ".$query_instance." a ?mapping. ?mapping rdfs:subClassOf bm:Mapping . ?mapping skos:prefLabel ?label . }";
+		$sparql_query = $this->ns->sparql."SELECT DISTINCT ?mapping ?label ?note WHERE { ".$query_instance." a ?mapping. ?mapping rdfs:subClassOf bm:Mapping . ?mapping skos:prefLabel ?label . OPTIONAL {?mapping skos:note ?note .} }";
 
 		print "<h5>Applicable Mappings</h5>\n";
 		$this->cl->getDiv($sparql_query, 'mapping', 'mapping');

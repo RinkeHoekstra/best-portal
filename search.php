@@ -17,7 +17,7 @@ $ct = new ConceptTree();
 	<title>
 		BEST Portal
 	</title>
-	<link rel="stylesheet" href="style.css" type="text/css" media="screen">
+
 	
 	
 	<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.8.0r4/build/fonts/fonts-min.css" />
@@ -27,7 +27,7 @@ $ct = new ConceptTree();
 	<link rel="stylesheet" type="text/css" href="js/yui/container/assets/skins/sam/container.css" />
 	<link rel="stylesheet" type="text/css" href="js/yui/button/assets/skins/sam/button.css" />
 	<link rel="stylesheet" type="text/css" href="js/yui/tabview/assets/skins/sam/tabview.css" />
-
+	<link rel="stylesheet" href="style.css" type="text/css" media="screen">
 
 
 	<script type="text/javascript" src="js/yui/yahoo/yahoo-min.js"></script>
@@ -58,33 +58,46 @@ $ct = new ConceptTree();
 </head>
 
 <body class="yui-skin-sam">
-	<h2>BestPortal: Complex Search Specifier (TEST)</h2>
+	<div id="banner" style='position: absolute; left: 0px; width: 1170px;'>
+		<img src="http://www.best-project.nl/images/best-logo-96dpi-80px.png" width="80" align="right" alt="BEST logo" valign="top">
+		<div class="bannerheading">
+			BEST Portal
+		</div>
+		<div class="bannersubheading">
+			BATNA Establishment using Semantic Web Technology
+		</div>
+		<div class="copyrightnotice">
+			Copyright (c) 2010, Rinke Hoekstra, Vrije Universiteit Amsterdam
+		</div>
+	</div>
 	
 	<div id='page' width='100%' style='width: 100%;'>
-		<div id='laymanlist' style='position:absolute; top: 60px; left: 10px;'>
+		<div id='laymanlist' style='position:absolute; top: 140px; left: 10px;'>
 			<?php printLaymanConcepts($ct,$config); ?>
 		</div>
-		<div id='mapping' style='position: absolute; top: 60px; left: 420px; width: 600px; height: 800px;'>
+		<div style='position: absolute; top: 140px; left: 320px; '>
+				<h3>Casusomschrijving</h3>
+				<div id='mapping' style='width: 530px; height: 800px;'>
 		<table>
-			<tr><th>Case Description</th><th></th></tr>
+			<tr><th>Geselecteerde Begrippen</th><th></th></tr>
 			<tr><td>
-				<div id='lc' style='float: left; width:550px; height:200px; border: 1px solid #bbb; padding: 5px; overflow: auto; background: white;'>
+				<div id='lc' style='float: left; width:480px; height:200px; border: 1px solid #bbb; padding: 5px; overflow: auto; background: white;'>
 				</div>
 			</td><td>
-				<a onClick="showComplexMapping('tc')">&gt;&gt;</a>
+				<div style='height: 198px; padding: 1ex; background: #bbb; border: 1px solid #ddd;  '><a style='color: black; font-weight: bold;' onClick="showComplexMapping('tc')">&gt;&gt;</a></div>
 			</td></tr>
 			<tr><th colspan='2' style='padding-top: 1ex;'>
-				Concept Description
+				Uitleg over een concept
 			</th></tr>
 			<tr><td colspan='2'>
-				<div id='info' style='width: 585px; height: 120px; border: 1px solid #bbb; overflow: auto; background: white;'></div>
+				<div id='info' style='width: 525px; height: 120px; border: 1px solid #bbb; overflow: auto; background: white;'></div>
 			</td></tr>
 			<tr><th colspan='2' style='padding-top: 1ex;'>
 				Solr Query
 			</th></tr>
 			<tr><td colspan='2'>
 				<form method="get" action="<?php $c=new Config(); print $c->solr_url; ?>">
-					<textarea id='q' name='q' style='width: 575px; height: 120px; border: 1px solid #bbb; overflow: auto; background: white;'></textarea><br>
+					<textarea id='q' name='q' style='width: 515px; height: 120px; border: 1px solid #bbb; overflow: auto; background: white;'></textarea><br>
 					<select name="qt" id="qt">
 						<option selected value="standard">
 							Standard Query
@@ -118,31 +131,33 @@ $ct = new ConceptTree();
 			</td></tr> -->
 		</table>
 
-
 		</div>
-		<div id='tc' style='position: absolute; top: 60px; left: 1040px; width:400px; height:600px; border: 1px solid #bbb; padding: 5px; overflow: auto; background: white;'>
-		
-		
-		<h5>Mapping to Legal Concepts</h5>
+		</div>
+		<div style='position: absolute; top: 140px; left: 870px; width:300px; height:600px; overflow: auto; background: white;'>
+			<h3>Vertaling naar Juridische Concepten</h3>
+			<table>
+				<tr><td width='300'><div id='tc'></div></td></tr>
+			</table>
 		</div>
 
 
 <?php
 	function printLaymanConcepts($ct,$config){
-		print "<table><th width='400'>Laymen Concepts</th></tr><tr><td valign='top' width='400'>";
+		print "<h3>Leken Concepten</h3>";
+		print "<table><tr><td valign='top' width='300'>";
 
 
 
 
 		while($role = current($config->layman_roles)){
 			$key = key($config->layman_roles);
-			print "<div style='border: 1px solid #eee; padding: 1ex;'>";
-			print "<h5>".$key."</h5>";	
-			print "<div>".$role[1]."</div>";
-			print "<select id='".$key."' onChange=\"addConcept('lc','".$key."')\">";
+			print "<div style='padding-top: 0.5ex; font-size: small;'>";
+			print "<h5>".$role[0]."</h5>";	
+			print "<div style='font-size: smaller;'>".$role[2]."</div>";
+			print "<select id='".$key."' onChange=\"addConcept('lc','".$key."')\" style='width: 300px;'>";
 			print "<option class='concept' value='none' selected>(none)</option>";
 
-			$ct->makeCustomTree('',$role[0],'&nbsp;&nbsp;&nbsp;','option','value');
+			$ct->makeCustomTree('',$role[1],'&nbsp;&nbsp;&nbsp;','option','value');
 
 			print  "</select>";
 			print "</div>";
@@ -152,6 +167,7 @@ $ct = new ConceptTree();
 		print "</td></tr></table>";
 
 	}
+
 
 
 

@@ -189,7 +189,7 @@ body{	height: 100%; text-align:center; background: white;}
 
 
 td.name { font-size:100%; background: #eee;}
-td { vertical-align: top; font-size: 100%; padding-top: 1ex; padding-left: 1ex;}
+td { vertical-align: top; font-size: 100%; }
 th { font-size:100%; background: #eee; font-weight: bold;}
 ul { margin: 0px; margin-left: 1em; padding: 0px; }
 .note { font-size:80%; padding-bottom: 1em;}
