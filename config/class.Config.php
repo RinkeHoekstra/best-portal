@@ -54,14 +54,15 @@ class Config {
 			9 => array ('url' => 'http://www.w3.org/2009/08/skos-reference/skos.rdf', 'format' => 'rdfxml'),
 			10 => array ('url' => 'http://www.best-project.nl/owl/tort-vocabulary-new.n3', 'format' => 'turtle'),
 			11 => array ('url' => 'http://www.best-project.nl/owl/merged-tort-vocabulary.n3', 'format' => 'turtle'),
-			// 10 => array ('url' => 'http://www.best-project.nl/owl/verdicts.owl', 'format' => 'rdfxml')
+			12 => array ('url' => 'http://www.best-project.nl/owl/uitspraak-to-place.n3', 'format' => 'turtle'),
+			13 => array ('url' => 'http://www.best-project.nl/owl/verdicts.owl', 'format' => 'rdfxml')
 		);
 		
 		$this->layman_roles = array(
 				'best:action' 	=> array('Handeling','lv:actie','De handeling die tot de schade leidde.'),
-				'best:actor'  	=> array('Actor','lv:persoon','De persoon die de handeling verrichte, of onder wiens verantwoordelijkheid de handeling plaatshad.'),
+				'best:actor'  	=> array('Actor','lv:agent','De persoon die de handeling verrichte, of onder wiens verantwoordelijkheid de handeling plaatshad.'),
 				'best:object' 	=> array('Object','lv:object','Het object (ding) waarop de handeling plaatshad<br/> (bijv. een dier dat bij de handeling betrokken is, of een auto die door de handeling beschadigd is'),
-				'best:recipient' => array('Ontvanger','lv:persoon','De persoon die de schade ondervond.'),
+				'best:recipient' => array('Ontvanger','lv:agent','De persoon die de schade ondervond.'),
 				'best:result'	=> array('Gevolg','lv:schade','Het gevolg van de handeling (bijv. de evt. schade).'),
 				'best:location'	=> array('Locatie','lv:plaats','Waar de handeling plaatsvond.'),
 				'best:time'	 	=> array('Tijd','lv:tijdstip','Het tijdstip of de duur van de handeling.'),

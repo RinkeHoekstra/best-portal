@@ -139,16 +139,19 @@ if (count($laymenconcepts)>0 && count($tortconcepts)>0) {
 
 
 } else if ($type == "complex") {
-	
-	
 	// Get all properties from the _POST variable, and divide them over tort and layman roles
 	$t_roles = array_keys(array_intersect_key($_POST,$config->tort_roles));
 	$l_roles = array_keys(array_intersect_key($_POST,$config->layman_roles));
 	
+	$user_comment = $_POST["comment"];
+
+
+	
 	// If neither of the role types occurs in the _POST, there is no point continuing.
 	if(count($t_roles)>0 && count($l_roles)>0){
 		// Create the mapping class name, and add subclass relation to bm:Mapping
-		$mapping_class = "mapping:Map-".date('Ymd-His');
+		$date = date('Ymd-His');
+		$mapping_class = "mapping:Map-".$date;
 		$turtle .= $mapping_class;
 		$turtle .= "\n\t a\t owl:Class ;";
 		$turtle .= "\n\t rdfs:subClassOf bm:Mapping ;";
@@ -190,8 +193,10 @@ if (count($laymenconcepts)>0 && count($tortconcepts)>0) {
 		}
 		$turtle .= " )\n\t\t ] ;";
 		$turtle .= "\n\t skos:prefLabel \"".$mapping_class."\"@en ;";
+		if($user_comment!="" || $user_comment!=" ") {$turtle .= "\n\t skos:scopeNote \"".$user_comment."\"@nl ;"; }
+		$turtle .= "\n\t skos:changeNote \"Mapping created on ".$date."\"@en ; ";
 		$comment = $layman_comment.$tort_comment;
-		$turtle .= "\n\t skos:note \"".$comment."\"@en .";	
+		$turtle .= "\n\t skos:definition \"".$comment."\"@en . \n";	
 		
 		print "<pre>".htmlentities($turtle)."</pre>";
 		

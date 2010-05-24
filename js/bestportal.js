@@ -199,6 +199,7 @@ function onFormSubmitACM() {
 
 	}
 
+	postData += '&comment='+cDiv.value;
 
 
 

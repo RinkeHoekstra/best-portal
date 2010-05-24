@@ -96,7 +96,8 @@ $ct = new ConceptTree();
 				Solr Query
 			</th></tr>
 			<tr><td colspan='2'>
-				<form method="get" action="<?php $c=new Config(); print $c->solr_url; ?>">
+				<!-- <form method="get" action="<?php $c=new Config(); print $c->solr_url; ?>"> -->
+				<form method="get" action="results.php">
 					<textarea id='q' name='q' style='width: 515px; height: 120px; border: 1px solid #bbb; overflow: auto; background: white;'></textarea><br>
 					<select name="qt" id="qt">
 						<option selected value="standard">

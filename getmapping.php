@@ -102,7 +102,7 @@ class GetComplexMapping{
 		$this->cl->getDiv($sparql_query, 'concept');
 		
 		// Get all mappings acquired through OWL-Based mapping
-		$sparql_query = $this->ns->sparql."SELECT DISTINCT ?mapping ?label ?note WHERE { ".$query_instance." a ?mapping. ?mapping rdfs:subClassOf bm:Mapping . ?mapping skos:prefLabel ?label . OPTIONAL {?mapping skos:note ?note .} }";
+		$sparql_query = $this->ns->sparql."SELECT DISTINCT ?mapping ?label ?note WHERE { ".$query_instance." a ?mapping. ?mapping rdfs:subClassOf bm:Mapping . ?mapping skos:prefLabel ?label . OPTIONAL {?mapping skos:scopeNote ?note .} }";
 
 		print "<h5>Applicable Mappings</h5>\n";
 		$this->cl->getDiv($sparql_query, 'mapping', 'mapping');
