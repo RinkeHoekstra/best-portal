@@ -83,7 +83,7 @@ if ($solr_results){
 		
 		
 		// Get all places where the court case took place.
-		$q = $ns->sparql." select ?n ?lat ?long ?zpn ?zplat ?zplong where { <".$rnl_ljn."> rnl:instantie ?i. ?i <http://dbpedia.org/ontology/locationCity> ?p . ?p gn:name ?n . ?p geo:lat ?lat . ?p geo:long ?long . OPTIONAL { <http://www.ljn.nl/".$ljn."> rnl:zittingsplaats ?zp . ?zp gn:name ?zpn . ?zp geo:lat ?zplat . ?zp geo:long ?zplong .}}";
+		$q = $ns->sparql." select ?n ?lat ?long ?zpn ?zplat ?zplong where { <".$rnl_ljn."> rnl:instantie ?i. ?i <http://dbpedia.org/ontology/locationCity> ?p . ?p gn:name ?n . ?p geo:lat ?lat . ?p geo:long ?long . OPTIONAL { <http://linkeddata.few.vu.nl/rechtspraak/uitspraak/".$ljn."> rnl:zittingsplaats ?zp . ?zp gn:name ?zpn . ?zp geo:lat ?zplat . ?zp geo:long ?zplong .}}";
 		$rows = $sc->query($q, 'rows');
 		foreach ($rows as $row) {
 			if($row['zpn'] == null ){

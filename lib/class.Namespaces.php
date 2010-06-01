@@ -21,7 +21,7 @@ class Namespaces {
 		$this->sparql .= "PREFIX best: <http://www.best-project.nl/owl/best.owl#> \n";
 		$this->sparql .= "PREFIX bm: <http://www.best-project.nl/owl/bestmap.owl#> \n";
 		$this->sparql .= "PREFIX metalex: <http://www.metalex.eu/schema#> \n";
-		$this->sparql .= "PREFIX rnl:   <http://www.rechtspraak.nl/rdf#> \n";
+		$this->sparql .= "PREFIX rnl:   <http://linkeddata.few.vu.nl/rechtspraak/resource/> \n";
 		$this->sparql .= "PREFIX mapping: <http://www.best-project.nl/owl/mapping.owl#> \n";
 		$this->sparql .= "PREFIX mtv:	<http://www.best-project.nl/owl/merged-tort-vocabulary.owl#> \n";
 		$this->sparql .= "PREFIX gn:   <http://www.geonames.org/ontology#> \n";

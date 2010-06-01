@@ -80,7 +80,7 @@ function initialize() {
 	            </div> 
 	        </div> 
 	        <div class="col2lm"> 
-				<h4>Beschrijving</h4>
+				<h4>Beschrijving gebeurtenis</h4>
 	        </div> 
 	    </div> 
 	</div>
@@ -94,7 +94,7 @@ function initialize() {
 	            </div> 
 	        </div> 
 	        <div class="col2lm"> 
-				<h4>Inperking</h4>
+				<h4>Inperking zoekvraag</h4>
 	        </div> 
 	    </div> 
 	</div>

@@ -8,8 +8,8 @@ $solr = new Apache_Solr_Service('localhost',8983,'/solr/');
 $query = $_GET["q"];
 $ljn = $_GET["ljn"];
 
-// if($query == null) $query = "eigen energie";
-if($ljn == null) $ljn = "BL0212";
+// if($query == null) $query = "(\"gevaarzetting\"^1 OR \"gevaar\"^0.12 OR \"gevaarzetting\"^1 OR \"beperking\"^0.11 OR \"voortbestaan\"^0.18 OR \"nalaten\"^0.1 OR \"waarschuwing\"^0.15 OR \"gevaarlijke toestand\"^1 OR \"voorschrift\"^0.12 OR \"voorkoming\"^0.15 OR \"gevaarlijk\"^0.25 OR \"veiligheid\"^0.15 OR \"in stand houden\"^0.23) OR (\"medebezitter roerende zaak\"^1)";
+if($ljn == null) $ljn = "AY8447";
 
 $params['fl'] = 'score';
 $params['hl'] = 'on';
@@ -25,6 +25,7 @@ if($query != null) {
 	$query = "ljn:".$ljn;
 }
 $results = $solr->search($query,0,1,$params);
+
 
 // print_r($results);
 
@@ -67,7 +68,7 @@ if ($results){
 	    <div class="bannerheading">Uitspraak <?php print $ljn; ?></div>
 		<div class="bannersubheading">Voor de oorspronkelijke publicatie van deze tekst op Rechtspraak.nl zie <a href='http://www.rechtspraak.nl/ljn.asp?ljn=<?php print $ljn;?>'>hier</a>.</div>
 		<div class="copyrightnotice">
-			Copyright (c) 2010, Rinke Hoekstra, Vrije Universiteit Amsterdam
+			BestPortal is Copyright (c) 2010, Rinke Hoekstra, Vrije Universiteit Amsterdam
 		</div>
 		</div>
 	<?php print $t;?>
