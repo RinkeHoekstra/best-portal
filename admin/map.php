@@ -1,10 +1,10 @@
 <?php
 
 
-require_once 'lib/class.SPARQLConnection.php';
-require_once 'lib/class.Namespaces.php';
-require_once 'lib/class.ConceptTree.php';
-require_once "config/class.Config.php";
+require_once '../lib/class.SPARQLConnection.php';
+require_once '../lib/class.Namespaces.php';
+require_once '../lib/class.ConceptTree.php';
+require_once "../config/class.Config.php";
 
 $config = new Config();
 $ct = new ConceptTree();
@@ -21,10 +21,10 @@ $ct = new ConceptTree();
 	
 	
 	<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.8.0r4/build/fonts/fonts-min.css" />
-	<link rel="stylesheet" type="text/css" href="js/yui/container/assets/skins/sam/container.css" />
-	<link rel="stylesheet" type="text/css" href="js/yui/button/assets/skins/sam/button.css" />
-	<link rel="stylesheet" type="text/css" href="js/yui/tabview/assets/skins/sam/tabview.css" />
-	<link rel="stylesheet" href="style.css" type="text/css" media="screen">
+	<link rel="stylesheet" type="text/css" href="../js/yui/container/assets/skins/sam/container.css" />
+	<link rel="stylesheet" type="text/css" href="../js/yui/button/assets/skins/sam/button.css" />
+	<link rel="stylesheet" type="text/css" href="../js/yui/tabview/assets/skins/sam/tabview.css" />
+	<link rel="stylesheet" href="../style.css" type="text/css" media="screen">
 	
 	<script type="text/javascript" src="js/yui/yahoo/yahoo-min.js"></script>
 	<script type="text/javascript" src="js/yui/yahoo-dom-event/yahoo-dom-event.js"></script>
@@ -39,13 +39,13 @@ $ct = new ConceptTree();
 	
 	<script type="text/javascript">
 		YAHOO.namespace("example.container");
-		<?php include 'js/bestportal.js'; ?>
+		<?php include '../js/bestportal.js'; ?>
 	</script>
 </head>
 
 <body class="yui-skin-sam">
 	<div id="banner" style='position: absolute; left: 0px; width: 1170px;'>
-		<img src="http://www.best-project.nl/images/best-logo-96dpi-80px.png" width="80" align="right" alt="BEST logo" valign="top">
+		<img src="../img/best-logo-96dpi-80px.png" width="80" align="right" alt="BEST logo" valign="top">
 		<div class="bannerheading">
 			BEST Portal
 		</div>
