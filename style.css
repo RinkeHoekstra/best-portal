@@ -212,20 +212,52 @@ em {font-weight: bold; }
 	  background: white;
 	  text-align: left;
 	  margin: auto;
-    }
+}
 
-	.bannerheading {	
-	      font-weight: bold;
-	      font-size: 300%;
-	}
-	.bannersubheading {
-	      font-weight: normal;
-	      font-size: 100%;
-	      padding-left:20px;
-	      padding-bottom:15px;
-	      font-style:italic;
-	      color: #566;
-	}
+.bannerheading {	
+      font-weight: bold;
+      font-size: 300%;
+}
+.bannersubheading {
+      font-weight: normal;
+      font-size: 100%;
+      padding-left:20px;
+      padding-bottom:15px;
+      font-style:italic;
+      color: #566;
+}
+
+
+.copyrightnotice {
+    float: right;
+    font-size: xx-small;
+    margin-top: -15px;
+}
+
+#smallbanner {
+      width: 100%;
+	  height: 71px;
+/*      border-bottom:1px solid #000;*/
+	  background: white;
+	  text-align: left;
+	  margin: auto;
+}
+
+.smallbannerheading {	
+	  padding-left: 10px;
+	  padding-right: 5px;
+	  padding-top: 10px;
+      font-weight: bold;
+      font-size: 200%;
+}
+.smallbannersubheading {
+      font-weight: normal;
+      font-size: 90%;
+      padding-left:20px;
+      padding-bottom:15px;
+      font-style:italic;
+      color: #566;
+}
 
 
 /*OTHER CLASSES*/
@@ -312,7 +344,11 @@ div.terms {
 }*/
 
 
-
+.searching {
+    font-weight: bold;
+    text-align: center;
+    font-size: 130%;
+}
 
 .conceptList li:hover {
 	background-color: #def;
@@ -390,6 +426,30 @@ div.concept {
 	background: #d6eff7;
 }
 
+div.inlineconcept {
+	margin: 1px;
+	padding: 1px;
+	font-size: x-small;
+	display: inline;
+	background: #d6eff7;
+}
+
+div.inlinelegalconcept {
+	margin: 1px;
+	padding: 1px;
+	font-size: x-small;
+	display: inline;
+	background: #efd6f7;
+}
+
+div.inlinefilter {
+	margin: 1px;
+	padding: 1px;
+	font-size: x-small;
+	display: inline;
+	background: #eff7d6;
+}
+
 div.mapping {
 	width: 80%;
 	padding: 1ex;
@@ -402,4 +462,141 @@ div.query {
 	padding: 1ex;
 	margin: 1ex;
 	background: #efd6f7;
+}
+
+td.resultheader:before {
+    content: url(img/court.png);
+}
+td.resultheader {
+    font-weight: bolder; background: #fff; font-size: normal;
+}
+
+td.result_attribute {
+    font-size: 90%;
+    font-weight: bolder;
+}
+
+td.result_value {
+    font-size: 90%;
+}
+
+span.hl {
+    font-weight: bolder;
+    background: #9cf;
+    border-bottom: 1px dashed black;
+}
+
+.casedescription {
+    clear: both;
+    padding-bottom: 2px;
+    border-bottom: 1px solid black;
+}
+
+/* column container */
+.colmask {
+	position:relative;		/* This fixes the IE7 overflow hidden bug and stops the layout jumping out of place */
+    clear:both;
+    float:left;
+    width:100%;				/* width of whole page */
+	overflow:hidden;		/* This chops off any overhanging divs */
+}
+/* holy grail 3 column settings */
+.holygrail {
+    background:#ddd;    	/* Right column background colour */
+}
+.holygrail .colmid {
+    float:left;
+    width:200%;
+    margin-left:-300px; 	/* Width of right column */
+    position:relative;
+    right:100%;
+    background:#fff;    	/* Centre column background colour */
+}
+.holygrail .colleft {
+    float:left;
+    width:100%;
+    margin-left:-50%;
+    position:relative;
+    left:500px;         	/* Left column width + right column width */
+    background:#ddd;    	/* Left column background colour */
+}
+.holygrail .col1wrap {
+    float:left;
+    width:50%;
+    position:relative;
+    right:200px;        	/* Width of left column */
+    padding-bottom:1em; 	/* Centre column bottom padding. Leave it out if it's zero */
+}
+.holygrail .col1 {
+    margin:0 315px 0 215px;     	/* Centre column side padding:
+                        	Left padding = left column width + centre column left padding width
+                        	Right padding = right column width + centre column right padding width */
+    position:relative;
+    left:200%;
+    overflow:hidden;
+    padding-top: 15px;
+}
+.holygrail .col2 {
+    float:left;
+    float:right;			/* This overrides the float:left above */
+    width:170px;        	/* Width of left column content (left column width minus left and right padding) */
+    position:relative;
+    padding-top: 15px;
+    right:15px;         	/* Width of the left-had side padding on the left column */
+}
+.holygrail .col3 {
+    float:left;
+    float:right;			/* This overrides the float:left above */
+    width:270px;        	/* Width of right column content (right column width minus left and right padding) */
+    margin-right:45px;  	/* Width of right column right-hand padding + left column left and right padding */
+    position:relative;
+    padding-top: 15px;
+    left:50%;
+}
+
+
+/* column container */
+.colmasklm {
+	position:relative;		/* This fixes the IE7 overflow hidden bug and stops the layout jumping out of place */
+    clear:both;
+    float:left;
+    width:100%;			/* width of whole page */
+	overflow:hidden;	/* This chops off any overhanging divs */
+}
+/* 2 column left menu settings */
+.leftmenu {
+    background:#942724;
+    text-align: left;
+}
+
+.leftmenu h4 {
+    color: white;
+}
+.leftmenu .colrightlm {
+    float:left;
+    width:200%;
+	position:relative;
+	left:200px;
+    background:#eee;
+}
+.leftmenu .col1wraplm {
+    float:right;
+    width:50%;
+    position:relative;
+    right:200px;
+    padding-bottom:1em;
+}
+.leftmenu .col1lm {
+    margin:0 15px 0 215px;
+    padding-top: 5px;
+    position:relative;
+    right:100%;
+    overflow:hidden;
+}
+.leftmenu .col2lm {
+    float:left;
+    padding-top: 5px;
+    width:170px;
+    position:relative;
+    right:185px;
 }

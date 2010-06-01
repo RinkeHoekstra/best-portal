@@ -99,7 +99,7 @@ $ct = new ConceptTree();
 				<!-- <form method="get" action="<?php $c=new Config(); print $c->solr_url; ?>"> -->
 				<form method="get" action="results.php">
 					<textarea id='q' name='q' style='width: 515px; height: 120px; border: 1px solid #bbb; overflow: auto; background: white;'></textarea><br>
-					<select name="qt" id="qt">
+					<!-- <select name="qt" id="qt">
 						<option selected value="standard">
 							Standard Query
 						</option>
@@ -116,8 +116,8 @@ $ct = new ConceptTree();
 						</option>
 					</select><br>
 					Number of Results: <input type="input" name="rows" id ="rows" value="10"><br>
-					<input type="hidden" name="indent" value="on"> <input type="hidden" name="version" value="2.2"> <input type="hidden" name="start" value="0"> <input type="hidden" name="fl" value="*,score"> <input type="hidden" name="qt" value=""> <input type="hidden" name="debugQuery" value="on"> <input type="hidden" name="explainOther" value=""> <input type="hidden" name="hl" value="on"> <input type="hidden" name="hl.fl" value="uitspraak_anoniem"> <input type="hidden" name="mlt" value="true"> <input type="hidden" name="mlt.fl" value="uitspraak_anoniem"> <input type="hidden" name="tr" value="best.xsl"> <!-- <input type="hidden" name="mlt.match.include" value="false"/> -->
-					<br/>
+					<input type="hidden" name="indent" value="on"> <input type="hidden" name="version" value="2.2"> <input type="hidden" name="start" value="0"> <input type="hidden" name="fl" value="*,score"> <input type="hidden" name="qt" value=""> <input type="hidden" name="debugQuery" value="on"> <input type="hidden" name="explainOther" value=""> <input type="hidden" name="hl" value="on"> <input type="hidden" name="hl.fl" value="uitspraak_anoniem"> <input type="hidden" name="mlt" value="true"> <input type="hidden" name="mlt.fl" value="uitspraak_anoniem"> <input type="hidden" name="tr" value="best.xsl"><input type="hidden" name="mlt.match.include" value="false"/>
+					<br/> -->
 					<input type="submit" name="search" id="search" value="Submit Query"/>
 				</form>
 				

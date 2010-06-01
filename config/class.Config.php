@@ -44,29 +44,29 @@ class Config {
 		$this->ontologies = array(
 			0 => array ('url' => 'http://www.best-project.nl/owl/tort-ontology.n3', 'format' => 'turtle'),
 			1 => array ('url' => 'http://www.best-project.nl/owl/laymen-ontology.n3', 'format' => 'turtle'),
-			2 => array ('url' => 'http://www.best-project.nl/owl/tort-vocabulary.n3', 'format' => 'turtle'),
+			// 2 => array ('url' => 'http://www.best-project.nl/owl/tort-vocabulary.n3', 'format' => 'turtle'),
 			3 => array ('url' => 'http://www.best-project.nl/owl/laymen-vocabulary.n3', 'format' => 'turtle'),
 			4 => array ('url' => 'http://www.best-project.nl/owl/bestmap.owl', 'format' => 'rdfxml'),
 			5 => array ('url' => 'http://www.best-project.nl/owl/metalex.n3', 'format' => 'turtle'),
 			6 => array ('url' => 'http://www.best-project.nl/owl/best.n3', 'format' => 'turtle'),
 			7 => array ('url' => 'http://www.best-project.nl/owl/test-mappings.n3', 'format' => 'turtle'),
-			8 => array ('url' => 'http://www.best-project.nl/owl/rechtspraak.owl', 'format' => 'rdfxml'),
+			8 => array ('url' => 'http://www.best-project.nl/owl/rechtspraak.n3', 'format' => 'turtle'),
 			9 => array ('url' => 'http://www.w3.org/2009/08/skos-reference/skos.rdf', 'format' => 'rdfxml'),
 			10 => array ('url' => 'http://www.best-project.nl/owl/tort-vocabulary-new.n3', 'format' => 'turtle'),
 			11 => array ('url' => 'http://www.best-project.nl/owl/merged-tort-vocabulary.n3', 'format' => 'turtle'),
 			12 => array ('url' => 'http://www.best-project.nl/owl/uitspraak-to-place.n3', 'format' => 'turtle'),
-			13 => array ('url' => 'http://www.best-project.nl/owl/verdicts.owl', 'format' => 'rdfxml')
+			13 => array ('url' => 'http://www.best-project.nl/owl/uitspraken-20100525.owl', 'format' => 'rdfxml')
 		);
 		
 		$this->layman_roles = array(
-				'best:action' 	=> array('Handeling','lv:actie','De handeling die tot de schade leidde.'),
-				'best:actor'  	=> array('Actor','lv:agent','De persoon die de handeling verrichte, of onder wiens verantwoordelijkheid de handeling plaatshad.'),
-				'best:object' 	=> array('Object','lv:object','Het object (ding) waarop de handeling plaatshad<br/> (bijv. een dier dat bij de handeling betrokken is, of een auto die door de handeling beschadigd is'),
-				'best:recipient' => array('Ontvanger','lv:agent','De persoon die de schade ondervond.'),
-				'best:result'	=> array('Gevolg','lv:schade','Het gevolg van de handeling (bijv. de evt. schade).'),
-				'best:location'	=> array('Locatie','lv:plaats','Waar de handeling plaatsvond.'),
-				'best:time'	 	=> array('Tijd','lv:tijdstip','Het tijdstip of de duur van de handeling.'),
-				'best:situation' => array('Situatie','lv:bijzondere_omstandigheid','Een eventuele bijzondere omstandigheid die van toepassing was toen de handeling plaatshad.')
+				'best:action' 	=> array('Wat werd er gedaan','lv:actie','De handeling die tot de schade leidde.'),
+				'best:actor'  	=> array('Wie deed het','lv:agent','De persoon die de handeling verrichte, of onder wiens verantwoordelijkheid de handeling plaatshad.'),
+				'best:object' 	=> array('Wat was er bij','lv:object','Het object (ding) waarop de handeling plaatshad<br/> (bijv. een dier dat bij de handeling betrokken is, of een auto die door de handeling beschadigd is'),
+				'best:recipient' => array('Tegen wie is het gedaan','lv:agent','De persoon die de schade ondervond.'),
+				'best:result'	=> array('Wat was het gevolg','lv:schade','Het gevolg van de handeling (bijv. de evt. schade).'),
+				'best:location'	=> array('Waar gebeurde het','lv:plaats','Waar de handeling plaatsvond.'),
+				'best:time'	 	=> array('Wanneer of hoelang','lv:tijdstip','Het tijdstip of de duur van de handeling.'),
+				'best:situation' => array('Speciale situatie','lv:bijzondere_omstandigheid','Een eventuele bijzondere omstandigheid die van toepassing was toen de handeling plaatshad.')
 		);
 
 		$this->tort_roles = array(

@@ -61,8 +61,8 @@ class ConceptList {
 				if($value != $oldvalue){
 					print "<div class='".$cssclass."' id='".$value."'";
 					if($row['note']!=""){
-						print " alt='".htmlentities(nl2br($row['note']))."'>".$label;
-						print " <a style='float: right;' onclick=\"showInfo('".$value."')\">?</a></div>\n";
+						print " alt='".$value."'>".$label;
+						print " <a title=\"".htmlentities(nl2br($row['note']))."\">?</a></div>\n";
 					} else {
 						print ">".$label;
 						print "</div>\n";
@@ -205,6 +205,38 @@ class ConceptList {
 			$qs = rtrim($qs,"OR ");
 			$qs .= ")";
 			print "<a onclick=\"showQuery('".htmlentities($qs,ENT_QUOTES)."')\" name='".$id."' id='".$id."' >".$name."</a>";
+			} 
+	}
+	
+	public function getPlainWeightedQueryStringORnoHTML($sparql_query,$id,$name,$value_fn='concept',$label_fn='label',$weight_fn='weight') {
+		// print "<p>".$sparql_query."</p>";
+		
+		$rows = $this->connection->query($sparql_query, 'rows');
+
+
+			if(count($rows)>0){
+
+			$qs = "(";
+			$oldvalue = "";
+			foreach($rows as $row) {
+				$label = $row[$label_fn];
+				$value = $row[$value_fn];
+				$weight = $row[$weight_fn]/100;
+				
+				if($value == $oldvalue || $oldvalue == "") {
+					$qs .= "\"".$label."\"^".$weight." OR ";
+					$oldvalue = $value;
+				} else {
+					$qs = rtrim($qs,"OR ");
+					$qs .= ") OR (\"".$label."\"^".$weight." OR ";
+					$oldvalue = $value;
+				}
+			}		
+			
+			$qs = rtrim($qs,"OR ");
+			$qs .= ")";
+			print $qs;
+			// htmlentities($qs,ENT_QUOTES);
 			} 
 	}
 	
