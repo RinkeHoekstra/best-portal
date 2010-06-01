@@ -73,7 +73,7 @@ function showComplexMapping(target) {
 	window.setTimeout(function() {
     		// YAHOO.util.Connect.setForm(formObject);
 			
-			var request = YAHOO.util.Connect.asyncRequest('POST', <?php print "'".$config->portal_url."'"; ?>+'/getmapping.php', callback, postData);
+			var request = YAHOO.util.Connect.asyncRequest('POST', <?php print "'".$config->portal_url."'"; ?>+'/admin/getmapping.php', callback, postData);
 		}, 200);
 }
 
@@ -142,7 +142,7 @@ function showLightweightComplexMapping(target) {
 	window.setTimeout(function() {
     		// YAHOO.util.Connect.setForm(formObject);
 			
-			var request = YAHOO.util.Connect.asyncRequest('POST', <?php print "'".$config->portal_url."'"; ?>+'/getmapping.php', callback, postData);
+			var request = YAHOO.util.Connect.asyncRequest('POST', <?php print "'".$config->portal_url."'"; ?>+'/admin/getmapping.php', callback, postData);
 		}, 200);
 }
 
@@ -349,7 +349,7 @@ function onFormSubmitACM() {
 	window.setTimeout(function() {
     		// YAHOO.util.Connect.setForm(formObject);
 			
-			var request = YAHOO.util.Connect.asyncRequest('POST', <?php print "'".$config->portal_url."'"; ?>+'/addmapping.php', callback, postData);
+			var request = YAHOO.util.Connect.asyncRequest('POST', <?php print "'".$config->portal_url."'"; ?>+'/admin/addmapping.php', callback, postData);
 		}, 200);
 }
 
@@ -402,7 +402,7 @@ function onFormSubmitACM() {
 		// included when calling asyncRequest.
 		window.setTimeout(function() {
         		YAHOO.util.Connect.setForm(formObject);
-				var request = YAHOO.util.Connect.asyncRequest('POST', <?php print "'".$config->portal_url."'"; ?>+'/addmapping.php', callback);
+				var request = YAHOO.util.Connect.asyncRequest('POST', <?php print "'".$config->portal_url."'"; ?>+'/admin/addmapping.php', callback);
 			}, 200);
 	}
 	

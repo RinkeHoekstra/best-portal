@@ -1,21 +1,19 @@
 
 
-// var mapDiv = document.getElementById('map_canvas');
-// var timelineDiv = document.getElementById('timeline');
 start = 0;
 timeline = '';
 filter = {"procedure_soort":null,"instantie":null,"sector_toon":null,"rechtsgebied_rechtspraak":null,"set":false};
 mr = {"mapping":[],"query":null};
 docs = '';
+hl = '';
+map = {};
+markersArray = [];
 
 function getResults(){
     doReset();
     var div = document.getElementById('results');
     
-    var sDiv = document.createElement('div');
-    sDiv.setAttribute('class','searching');
-    sDiv.innerHTML = 'Searching ...';
-    div.appendChild(sDiv);
+    printSearching();
     
     var handleSuccess = function(o){
         if(o.responseText !== undefined) {
@@ -43,8 +41,11 @@ function getResults(){
 	  argument: ['test','xml']
 	};
 	
-    var postData = 'q='+unescape(mr.query);
-	
+	if(mr.query!=null) {
+        var postData = 'q='+unescape(mr.query);
+    } else {
+        var postData = 'q=';
+    }
 	window.setTimeout(function() {
 			var request = YAHOO.util.Connect.asyncRequest('POST', 'getresults.php', callback, postData);
 		}, 200);
@@ -118,17 +119,48 @@ function printFilter(){
 
 function doUpdate(resultsText) {
     var cases = JSON.parse(resultsText);
-    docs = cases.solr.response.docs;
-    var resultsDiv = document.getElementById('results');
-    // resultsDiv.innerHTML += "doUpdate2(resultsText), query:"+q+"\n";
     
     if(cases.query != null) {
+        docs = cases.solr.response.docs;
+        hl = cases.solr.highlighting;
         updateResults();
         updateTimeline(cases.timeline,cases.latestdate);
         updateMap(cases.places,cases.courts);
     } else {
-        resultsDiv.innerHTML = "geen resultaten";
+        printNoResults();
+        updateTimeline(null,null);
+        updateMap(null,null);
     }
+}
+
+
+function printNoResults(){
+    var resultsDiv = document.getElementById('results');
+    var sDiv = document.createElement('div');
+    sDiv.setAttribute('class','noresult');
+    var h = document.createElement('h4');
+    h.innerHTML = '(Nog) geen uitspraken gevonden ...';
+    var p = document.createElement('div');
+    p.setAttribute('class','noresultexplanation');
+    p.innerHTML = 'Dit komt waarschijnlijk door een onvolledige beschrijving van uw zaak. Selecteer de factoren die meespelen in uw zaak. Zodra er een vertaling naar juridisch vocabulair beschikbaar is, zal gezocht worden naar relevante uitspraken.'
+    sDiv.appendChild(h);
+    sDiv.appendChild(p);
+    resultsDiv.appendChild(sDiv);
+}
+
+
+function printSearching(){
+    var div = document.getElementById('results');
+    var sDiv = document.createElement('div');
+    sDiv.setAttribute('class','searching');
+    var h = document.createElement('h4');
+    h.innerHTML = 'Bezig met zoeken ...';
+    var p = document.createElement('div');
+    p.setAttribute('class','searchexplanation');
+    p.innerHTML = 'Dit kan enige tijd duren aangezien alle zoekresultaten in uw browser worden geladen.';
+    sDiv.appendChild(h);
+    sDiv.appendChild(p);
+    div.appendChild(sDiv);
 }
 
 
@@ -175,7 +207,7 @@ function updateResults(){
     doReset();
     var resultsDiv = document.getElementById('results');
 	if (docs.length == 0) {
-	    resultsDiv.innerHTML = "<p>no results</p>";
+	    printNoResults();
 	} else {
         for (var i = 0; i < docs.length; i++) { 
     		// docs is a global variable
@@ -184,20 +216,7 @@ function updateResults(){
     		if(!filter.set){
         		var nd = document.createElement('div');
         		nd.setAttribute('id',doc.ljn);
-        		var c = "<table style=\'border: 0px; width: 100%; padding-bottom: 2em; padding-right: 1em;\'>\n";
-        		c += "<tr><td class=\'resultheader\' style=\'width: 100px\' colspan=\'2\'><span style=\'padding-left: 74px; vertical-align: top;\'>LJN "+doc.ljn+"</span><span style=\'float: right; font-weight: normal;\'>"+doc.score.toFixed(2)+"%</span><td></tr>\n";
-            	c += "<tr<td class=\'result_attribute\' style=\'width: 100px\'>Datum</td><td class=\'result_value\' >"+doc.datum_uitspraak+"</td></tr>\n";
-            	c += "<tr><td class=\'result_attribute\' style=\'width: 100px\'>Beschrijving</td><td class=\'result_value\'>Uitspraak in <a onClick=\"doUpdateFilter(\'"+escape('{\"procedure_soort\":\"'+doc.procedure_soort+'\"}')+"\')\">"+doc.procedure_soort+"</a> van <a onClick=\"doUpdateFilter(\'"+escape('{\"instantie\":\"'+doc.instantie+'\"}')+"\')\">"+doc.instantie+"</a>";
-                if (doc.sector_toon != null) {
-                    c += " (<a onClick=\"doUpdateFilter(\'"+escape('{\"sector_toon\":\"'+doc.sector_toon+'\"}')+"\')\">"+doc.sector_toon+"</a>)";
-                }
-                c += " binnen het rechtsgebied <a onClick=\"doUpdateFilter(\'"+escape('{\"rechtsgebied_rechtspraak\":\"'+doc.rechtsgebied_rechtspraak+'\"}')+"\')\">"+doc.rechtsgebied_rechtspraak+"</a></td></tr>\n";
-        		if (doc.indicatie != null) {
-        		    c += "<tr><td class=\'result_attribute\' style=\'width: 100px\'>Indicatie</td><td class=\'result_value\'>"+doc.indicatie+"</td></tr>\n";
-        		}
-        		c += "<tr><td></td><td style=\'padding-top: 1ex;\'><a href=\'show.php?q="+mr.query+"&ljn="+doc.ljn+"' target=\'_new\'>Volledige Tekst</a></td></tr>\n";
-        		c += "</table></div>";
-        		nd.innerHTML = c;
+        		nd.innerHTML = getDescription(doc);
         		resultsDiv.appendChild(nd);
     	    } else {
     	        if(doc.procedure_soort == filter.procedure_soort || filter.procedure_soort == null) {
@@ -206,20 +225,7 @@ function updateResults(){
             	            if(doc.rechtsgebied_rechtspraak == filter.rechtsgebied_rechtspraak || filter.rechtsgebied_rechtspraak == null) {
                         		var nd = document.createElement('div');
                         		nd.setAttribute('id',doc.ljn);
-                        		var c = "<table style=\'border: 0px; width: 100%; padding-bottom: 2em; padding-right: 1em;\'>\n";
-                        		c += "<tr><td class=\'resultheader\' style=\'width: 100px\' colspan=\'2\'><span style=\'padding-left: 74px; vertical-align: top;\'>LJN "+doc.ljn+"</span><span style=\'float: right; font-weight: normal;\'>"+doc.score.toFixed(2)+"%</span><td></tr>\n";
-                            	c += "<tr<td class=\'result_attribute\' style=\'width: 100px\'>Datum</td><td class=\'result_value\' >"+doc.datum_uitspraak+"</td></tr>\n";
-                            	c += "<tr><td class=\'result_attribute\' style=\'width: 100px\'>Beschrijving</td><td class=\'result_value\'>Uitspraak in <a onClick=\"doUpdateFilter(\'"+escape('{\"procedure_soort\":\"'+doc.procedure_soort+'\"}')+"\')\">"+doc.procedure_soort+"</a> van <a onClick=\"doUpdateFilter(\'"+escape('{\"instantie\":\"'+doc.instantie+'\"}')+"\')\">"+doc.instantie+"</a>";
-                                if (doc.sector_toon != null) {
-                                    c += " (<a onClick=\"doUpdateFilter(\'"+escape('{\"sector_toon\":\"'+doc.sector_toon+'\"}')+"\')\">"+doc.sector_toon+"</a>)";
-                                }
-                                c += " binnen het rechtsgebied <a onClick=\"doUpdateFilter(\'"+escape('{\"rechtsgebied_rechtspraak\":\"'+doc.rechtsgebied_rechtspraak+'\"}')+"\')\">"+doc.rechtsgebied_rechtspraak+"</a></td></tr>\n";
-                        		if (doc.indicatie != null) {
-                        		    c += "<tr><td class=\'result_attribute\' style=\'width: 100px\'>Indicatie</td><td class=\'result_value\'>"+doc.indicatie+"</td></tr>\n";
-                        		}
-                        		c += "<tr><td></td><td style=\'padding-top: 1ex;\'><a href=\'show.php?q="+mr.query+"&ljn="+doc.ljn+"' target=\'_new\'>Volledige Tekst</a></td></tr>\n";
-                        		c += "</table></div>";
-                        		nd.innerHTML = c;
+        		                nd.innerHTML = getDescription(doc);
                         		resultsDiv.appendChild(nd);
                 	        } 
             	        } 
@@ -230,8 +236,29 @@ function updateResults(){
     }
 }
 
-function addInlineConcept(lc,tc,id){
-	var div = document.getElementById(lc);
+
+function getDescription(doc) {
+    
+    var c = "<table style=\'border: 0px; width: 100%; padding-bottom: 2em; padding-right: 1em;\'>\n";
+	c += "<tr><td class=\'resultheader\' style=\'width: 100px\' colspan=\'2\'><span style=\'padding-left: 74px; vertical-align: top;\'>LJN "+doc.ljn+"</span><span style=\'float: right; font-weight: normal;\'>"+doc.score.toFixed(2)+"</span><td></tr>\n";
+	c += "<tr<td class=\'result_attribute\' style=\'width: 100px\'>Datum</td><td class=\'result_value\' >"+doc.datum_uitspraak+"</td></tr>\n";
+	c += "<tr><td class=\'result_attribute\' style=\'width: 100px\'>Kenmerken</td><td class=\'result_value\'>Uitspraak in <a onClick=\"doUpdateFilter(\'"+escape('{\"procedure_soort\":\"'+doc.procedure_soort+'\"}')+"\')\">"+doc.procedure_soort+"</a> van <a onClick=\"doUpdateFilter(\'"+escape('{\"instantie\":\"'+doc.instantie+'\"}')+"\')\">"+doc.instantie+"</a>";
+    if (doc.sector_toon != null) {
+        c += " (<a onClick=\"doUpdateFilter(\'"+escape('{\"sector_toon\":\"'+doc.sector_toon+'\"}')+"\')\">"+doc.sector_toon+"</a>)";
+    }
+    c += " binnen het rechtsgebied <a onClick=\"doUpdateFilter(\'"+escape('{\"rechtsgebied_rechtspraak\":\"'+doc.rechtsgebied_rechtspraak+'\"}')+"\')\">"+doc.rechtsgebied_rechtspraak+"</a></td></tr>\n";
+	c += "<tr><td class=\'result_attribute\' style=\'width: 100px\'>Relevante tekst</td><td class=\'result_value\'>"+hl[doc.ljn].uitspraak_anoniem[0]+"</td></tr>\n"
+	if (doc.indicatie != null) {
+	    c += "<tr><td class=\'result_attribute\' style=\'width: 100px\'>Beschrijving</td><td class=\'result_value\'>"+doc.indicatie+"</td></tr>\n";
+	}
+	c += "<tr><td></td><td style=\'padding-top: 1ex; text-align: right;\'><a href=\'show.php?q="+mr.query+"&ljn="+doc.ljn+"' target=\'_new\'>Volledige Tekst</a></td></tr>\n";
+	c += "</table></div>";
+	
+	return c;
+}
+
+function addInlineConcept(id){
+	var div = document.getElementById('lc');
 	var index = document.getElementById(id).selectedIndex;
 	if(index==0) return;
 	
@@ -247,9 +274,9 @@ function addInlineConcept(lc,tc,id){
 		newdiv.setAttribute('id',divURIFrag);
 		newdiv.setAttribute('property',id);
 		newdiv.setAttribute('class','inlineconcept');
-		newdiv.innerHTML =  divLabel +' (<i>'+ id +"</i>) <a onClick=\"removeInlineConcept(\'"+lc+'\', \''+tc+'\', \''+divURIFrag+'\')\">[x]</a>';
+		newdiv.innerHTML =  divLabel +' (<i>'+ id +'</i>) [<a onClick="removeInlineConcept(\''+divURIFrag+'\')">x</a>]';
 		if(divNote!=null&&divNote!=''){
-			newdiv.innerHTML += '<a onClick=\"showOptionInfo(\''+id+'\',\''+index+'\')\">[?]</a>';
+			newdiv.innerHTML += '[<a onClick=\"showOptionInfo(\''+id+'\',\''+index+'\')\">?</a>]';
 		}
 		
 		div.appendChild(newdiv);
@@ -258,45 +285,13 @@ function addInlineConcept(lc,tc,id){
 	document.getElementById(id).selectedIndex = 0;
 }
 
-function removeInlineConcept(lc,tc,id){
-	var div = document.getElementById(lc);
+function removeInlineConcept(id){
+	var div = document.getElementById('lc');
 	var olddiv = document.getElementById(id);
 	div.removeChild(olddiv);
-	doUpdateMapping();
+	getMapping();
 }
 
-
-function addFilter(filter,id){
-	var div = document.getElementById(filter);
-	var index = document.getElementById(id).selectedIndex;
-	if(index==0) return;
-	
-	var newdiv = document.createElement('div');
-	var option = document.getElementById(id).options[index];
-	var divIdName = option.value;
-	var divURIFrag = option.title;
-	var divLabel = option.label;
-	var divNote = option.getAttribute('alt');
-	
-	if(!document.getElementById(divURIFrag)) {
-		newdiv.setAttribute('uri',divIdName);
-		newdiv.setAttribute('id',divURIFrag);
-		newdiv.setAttribute('property',id);
-		newdiv.setAttribute('class','filter');
-		newdiv.innerHTML =  divLabel +' (<i>'+ id +"</i>) <a onClick=\"removeFilter(\'"+filter+'\', \''+divURIFrag+'\')\">[x]</a>';
-		if(divNote!=null&&divNote!=''){
-			newdiv.innerHTML += '<a onClick=\"showOptionInfo(\''+id+'\',\''+index+'\')\">[?]</a>';
-		}
-		
-		div.appendChild(newdiv);
-	}
-}
-
-function removeFilter(filter,id){
-	var div = document.getElementById(filter);
-	var olddiv = document.getElementById(id);
-	div.removeChild(olddiv);
-}
 
 
 function getMapping() {
@@ -312,6 +307,11 @@ function getMapping() {
                 showMapping();
                 if(mr.query != null ) {
                     getResults();
+                } else {
+                    doReset();
+                    clearMap();
+                    clearTimeline();
+                    printNoResults();
                 }
             }   
 		}
@@ -390,11 +390,16 @@ function showMapping() {
 }
 
 
-function doUpdateMapping(){
-	getMapping();
+function clearTimeline(){
+    updateTimeline(null,null)
 }
 
 function updateTimeline(events,latestdate){
+    if(events==null) {
+        tlDiv = document.getElementById("timeline");
+        tlDiv.innerHTML = "";
+        return;
+    }
     var eventSource = new Timeline.DefaultEventSource();
     
     var bandInfos = [
@@ -424,21 +429,33 @@ function updateTimeline(events,latestdate){
     tl.layout();
 }
 
-function updateMap(places, courts){
+function initMap() {
     var myOptions = {
       zoom: 6,
       center: new google.maps.LatLng(52, 5.5),
       mapTypeId: google.maps.MapTypeId.TERRAIN
     }
-    var map = new google.maps.Map(document.getElementById("map_canvas"),myOptions);
+    map = new google.maps.Map(document.getElementById("map_canvas"),myOptions);
+}
 
+function updateMap(places, courts){
+    clearMap();
     setMarkers(map, places, 'img/place.png');
     setMarkers(map, courts, 'img/court.png');
 }
 
+function clearMap(){
+    for(var i=0; i<markersArray.length; i++){
+        markersArray[i].setMap(null);
+    }
+    markersArray = new Array();
+}
+
 function setMarkers(map, locations, img) {
   // Add markers to the map
-
+  if(locations == null) {
+      return;
+  }
   for (var i = 0; i < locations.length; i++) {
     var loc = locations[i];
     var myLatLng = new google.maps.LatLng(loc[1], loc[2]);
@@ -465,7 +482,7 @@ function createMarker(map, place, myLatLng, infowindow, image){
         map: map,
         title: place[0],
     });
-
+    markersArray.push(marker); 
 	google.maps.event.addListener(marker, 'click', function() {
 	  infowindow.open(map,marker);
 	});

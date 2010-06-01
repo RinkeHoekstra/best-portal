@@ -11,10 +11,16 @@ if($query == null) {
 	print '{"query":null,"solr":null,"timeline":null,"latestdate":null,"places":null,"courts":null}';	
 	exit(0);
 } 
+// print $query;
 
 
 $params['fl'] = 'score,rnl_ljn,ljn,datum_uitspraak,indicatie,instantie,procedure_soort,rechtsgebied_rechtspraak,rnl_instantie,rnl_procedure_soort,rnl_rnl_rechtsgebied_rechtspraak,rnl_status,sector_toon,zaaknummers,src';
-$solr_results = $solr->search($query,0,50,$params);
+$params['hl'] = 'on';
+$params['hl.fl']= 'uitspraak_anoniem';
+$params['hl.simple.pre'] = "<span class='hllight'>";
+$params['hl.simple.post'] = '</span>';
+
+$solr_results = $solr->search($query,0,20,$params);
 
 $json_solr_results = $solr_results->getRawResponse();
 
@@ -99,7 +105,7 @@ if ($solr_results){
 		if($doc->datum_uitspraak > $latest_date) $latest_date = $doc->datum_uitspraak;
 		
 		// Create JSON object for the timeline
-		$times[] = array('start'=>$date,'title'=>$ljn,'durationEvent'=>false,'link'=>$src,'description'=>$ind);
+		$times[] = array('start'=>$date,'title'=>$ljn,'durationEvent'=>false,'link'=>'show.php?ljn='.$ljn,'description'=>$ind);
 
 	}
 	$timeline = array('dateTimeFormat'=>'iso8601','events'=>$times);

@@ -18,7 +18,7 @@ function printLaymanConcepts($ct,$config){
 		print "<div style='font-size: small;'>\n";
 		print "<h6>".$role[0]." <a style='font-weight: normal;' title='".$role[2]."'>?</a></h6>\n";	
 		// print "<div style='font-size: small;'>".$role[2]."</div>";
-		print "<select id='".$key."' onChange=\"addInlineConcept('lc','tc','".$key."'); doUpdateMapping(); \" style='width: 170px;'>\n";
+		print "<select id='".$key."' onChange=\"addInlineConcept('".$key."'); getMapping(); \" style='width: 170px;'>\n";
 		print "<option class='concept' value='none' selected>(none)</option>\n";
 
 		$ct->makeCustomTree('',$role[1],'&nbsp;&nbsp;&nbsp;','option','value');

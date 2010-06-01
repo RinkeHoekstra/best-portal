@@ -228,7 +228,7 @@ em {font-weight: bold; }
 }
 
 
-.copyrightnotice {
+.copyrightnoticesmall {
     float: right;
     font-size: xx-small;
     margin-top: -15px;
@@ -344,11 +344,21 @@ div.terms {
 }*/
 
 
-.searching {
-    font-weight: bold;
+.searching, .noresult {
+    margin-top: 100px;
     text-align: center;
-    font-size: 130%;
 }
+
+
+
+.noresultexplanation, .searchexplanation {
+    font-size: 90%;
+    width: 70%;
+    margin-left: auto; 
+    margin-right: auto;
+    text-align: center;
+}
+
 
 .conceptList li:hover {
 	background-color: #def;
@@ -429,25 +439,29 @@ div.concept {
 div.inlineconcept {
 	margin: 1px;
 	padding: 1px;
-	font-size: x-small;
+	font-size: 90%;
 	display: inline;
-	background: #d6eff7;
+	margin-left: 5px;
 }
 
 div.inlinelegalconcept {
 	margin: 1px;
 	padding: 1px;
-	font-size: x-small;
+	font-size: 90%;
 	display: inline;
-	background: #efd6f7;
+	margin-left: 5px;
 }
 
 div.inlinefilter {
 	margin: 1px;
 	padding: 1px;
-	font-size: x-small;
+	font-size: 90%;
 	display: inline;
-	background: #eff7d6;
+	margin-left: 5px;
+}
+
+#filterreset {
+    font-size: 90%;
 }
 
 div.mapping {
@@ -474,15 +488,21 @@ td.resultheader {
 td.result_attribute {
     font-size: 90%;
     font-weight: bolder;
+    padding-top: 2px;
 }
 
 td.result_value {
+    padding-top: 2px;
     font-size: 90%;
 }
 
 span.hl {
     font-weight: bolder;
     background: #9cf;
+    border-bottom: 1px dashed black;
+}
+
+span.hllight {
     border-bottom: 1px dashed black;
 }
 

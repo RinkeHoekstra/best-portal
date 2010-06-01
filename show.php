@@ -8,8 +8,8 @@ $solr = new Apache_Solr_Service('localhost',8983,'/solr/');
 $query = $_GET["q"];
 $ljn = $_GET["ljn"];
 
-if($query == null) $query = "eigen energie";
-if($ljn == null) $ljn = "BM4553";
+// if($query == null) $query = "eigen energie";
+if($ljn == null) $ljn = "BL0212";
 
 $params['fl'] = 'score';
 $params['hl'] = 'on';
@@ -19,8 +19,12 @@ $params['hl.snippets'] = '50';
 $params['hl.simple.pre'] = "<span class='hl'>";
 $params['hl.simple.post'] = '</span>';
 
-$query = $query." AND ljn:".$ljn;
-$results = $solr->search($query,$start,$start+10,$params);
+if($query != null) {
+	$query = $query." AND ljn:".$ljn;
+} else {
+	$query = "ljn:".$ljn;
+}
+$results = $solr->search($query,0,1,$params);
 
 // print_r($results);
 
@@ -34,13 +38,20 @@ $hl_array = (array) $results->highlighting;
 
 if ($results){
 	$hla = (array) $hl_array[$ljn];
-	$hls = $hla['uitspraak_anoniem'];
-	
-	foreach ($hls as $t){
-		$t = utf8_decode($t);
-		// $t = htmlentities($t);
+	if($hla != null){
+		$hls = $hla['uitspraak_anoniem'];
+		foreach ($hls as $t){
+			$t = utf8_decode($t);
+			// $t = htmlentities($t);
+			$t = nl2br($t);
+		}
+	} else {
+		$docs = (array) $results->response->docs;
+		$doc = $docs[0];
+		$t = utf8_decode($doc->uitspraak_anoniem);
 		$t = nl2br($t);
 	}
+
 }
 
 ?>

@@ -50,7 +50,7 @@ Timeline_parameters='bundle=true';
 YAHOO.namespace("example.container");
 
 function initialize() {
-	q = "<?php print $_GET['q']; ?>";
+	initMap();
 	getResults();
 	getLaymanConcepts();
 }
@@ -64,7 +64,7 @@ function initialize() {
 		<img src="<?php print $config->portal_url;?>/img/best-logo-96dpi-40px.png" width="40" align="right" alt="BEST logo" valign="top" style="padding-right: 15px;"/>
 	    <div class="smallbannerheading">BestPortal</div>
 		<div class="smallbannersubheading">Juridisch zoeken voor de normale mens...</div>
-		<div class="copyrightnotice">
+		<div class="copyrightnoticesmall">
 			Copyright (c) 2010, Rinke Hoekstra, Vrije Universiteit Amsterdam
 		</div>
 	</div>
