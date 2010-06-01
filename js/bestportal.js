@@ -77,6 +77,74 @@ function showComplexMapping(target) {
 		}, 200);
 }
 
+function showLightweightComplexMapping(target) {
+	var div = document.getElementById(target);
+	
+	var handleSuccess = function(o){
+
+		if(o.responseText !== undefined){
+			// div.innerHTML = "Transaction id: " + o.tId;
+			// div.innerHTML += "HTTP status: " + o.status;
+			// div.innerHTML += "Status code message: " + o.statusText;
+			// div.innerHTML += "<li>HTTP headers: <ul>" + o.getAllResponseHeaders + "</ul></li>";
+			div.innerHTML = o.responseText;
+			// alert(o.responseText);
+			// div.innerHTML += "Argument object: " + o.argument;
+		}
+	}
+
+	var handleFailure = function(o){
+
+		if(o.responseText !== undefined){
+			div.innerHTML += "Transaction id: " + o.tId;
+			div.innerHTML += "HTTP status: " + o.status;
+			div.innerHTML += "Status code message: " + o.statusText;
+			div.innerHTML += "<li>HTTP headers: <ul>" + o.getAllResponseHeaders + "</ul></li>";
+			div.innerHTML += "Response text: " + o.responseText;
+			div.innerHTML += "Argument object: " + o.argument;
+		}
+	}
+
+	var callback =
+	{
+	  success: handleSuccess,
+	  failure: handleFailure,
+	  argument: ['foo','bar']
+	};		
+	
+	
+	// var bSubmit = window.confirm("Are you sure you want to submit this mapping?");
+	// YAHOO.util.Event.preventDefault(p_oEvent);
+	var lcDiv = document.getElementById('lc');
+	// var tcDiv = document.getElementById('tc');
+
+	
+	var postData='type=lwcomplex';
+	
+
+	
+	for (var i = 0; i < lcDiv.childNodes.length; i++) { 
+		
+	    var lc = lcDiv.childNodes[i];
+		
+		if(lc.nodeType == 1){//element of type html-object/tag
+		  if(lc.tagName=="DIV"){
+		    postData += '&'+lc.getAttribute("property")+'[]='+lc.getAttribute("uri");
+		  }
+		}
+
+	}
+
+
+	// This example facilitates a POST transaction.  The POST data(HTML form)
+	// are initialized when calling setForm(), and it is automatically
+	// included when calling asyncRequest.
+	window.setTimeout(function() {
+    		// YAHOO.util.Connect.setForm(formObject);
+			
+			var request = YAHOO.util.Connect.asyncRequest('POST', <?php print "'".$config->portal_url."'"; ?>+'/getmapping.php', callback, postData);
+		}, 200);
+}
 
 
 function showOptionInfo(id,index){
@@ -129,6 +197,78 @@ function removeConcept(lctc,id){
 	var div = document.getElementById(lctc);
 	var olddiv = document.getElementById(id);
 	div.removeChild(olddiv);
+}
+
+function addInlineConcept(lc,tc,id){
+	var div = document.getElementById(lc);
+	var index = document.getElementById(id).selectedIndex;
+	if(index==0) return;
+	
+	var newdiv = document.createElement('div');
+	var option = document.getElementById(id).options[index];
+	var divIdName = option.value;
+	var divURIFrag = option.title;
+	var divLabel = option.label;
+	var divNote = option.getAttribute('alt');
+	
+	if(!document.getElementById(divURIFrag)) {
+		newdiv.setAttribute('uri',divIdName);
+		newdiv.setAttribute('id',divURIFrag);
+		newdiv.setAttribute('property',id);
+		newdiv.setAttribute('class','inlineconcept');
+		newdiv.innerHTML =  divLabel +' (<i>'+ id +"</i>) <a onClick=\"removeInlineConcept(\'"+lc+'\', \''+tc+'\', \''+divURIFrag+'\')\">[x]</a>';
+		if(divNote!=null&&divNote!=''){
+			newdiv.innerHTML += '<a onClick=\"showOptionInfo(\''+id+'\',\''+index+'\')\">[?]</a>';
+		}
+		
+		div.appendChild(newdiv);
+	}
+	
+	document.getElementById(id).selectedIndex = 0;
+}
+
+function removeInlineConcept(lc,tc,id){
+	var div = document.getElementById(lc);
+	var olddiv = document.getElementById(id);
+	div.removeChild(olddiv);
+	doUpdate(tc);
+}
+
+
+function addFilter(filter,id){
+	var div = document.getElementById(filter);
+	var index = document.getElementById(id).selectedIndex;
+	if(index==0) return;
+	
+	var newdiv = document.createElement('div');
+	var option = document.getElementById(id).options[index];
+	var divIdName = option.value;
+	var divURIFrag = option.title;
+	var divLabel = option.label;
+	var divNote = option.getAttribute('alt');
+	
+	if(!document.getElementById(divURIFrag)) {
+		newdiv.setAttribute('uri',divIdName);
+		newdiv.setAttribute('id',divURIFrag);
+		newdiv.setAttribute('property',id);
+		newdiv.setAttribute('class','filter');
+		newdiv.innerHTML =  divLabel +' (<i>'+ id +"</i>) <a onClick=\"removeFilter(\'"+filter+'\', \''+divURIFrag+'\')\">[x]</a>';
+		if(divNote!=null&&divNote!=''){
+			newdiv.innerHTML += '<a onClick=\"showOptionInfo(\''+id+'\',\''+index+'\')\">[?]</a>';
+		}
+		
+		div.appendChild(newdiv);
+	}
+}
+
+function removeFilter(filter,id){
+	var div = document.getElementById(filter);
+	var olddiv = document.getElementById(id);
+	div.removeChild(olddiv);
+}
+
+function doUpdate(){
+	showLightweightComplexMapping('tc');
 }
 
 function onFormSubmitACM() {

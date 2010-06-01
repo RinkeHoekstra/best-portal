@@ -16,7 +16,34 @@ require_once "lib/class.SPARQLConnection.php";
 
 $type = $_POST["type"];
 
-if($type!="complex"){
+if($type=="complex"){
+
+	$roles = array_keys($_POST);
+	// Remove the 'type' key from the array of roles.
+	unset($roles[0]);
+	$gcm = new GetComplexMapping($roles,$_POST);
+	
+	$now = time();
+	$timestamp = date(DATE_ATOM,$now);
+	$query_instance = "query:q-".date('Ymd-His',$now);
+	
+	$gcm->getOWLMapping($query_instance,$timestamp);
+	$gcm->getQueryLinks($query_instance);
+	
+	
+} else if ($type=="lwcomplex") {
+	$roles = array_keys($_POST);
+	// Remove the 'type' key from the array of roles.
+	unset($roles[0]);
+	$gcm = new GetLWComplexMapping($roles,$_POST);
+	
+	$now = time();
+	$timestamp = date(DATE_ATOM,$now);
+	$query_instance = "query:q-".date('Ymd-His',$now);
+	
+	$gcm->getOWLMapping($query_instance,$timestamp);
+	$gcm->getQueryLinks($query_instance);
+} else {
 
 	$concepts=$_GET["q"];
 
@@ -43,19 +70,6 @@ if($type!="complex"){
 	$gm->getVerdictButtons($query_instance);
 
 	print "</div>";
-} else {
-
-	$roles = array_keys($_POST);
-	// Remove the 'type' key from the array of roles.
-	unset($roles[0]);
-	$gcm = new GetComplexMapping($roles,$_POST);
-	
-	$now = time();
-	$timestamp = date(DATE_ATOM,$now);
-	$query_instance = "query:q-".date('Ymd-His',$now);
-	
-	$gcm->getOWLMapping($query_instance,$timestamp);
-	$gcm->getQueryLinks($query_instance);
 	
 }
 
@@ -140,6 +154,56 @@ class GetComplexMapping{
 	
 }
 
+class GetLWComplexMapping{
+	
+	private $connection;
+	private $roles;
+	private $values;
+	private $ns;
+	private $cl;
+	
+	function __construct($roles,$values){
+		$this->connection = new SPARQLConnection();
+		$this->cl = new ConceptList($this->connection);
+		$this->ns = new Namespaces();
+		
+	 	$this->roles = $roles;
+		$this->values = $values;
+	}
+	
+	public function getOWLMapping($query_instance,$timestamp){
+		// Create query instance for OWL-Based mappings
+		$turtle = $query_instance;
+		foreach ($this->roles as $r) {
+			foreach($this->values[$r] as $c) {
+				$turtle .=" ".$r." <".urldecode($c).">; ";
+			}
+		}
+		$turtle .= " a best:Query; best:timestamp \"".$timestamp."\"^^xsd:dateTime .";
+
+		// Add prefixes
+		$sparql_update_query = $this->ns->sparql."INSERT { ".$turtle." }";
+		
+		// Send update query
+		$this->connection->update($sparql_update_query);
+
+		// Get all legal terms acquired through OWL-Based mapping
+		$sparql_query = $this->ns->sparql."SELECT DISTINCT ?concept ?label ?note WHERE { ?concept bm:describes ".$query_instance." . ?concept skos:inScheme ".$this->ns->tort_scheme_new." . ?concept skos:prefLabel ?label . OPTIONAL {?concept skos:note ?note }}";
+
+		$this->cl->getDiv($sparql_query, 'inlinelegalconcept');
+	}
+	
+	
+	public function getQueryLinks($query_instance) {
+		$sparql_query = $this->ns->sparql."SELECT DISTINCT ?concept ?label ?weight WHERE { ?concept bm:describes ".$query_instance." . ?concept skos:inScheme ".$this->ns->tort_scheme_new." .  ?concept to:fingerprint ?fp . ?fp to:value ?label . ?fp to:weight ?weight .}";
+		
+		print "<div id='tc_query' style='display: none'>";
+		$this->cl->getPlainWeightedQueryStringORnoHTML($sparql_query, "wtqaowl", "Weighed Tort Query (AND)");
+		print "</div>";
+	}	
+	
+	
+}
 
 class GetMapping {
 

@@ -26,6 +26,7 @@ class Namespaces {
 		$this->sparql .= "PREFIX mtv:	<http://www.best-project.nl/owl/merged-tort-vocabulary.owl#> \n";
 		$this->sparql .= "PREFIX gn:   <http://www.geonames.org/ontology#> \n";
 		$this->sparql .= "PREFIX geo:   <http://www.w3.org/2003/01/geo/wgs84_pos#> \n";
+		// $this->sparql .= "PREFIX dbpedia:   <http://dbpedia.org/ontology/> \n";
 		$this->sparql .= "PREFIX query: <http://www.best-project.nl/owl/query#> \n\n";
 		
 		

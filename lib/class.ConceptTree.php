@@ -146,7 +146,7 @@ class ConceptTree {
 	public function makeCSVTree($scheme){
 		makeCustomTree($scheme,'',';','','');
 	}
-	public function makeCustomTree($scheme,$topconcept,$indentchar,$element,$idattr){
+	public function makeCustomTree($scheme,$topconcept,$indentchar,$element,$idattr,$width){
 		
 		$this->init();
 		
@@ -185,16 +185,20 @@ class ConceptTree {
 					print " title='".urlencode($urifrag)."'";
 					print " label='".$label."'";
 					print " alt='".$note."'";
-					print " style='font-weight: bold;'>".$label."</".$element.">\n";
+					if($width){
+						print " style='font-weight: bold; width:".$width.";'>".$label."</".$element.">\n";
+					} else {
+						print " style='font-weight: bold;'>".$label."</".$element.">\n";
+					}
 				} else {
 					print $value."\n";
 				}
-				$this->makeCustomSubTree($uri, $this->concepts, 1, $indentchar,$element,$idattr);
+				$this->makeCustomSubTree($uri, $this->concepts, 1, $indentchar,$element,$idattr, $width);
 			}		
 		
 	}
 	
-	private function makeCustomSubTree($uri,$rows,$depth,$indentchar,$element,$idattr){
+	private function makeCustomSubTree($uri,$rows,$depth,$indentchar,$element,$idattr,$width){
 		foreach ($rows as $row){
 			if($row['superconcept']==$uri){
 
@@ -219,7 +223,11 @@ class ConceptTree {
 					print " title='".urlencode($suburifrag)."'";
 					print " label='".$label."'";
 					print " alt='".$note."'";
-					print ">";
+					if($width){
+						print " style='width:".$width.";'>";
+					} else {
+						print " >";	
+					} 
 					print str_repeat($indentchar,$depth);
 					print $label."</".$element.">\n";
 				} else {
