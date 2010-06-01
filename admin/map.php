@@ -1,10 +1,10 @@
 <?php
 
 
-require_once '../lib/class.SPARQLConnection.php';
-require_once '../lib/class.Namespaces.php';
-require_once '../lib/class.ConceptTree.php';
-require_once "../config/class.Config.php";
+require_once 'lib/class.SPARQLConnection.php';
+require_once 'lib/class.Namespaces.php';
+require_once 'lib/class.ConceptTree.php';
+require_once "config/class.Config.php";
 
 $config = new Config();
 $ct = new ConceptTree();
