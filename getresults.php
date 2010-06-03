@@ -34,6 +34,7 @@ if ($solr_results){
 	// print $results->response->numFound;
 
 	$times = array();
+	if($solr_results->response->docs != []){
 	foreach ($solr_results->response->docs as $doc) {
 		$rnl_ljn =  $doc->rnl_ljn;
 		$ljn = $doc->ljn;
@@ -136,7 +137,7 @@ if ($solr_results){
 
 	}
 	$json_courts = json_encode($courts_array);
-	
+	}
 }
 
 $json_results = '{"query":"'.urlencode($query).'","solr":'.$json_solr_results.',"timeline":'.$json_timeline.',"latestdate":"'.$latest_date.'","places":'.$json_places.',"courts":'.$json_courts.'}';
