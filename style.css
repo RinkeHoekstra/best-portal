@@ -620,3 +620,6 @@ span.hllight {
     position:relative;
     right:185px;
 }
+
+
+a.imglink { text-decoration: none; border-bottom: 0px;}

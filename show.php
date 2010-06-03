@@ -9,7 +9,7 @@ $query = $_GET["q"];
 $ljn = $_GET["ljn"];
 
 // if($query == null) $query = "(\"gevaarzetting\"^1 OR \"gevaar\"^0.12 OR \"gevaarzetting\"^1 OR \"beperking\"^0.11 OR \"voortbestaan\"^0.18 OR \"nalaten\"^0.1 OR \"waarschuwing\"^0.15 OR \"gevaarlijke toestand\"^1 OR \"voorschrift\"^0.12 OR \"voorkoming\"^0.15 OR \"gevaarlijk\"^0.25 OR \"veiligheid\"^0.15 OR \"in stand houden\"^0.23) OR (\"medebezitter roerende zaak\"^1)";
-if($ljn == null) $ljn = "AY8447";
+// if($ljn == null) $ljn = "AY8447";
 
 $params['fl'] = 'score';
 $params['hl'] = 'on';
@@ -26,8 +26,14 @@ if($query != null) {
 }
 $results = $solr->search($query,0,1,$params);
 
-
 // print_r($results);
+
+if(count((array) $results->response->docs)==0){
+	$query = "ljn:".$ljn;
+	$results = $solr->search($query,0,1,$params);
+}
+
+
 
 $sc = new SPARQLConnection();
 $ns = new Namespaces();
@@ -49,7 +55,8 @@ if ($results){
 	} else {
 		$docs = (array) $results->response->docs;
 		$doc = $docs[0];
-		$t = utf8_decode($doc->uitspraak_anoniem);
+		$t = $doc->uitspraak_anoniem;
+		$t = utf8_decode($t);
 		$t = nl2br($t);
 	}
 
