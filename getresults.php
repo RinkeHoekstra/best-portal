@@ -34,7 +34,7 @@ if ($solr_results){
 	// print $results->response->numFound;
 
 	$times = array();
-	if($solr_results->response->docs != []){
+	if($solr_results->response->docs.count > 0){
 	foreach ($solr_results->response->docs as $doc) {
 		$rnl_ljn =  $doc->rnl_ljn;
 		$ljn = $doc->ljn;
