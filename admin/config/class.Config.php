@@ -63,7 +63,7 @@ class Config {
 				'best:actor'  	=> array('Wie deed het','lv:agent','De persoon die de handeling verrichte, of onder wiens verantwoordelijkheid de handeling plaatshad.'),
 				'best:object' 	=> array('Wat was er bij','lv:object','Het object (ding) waarop de handeling plaatshad<br/> (bijv. een dier dat bij de handeling betrokken is, of een auto die door de handeling beschadigd is'),
 				'best:recipient' => array('Tegen wie is het gedaan','lv:agent','De persoon die de schade ondervond.'),
-				'best:result'	=> array('Wat was het gevolg','lv:schade','Het gevolg van de handeling (bijv. de evt. schade).'),
+				'best:result'	=> array('Wat was het gevolg','lv:gevolg','Het gevolg van de handeling (bijv. de evt. schade).'),
 				'best:location'	=> array('Waar gebeurde het','lv:plaats','Waar de handeling plaatsvond.'),
 				'best:time'	 	=> array('Wanneer of hoelang','lv:tijdstip','Het tijdstip of de duur van de handeling.'),
 				'best:situation' => array('Speciale situatie','lv:bijzondere_omstandigheid','Een eventuele bijzondere omstandigheid die van toepassing was toen de handeling plaatshad.')

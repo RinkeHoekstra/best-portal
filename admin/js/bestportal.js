@@ -179,12 +179,14 @@ function addConcept(lctc,id){
 	var divLabel = option.label;
 	var divNote = option.getAttribute('alt');
 	
-	if(!document.getElementById(divURIFrag)) {
+	var divID = id+'_'+divURIFrag;
+	
+	if(!document.getElementById(divID)) {
 		newdiv.setAttribute('uri',divIdName);
-		newdiv.setAttribute('id',divURIFrag);
+		newdiv.setAttribute('id',divID);
 		newdiv.setAttribute('property',id);
 		newdiv.setAttribute('class','concept');
-		newdiv.innerHTML =  divLabel +' (<i>'+ id +"</i>) <a style=\"float: right;\" onClick=\"removeConcept(\'"+lctc+'\', \''+divURIFrag+'\')\">[x]</a>';
+		newdiv.innerHTML =  divLabel +' (<i>'+ id +"</i>) <a style=\"float: right;\" onClick=\"removeConcept(\'"+lctc+'\', \''+divID+'\')\">[x]</a>';
 		if(divNote!=null&&divNote!=''){
 			newdiv.innerHTML += '<a style=\"float: right;\" onClick=\"showOptionInfo(\''+id+'\',\''+index+'\')\">[?]</a>';
 		}

@@ -16,7 +16,7 @@ $q = $ns->sparql."SELECT ?m ?l ?def ?note WHERE {?m rdfs:subClassOf bm:Mapping. 
 $rows = $sc->query($q, 'rows');
 
 
-print "<html><head><link rel=\"stylesheet\" href=\"style.css\" type=\"text/css\" media=\"screen\"></head><body><div id='page'>\n";
+print "<html><head><link rel=\"stylesheet\" href=\"../style.css\" type=\"text/css\" media=\"screen\"></head><body><div id='page'>\n";
 print "<table style='background: white;'>\n";
 foreach($rows as $row){
 	print "<tr><th colspan='2'>Mapping</th></tr>\n";

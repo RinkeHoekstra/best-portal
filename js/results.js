@@ -286,13 +286,14 @@ function addInlineConcept(id){
 	var divURIFrag = option.title;
 	var divLabel = option.label;
 	var divNote = option.getAttribute('alt');
+	var divID = id+'_'+divURIFrag;
 	
-	if(!document.getElementById(divURIFrag)) {
+	if(!document.getElementById(divID)) {
 		newdiv.setAttribute('uri',divIdName);
-		newdiv.setAttribute('id',divURIFrag);
+		newdiv.setAttribute('id',divID);
 		newdiv.setAttribute('property',id);
 		newdiv.setAttribute('class','inlineconcept');
-		newdiv.innerHTML =  divLabel +' (<i>'+ id +'</i>) [<a onClick="removeInlineConcept(\''+divURIFrag+'\')">x</a>]';
+		newdiv.innerHTML =  divLabel +' (<i>'+ id +'</i>) [<a onClick="removeInlineConcept(\''+divID+'\')">x</a>]';
 		if(divNote!=null&&divNote!=''){
 			newdiv.innerHTML += '[<a onClick=\"showOptionInfo(\''+id+'\',\''+index+'\')\">?</a>]';
 		}
