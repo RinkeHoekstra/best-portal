@@ -4,16 +4,24 @@ require_once "config/class.Config.php";
 
 $config = new Config();
 ?>
-
-<html> 
-<head> 
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML+RDFa 1.0//EN" "http://www.w3.org/MarkUp/DTD/xhtml-rdfa-1.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+      xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+      xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+      xmlns:cc="http://creativecommons.org/ns#"
+      xmlns:dc="http://purl.org/dc/elements/1.1/"
+      xmlns:foaf="http://xmlns.com/foaf/0.1/">
+<head profile="http://www.w3.org/1999/xhtml/vocab"> 
 <meta name="viewport" content="initial-scale=1.0, user-scalable=no" /> 
 <meta http-equiv="content-type" content="text/html; charset=UTF-8"/> 
 <title>Best Portal - Zoekresultaten</title> 
 
 <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.8.0r4/build/fonts/fonts-min.css" />
 
-<script type="text/javascript" src="js/mapping.js"></script>
+<!-- <script type="text/javascript" src="js/mapping.js"></script> -->
+<script type="text/javascript" src="js/dateformat.js"></script>
 
 
 <link rel="stylesheet" type="text/css" href="js/yui/container/assets/skins/sam/container.css" />
@@ -31,7 +39,6 @@ $config = new Config();
 <script type="text/javascript" src="js/yui/element/element-min.js"></script>
 <script type="text/javascript" src="js/yui/button/button-min.js"></script>
 <script type="text/javascript" src="js/yui/tabview/tabview-min.js"></script>
-
 
 <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script> 
 
@@ -59,7 +66,7 @@ function initialize() {
 
 
 </head>
-<body style="margin:0px; padding:0px;" onload="initialize()"> 
+<body style="margin:0px; padding:0px;" onload="initialize()" onunload="saveTrace()"> 
 	<div id="smallbanner" style='width: 100%;'>
 		<img src="<?php print $config->portal_url;?>/img/best-logo-96dpi-40px.png" width="40" align="right" alt="BEST logo" valign="top" style="padding-right: 15px;"/>
 	    <div class="smallbannerheading">BestPortal</div>
@@ -73,7 +80,7 @@ function initialize() {
 	    <div class="colrightlm"> 
 	        <div class="col1wraplm"> 
 	            <div class="col1lm"> 
-					<table>
+					<table id='qtable'>
 					<tr><td style='width: 60px;'>Normaal</td><td>:<div id='lc' style='display: inline;'></div></td></tr>
 					<tr><td style='width: 60px;'>Juridisch</td><td>:<div id='tc' style='display: inline'><div id='tc_query' style='display: none;'></div></div></td></tr>
 					</table>
@@ -110,8 +117,6 @@ function initialize() {
 				<div class="col2" style='text-align: left;'>
 					<div id="laymanconcepts">
 					</div>
-					<!-- <h4>Eigenschappen</h4>
-					Eigenschappenselectie -->
 				</div>
 				<div class="col3">
 					<h4 style='text-align: left;'>Zoekresultaten op de Kaart</h4>

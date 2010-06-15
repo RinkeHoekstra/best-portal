@@ -14,7 +14,7 @@ if($query == null) {
 // print $query;
 
 
-$params['fl'] = 'score,rnl_ljn,ljn,datum_uitspraak,indicatie,instantie,procedure_soort,rechtsgebied_rechtspraak,rnl_instantie,rnl_procedure_soort,rnl_rnl_rechtsgebied_rechtspraak,rnl_status,sector_toon,zaaknummers,src';
+$params['fl'] = 'score,rnl_ljn,ljn,datum_uitspraak,indicatie,instantie,procedure_soort,rechtsgebied_rechtspraak,rnl_instantie,rnl_procedure_soort,rnl_rechtsgebied_rechtspraak,rnl_status,sector_toon,zaaknummers,src';
 $params['hl'] = 'on';
 $params['hl.fl']= 'uitspraak_anoniem';
 $params['hl.simple.pre'] = "<span class='hllight'>";

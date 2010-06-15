@@ -9,12 +9,15 @@ require_once "lib/class.SPARQLConnection.php";
 $roles = array_keys($_POST);
 // Remove the 'type' key from the array of roles.
 unset($roles[0]);
+unset($roles[1]);
 $jm = new JSONMapping($roles,$_POST);
 
-$now = time();
-$timestamp = date(DATE_ATOM,$now);
+// $now = time();
+// $timestamp = date(DATE_ATOM,$now);
+// 
+// $query_instance = "query:q-".date('Ymd-His',$now);
 
-$query_instance = "query:q-".date('Ymd-His',$now);
+$query_instance = urldecode($_POST['qi']);
 
 $json = '{"mapping":';
 $json .= $jm->getMapping($query_instance,$timestamp);

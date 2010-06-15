@@ -622,4 +622,8 @@ span.hllight {
 }
 
 
+span.filter:focus, 
+span.filter:hover     { color: black; background: #d5d7e1;}
+span.filter           { color: #2638A2; text-decoration: none; border-bottom: 1px solid #575757;}
+
 a.imglink { text-decoration: none; border-bottom: 0px;}

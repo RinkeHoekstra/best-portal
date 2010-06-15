@@ -7,10 +7,19 @@ mr = {"mapping":[],"query":null};
 docs = '';
 hl = '';
 map = {};
+trace = {"queries":[],"resultsclicked":[]};
 markersArray = [];
 
-n = {"resns":"http://linkeddata.few.vu.nl/rechtspraak/resource/","uitns":"http://linkeddata.few.vu.nl/rechtspraak/uitspraak/","metalexns":"http://www.metalex.eu/schema#"};
+n = {"resource":"http://linkeddata.few.vu.nl/rechtspraak/resource/",
+     "uitspraak":"http://linkeddata.few.vu.nl/rechtspraak/uitspraak/",
+     "metalex":"http://www.metalex.eu/schema#",
+     "best":"http://www.best-project.nl/owl/best.owl#",
+     "query":"http://www.best-project.nl/owl/query#"};
 
+
+function saveTrace(){
+    // alert(trace);
+}
 
 function getResults(){
     doReset();
@@ -283,30 +292,30 @@ function getDescription(doc) {
 
 function getRDFaDescription(doc) {
     
-    var c = "<table about=\'"+doc.rnl_ljn+"\' typeof=\'"+n.resns+"Uitspraak\' style=\'border: 0px; width: 100%; padding-bottom: 2em; padding-right: 1em;\'>\n";
+    var c = "<table xmlns:rnl=\'"+n.resource+"\' about=\'"+doc.rnl_ljn+"\' typeof=\'rnl:Uitspraak\' style=\'border: 0px; width: 100%; padding-bottom: 2em; padding-right: 1em;\'>\n";
     // Show LJN number
-	c += "<tr><td class=\'resultheader\' style=\'width: 100px\' colspan=\'2\'><span rel=\'"+n.resns+"src\' content=\'"+doc.ljn+"\' style=\'padding-left: 74px; vertical-align: top;\'>LJN "+doc.ljn+"</span>";
+	c += "<tr><td class=\'resultheader\' style=\'width: 100px\' colspan=\'2\'><span rel=\'rnl:src\' content=\'"+doc.ljn+"\' style=\'padding-left: 74px; vertical-align: top;\'>LJN "+doc.ljn+"</span>";
 	// Show RDF logo + link
     c += "<span style=\'display: inline; vertical-align: top; padding-left: 5px;\'><a class=\'imglink\' target=\'_blank\' href=\'"+doc.rnl_ljn+"\'><img src=\'img/rdf_flyer.png\'/></a></span>";
 	// Show Marbles logo + link http://www5.wiwiss.fu-berlin.de/marbles?lang=en&uri=
     c += "<span style=\'display: inline; vertical-align: top; padding-left: 5px;\'><a class=\'imglink\' target=\'_blank\' href=\'http://www5.wiwiss.fu-berlin.de/marbles?lang=en&uri="+doc.rnl_ljn+"\'><img src=\'img/marbles.png\'/></a></span>";
 	// Show Rechtspraak logo + link to LJN index
-    c += "<span rel=\'"+n.metalexns+"src\' style=\'display: inline; vertical-align: top; padding-left: 5px;\'><a class=\'imglink\' target=\'_blank\' href=\'http://www.ljn.nl/"+doc.ljn+"\'><img src=\'img/rechtspraak.png\'/></a></span>";
+    c += "<span xmlns:metalex=\'"+n.metalex+"\' rel=\'metalex:src\' style=\'display: inline; vertical-align: top; padding-left: 5px;\'><a class=\'imglink\' target=\'_blank\' href=\'http://www.ljn.nl/"+doc.ljn+"\'><img src=\'img/rechtspraak.png\'/></a></span>";
     // Show Score
 	c += "<span style=\'float: right; font-weight: normal;\'>"+doc.score.toFixed(2)+"</span><td></tr>\n";
 	// Show Data
-	c += "<tr><td class=\'result_attribute\' style=\'width: 100px\'>Datum</td><td  rel=\'"+n.resns+"datum_uitspraak\' class=\'result_value\' >"+doc.datum_uitspraak+"</td></tr>\n";
+	c += "<tr><td class=\'result_attribute\' style=\'width: 100px\'>Datum</td><td rel=\'rnl:datum_uitspraak\' class=\'result_value\' >"+doc.datum_uitspraak+"</td></tr>\n";
 	// Show Description
-	c += "<tr><td class=\'result_attribute\' style=\'width: 100px\'>Kenmerken</td><td class=\'result_value\'>Uitspraak in <a rel=\'"+n.resns+"procedure_soort\' href=\'"+doc.rnl_procedure_soort+"\' onClick=\"doUpdateFilter(\'"+escape('{\"procedure_soort\":\"'+doc.procedure_soort+'\"}')+"\')\">"+doc.procedure_soort+"</a> van <a  rel=\'"+n.resns+"instantie\' href=\'"+doc.rnl_instantie+"\' onClick=\"doUpdateFilter(\'"+escape('{\"instantie\":\"'+doc.instantie+'\"}')+"\')\">"+doc.instantie+"</a>";
+	c += "<tr><td class=\'result_attribute\' style=\'width: 100px\'>Kenmerken</td><td class=\'result_value\'>Uitspraak in <span class=\'filter\' rel=\'rnl:procedure_soort\' href=\'"+doc.rnl_procedure_soort+"\' onClick=\"doUpdateFilter(\'"+escape('{\"procedure_soort\":\"'+doc.procedure_soort+'\"}')+"\')\">"+doc.procedure_soort+"</span> van <span class=\'filter\' rel=\'rnl:instantie\' href=\'"+doc.rnl_instantie+"\' onClick=\"doUpdateFilter(\'"+escape('{\"instantie\":\"'+doc.instantie+'\"}')+"\')\">"+doc.instantie+"</span>";
     if (doc.sector_toon != null) {
-        c += " (<a  rel=\'"+n.resns+"sector_toon\' href=\'"+doc.rnl_sector_toon+"\' onClick=\"doUpdateFilter(\'"+escape('{\"sector_toon\":\"'+doc.sector_toon+'\"}')+"\')\">"+doc.sector_toon+"</a>)";
+        c += " (<span class=\'filter\' rel=\'rnl:sector_toon\' href=\'"+doc.rnl_sector_toon+"\' onClick=\"doUpdateFilter(\'"+escape('{\"sector_toon\":\"'+doc.sector_toon+'\"}')+"\')\">"+doc.sector_toon+"</span>)";
     }
-    c += " binnen het rechtsgebied <a rel=\'"+n.resns+"rechtsgebied_rechtspraak\' href=\'"+doc.rnl_rechtsgebied_rechtspraak+"\' onClick=\"doUpdateFilter(\'"+escape('{\"rechtsgebied_rechtspraak\":\"'+doc.rechtsgebied_rechtspraak+'\"}')+"\')\">"+doc.rechtsgebied_rechtspraak+"</a></td></tr>\n";
+    c += " binnen het rechtsgebied <span class=\'filter\' rel=\'rnl:rechtsgebied_rechtspraak\' href=\'"+doc.rnl_rechtsgebied_rechtspraak+"\' onClick=\"doUpdateFilter(\'"+escape('{\"rechtsgebied_rechtspraak\":\"'+doc.rechtsgebied_rechtspraak+'\"}')+"\')\">"+doc.rechtsgebied_rechtspraak+"</span></td></tr>\n";
 	// Show Highlight
 	c += "<tr><td class=\'result_attribute\' style=\'width: 100px\'>Relevante tekst</td><td class=\'result_value\'>"+hl[doc.ljn].uitspraak_anoniem[0]+"</td></tr>\n";
 	// Show Indicatie (note)
 	if (doc.indicatie != null) {
-	    c += "<tr><td class=\'result_attribute\' style=\'width: 100px\'>Beschrijving</td><td property=\'"+n.resns+"indicatie\'  class=\'result_value\'>"+doc.indicatie+"</td></tr>\n";
+	    c += "<tr><td class=\'result_attribute\' style=\'width: 100px\'>Beschrijving</td><td property=\'rnl:indicatie\'  class=\'result_value\'>"+doc.indicatie+"</td></tr>\n";
 	}
 	// Show link to full text
 	c += "<tr><td></td><td style=\'padding-top: 1ex; text-align: right;\'><a href=\'show.php?q="+mr.query+"&ljn="+doc.ljn+"' target=\'_blank\'>Volledige Tekst</a></td></tr>\n";
@@ -333,7 +342,9 @@ function addInlineConcept(id){
 	if(!document.getElementById(divID)) {
 		newdiv.setAttribute('uri',divIdName);
 		newdiv.setAttribute('id',divID);
-		newdiv.setAttribute('property',id);
+		newdiv.setAttribute('rel',id);
+        newdiv.setAttribute('href',unescape(divIdName));
+        newdiv.setAttribute('xmlns:best',n.best);
 		newdiv.setAttribute('class','inlineconcept');
 		newdiv.innerHTML =  divLabel +' (<i>'+ id +'</i>) [<a onClick="removeInlineConcept(\''+divID+'\')">x</a>]';
 		if(divNote!=null&&divNote!=''){
@@ -344,12 +355,31 @@ function addInlineConcept(id){
 	}
 	
 	document.getElementById(id).selectedIndex = 0;
+	
+	updateQueryInstance();
+}
+
+
+function updateQueryInstance(){
+    // $now = time();
+    // $timestamp = date(DATE_ATOM,$now);
+    // 
+    // $query_instance = "query:q-".date('Ymd-His',$now);
+    
+    var d = new Date();
+    
+    var qi = 'query:q-'+d.format('yyyymmdd-HHMMss');
+    
+    var qdiv = document.getElementById('qtable');
+    qdiv.setAttribute('about',qi);
+    trace.queries.push(qi);
 }
 
 function removeInlineConcept(id){
 	var div = document.getElementById('lc');
 	var olddiv = document.getElementById(id);
 	div.removeChild(olddiv);
+	updateQueryInstance();
 	getMapping();
 }
 
@@ -407,8 +437,8 @@ function getMapping() {
 	var lcDiv = document.getElementById('lc');
 	// var tcDiv = document.getElementById('tc');
 
-	
-	var postData='type=lwcomplex';
+	var qTab = document.getElementById('qtable');
+	var postData='type=lwcomplex&qi='+escape(qTab.getAttribute('about'));
 	
 
 	
@@ -418,7 +448,7 @@ function getMapping() {
 		
 		if(lc.nodeType == 1){//element of type html-object/tag
 		  if(lc.tagName=="DIV"){
-		    postData += '&'+lc.getAttribute("property")+'[]='+lc.getAttribute("uri");
+		    postData += '&'+lc.getAttribute("rel")+'[]='+lc.getAttribute("uri");
 		  }
 		}
 
