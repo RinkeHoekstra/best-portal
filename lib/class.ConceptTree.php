@@ -161,6 +161,7 @@ class ConceptTree {
 			// $sparql_query = $this->ns->sparql."SELECT DISTINCT ?subconcept ?superconcept WHERE {?subconcept skos:broader ?superconcept . ?subconcept skos:broaderTransitive ".$topconcept." . ?superconcept skos:broaderTransitive ".$topconcept." . } ";
 			// $allrows =  $this->connection->query($sparql_query, 'rows');
 		}
+		
 
 		
 			
