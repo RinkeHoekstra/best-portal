@@ -42,20 +42,20 @@ class Config {
 		
 		
 		$this->ontologies = array(
-			0 => array ('url' => 'http://www.best-project.nl/owl/tort-ontology.n3', 'format' => 'turtle'),
-			1 => array ('url' => 'http://www.best-project.nl/owl/laymen-ontology.n3', 'format' => 'turtle'),
-			// 2 => array ('url' => 'http://www.best-project.nl/owl/tort-vocabulary.n3', 'format' => 'turtle'),
-			3 => array ('url' => 'http://www.best-project.nl/owl/laymen-vocabulary.n3', 'format' => 'turtle'),
-			4 => array ('url' => 'http://www.best-project.nl/owl/bestmap.owl', 'format' => 'rdfxml'),
-			5 => array ('url' => 'http://www.best-project.nl/owl/metalex.n3', 'format' => 'turtle'),
-			6 => array ('url' => 'http://www.best-project.nl/owl/best.n3', 'format' => 'turtle'),
-			7 => array ('url' => 'http://www.best-project.nl/owl/test-mappings.n3', 'format' => 'turtle'),
-			8 => array ('url' => 'http://www.best-project.nl/owl/rechtspraak.n3', 'format' => 'turtle'),
+			0 => array ('url' => 'http://eculture2.cs.vu.nl/best/rdf/tort-ontology.n3', 'format' => 'turtle'),
+			1 => array ('url' => 'http://eculture2.cs.vu.nl/best/rdf/laymen-ontology.n3', 'format' => 'turtle'),
+			// 2 => array ('url' => 'http://eculture2.cs.vu.nl/best/rdf/tort-vocabulary.n3', 'format' => 'turtle'),
+			3 => array ('url' => 'http://eculture2.cs.vu.nl/best/rdf/laymen-vocabulary.n3', 'format' => 'turtle'),
+			4 => array ('url' => 'http://eculture2.cs.vu.nl/best/rdf/bestmap.owl', 'format' => 'rdfxml'),
+			5 => array ('url' => 'http://eculture2.cs.vu.nl/best/rdf/metalex.n3', 'format' => 'turtle'),
+			6 => array ('url' => 'http://eculture2.cs.vu.nl/best/rdf/best.n3', 'format' => 'turtle'),
+			7 => array ('url' => 'http://eculture2.cs.vu.nl/best/rdf/test-mappings.n3', 'format' => 'turtle'),
+			8 => array ('url' => 'http://eculture2.cs.vu.nl/best/rdf/rechtspraak.n3', 'format' => 'turtle'),
 			9 => array ('url' => 'http://www.w3.org/2009/08/skos-reference/skos.rdf', 'format' => 'rdfxml'),
-			10 => array ('url' => 'http://www.best-project.nl/owl/tort-vocabulary-new.n3', 'format' => 'turtle'),
-			11 => array ('url' => 'http://www.best-project.nl/owl/merged-tort-vocabulary.n3', 'format' => 'turtle'),
-			12 => array ('url' => 'http://www.best-project.nl/owl/uitspraak-to-place.n3', 'format' => 'turtle'),
-			13 => array ('url' => 'http://www.best-project.nl/owl/uitspraken-20100525.owl', 'format' => 'rdfxml')
+			10 => array ('url' => 'http://eculture2.cs.vu.nl/best/rdf/tort-vocabulary-new.n3', 'format' => 'turtle'),
+			11 => array ('url' => 'http://eculture2.cs.vu.nl/best/rdf/merged-tort-vocabulary.n3', 'format' => 'turtle'),
+			12 => array ('url' => 'http://eculture2.cs.vu.nl/best/rdf/uitspraak-to-place.n3', 'format' => 'turtle'),
+			13 => array ('url' => 'http://eculture2.cs.vu.nl/best/rdf/uitspraken-20100525.owl', 'format' => 'rdfxml')
 		);
 		
 		$this->layman_roles = array(
