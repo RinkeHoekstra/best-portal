@@ -162,7 +162,7 @@ class ConceptTree {
 			// $allrows =  $this->connection->query($sparql_query, 'rows');
 		}
 
-		print "<pre>".$sparql_query."</pre>";
+		// print "<pre>".$sparql_query."</pre>";
 			
 			foreach($rows as $row) {
 				$uri = $row['concept'];
