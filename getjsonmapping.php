@@ -21,6 +21,8 @@ $query_instance = urldecode($_POST['qi']);
 
 $json = '{"mapping":';
 $json .= $jm->getMapping($query_instance,$timestamp);
+$json .= ',"mappingclasses":';
+$json .= $jm->getMappingClasses($query_instance);
 $json .= ',"query":';
 $json .= $jm->getQuery($query_instance);
 $json .= '}';
@@ -60,14 +62,26 @@ class JSONMapping{
 		$this->connection->update($sparql_update_query);
 
 		// Get all legal terms acquired through OWL-Based mapping
-		$sparql_query = $this->ns->sparql."SELECT DISTINCT ?concept ?label ?note WHERE { ?concept bm:describes ".$query_instance." . ?concept skos:inScheme ".$this->ns->tort_scheme_new." . ?concept skos:prefLabel ?label . OPTIONAL {?concept skos:note ?note }}";
+		$sparql_query = $this->ns->sparql."SELECT DISTINCT ?subject ?label ?note WHERE { ?subject bm:describes ".$query_instance." . ?subject skos:inScheme ".$this->ns->tort_scheme_new." . ?subject skos:prefLabel ?label . OPTIONAL {?subject skos:note ?note }}";
 
 		return $this->getJSONList($sparql_query);
+		
+		
+	}
+	
+	
+	public function getMappingClass($query_instance){
+		
+		// Get all mappings acquired through OWL-Based mapping
+		$sparql_query = $this->ns->sparql."SELECT DISTINCT ?subject ?label ?note WHERE { ".$query_instance." a ?subject. ?subject rdfs:subClassOf bm:Mapping . ?subject skos:prefLabel ?label . OPTIONAL {?subject skos:scopeNote ?note .} }";
+
+		return $this->getJSONList($sparql_query);
+		
 	}
 	
 	
 	public function getQuery($query_instance) {
-		$sparql_query = $this->ns->sparql."SELECT DISTINCT ?concept ?label ?weight WHERE { ?concept bm:describes ".$query_instance." . ?concept skos:inScheme ".$this->ns->tort_scheme_new." .  ?concept to:fingerprint ?fp . ?fp to:value ?label . ?fp to:weight ?weight .}";
+		$sparql_query = $this->ns->sparql."SELECT DISTINCT ?subject ?label ?weight WHERE { ?subject bm:describes ".$query_instance." . ?subject skos:inScheme ".$this->ns->tort_scheme_new." .  ?subject to:fingerprint ?fp . ?fp to:value ?label . ?fp to:weight ?weight .}";
 		
 		return $this->getJSONQueryString($sparql_query);
 	}	
@@ -80,7 +94,7 @@ class JSONMapping{
 		if(count($rows)>0){
 			foreach($rows as $row) {
 				$label = $row['label'];
-				$value = $row['concept'];
+				$value = $row['subject'];
 				// Avoid duplicate entries
 				if($value != $oldvalue){
 					$jsonl .= '{"id":"'.$value.'","label":"'.$label.'"';
@@ -111,7 +125,7 @@ class JSONMapping{
 			$oldvalue = "";
 			foreach($rows as $row) {
 				$label = $row['label'];
-				$value = $row['concept'];
+				$value = $row['subject'];
 				$weight = $row['weight']/100;
 			
 				if($value == $oldvalue || $oldvalue == "") {
