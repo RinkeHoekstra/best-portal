@@ -55,7 +55,8 @@ class Config {
 			10 => array ('url' => 'http://eculture2.cs.vu.nl/best/rdf/tort-vocabulary-new.n3', 'format' => 'turtle'),
 			11 => array ('url' => 'http://eculture2.cs.vu.nl/best/rdf/merged-tort-vocabulary.n3', 'format' => 'turtle'),
 			12 => array ('url' => 'http://eculture2.cs.vu.nl/best/rdf/uitspraak-to-place.n3', 'format' => 'turtle'),
-			13 => array ('url' => 'http://eculture2.cs.vu.nl/best/rdf/uitspraken-20100525.owl', 'format' => 'rdfxml')
+			13 => array ('url' => 'http://eculture2.cs.vu.nl/best/rdf/uitspraken-20100525.owl', 'format' => 'rdfxml'),
+			14 => array ('url' => 'http://eculture2.cs.vu.nl/best/rdf/onrechtmatige-daad-mappings', 'format' => 'turtle')
 		);
 		
 		$this->layman_roles = array(
