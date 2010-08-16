@@ -19,7 +19,7 @@ $config = new Config();
 <head profile="http://www.w3.org/1999/xhtml/vocab"> 
 <meta name="viewport" content="initial-scale=1.0, user-scalable=no" /> 
 <meta http-equiv="content-type" content="text/html; charset=UTF-8"/> 
-<title>Best Portal - Zoekresultaten</title> 
+<title>JustFind/BestPortal - (c) 2010 Rinke Hoekstra, Vrije Universiteit Amsterdam</title> 
 
 <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.8.0r4/build/fonts/fonts-min.css" />
 
@@ -72,10 +72,10 @@ function initialize() {
 <body style="margin:0px; padding:0px;" onload="initialize()" onunload="saveTrace()"> 
 	<div id="smallbanner" style='width: 100%;'>
 		<img src="<?php print $config->portal_url;?>/img/best-logo-96dpi-40px.png" width="40" align="right" alt="BEST logo" valign="top" style="padding-right: 15px;"/>
-	    <div class="smallbannerheading">BestPortal</div>
+	    <div class="smallbannerheading">JustFind</div>
 		<div class="smallbannersubheading">Juridisch zoeken voor de normale mens...</div>
 		<div class="copyrightnoticesmall">
-			Copyright (c) 2010, Rinke Hoekstra, Vrije Universiteit Amsterdam
+			JustFind/BestPortal is copyright (c) 2010, Rinke Hoekstra, Vrije Universiteit Amsterdam
 		</div>
 	</div>
 	

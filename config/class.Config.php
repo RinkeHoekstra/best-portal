@@ -49,7 +49,7 @@ class Config {
 			4 => array ('url' => 'http://eculture2.cs.vu.nl/best/rdf/bestmap.owl', 'format' => 'rdfxml'),
 			5 => array ('url' => 'http://eculture2.cs.vu.nl/best/rdf/metalex.n3', 'format' => 'turtle'),
 			6 => array ('url' => 'http://eculture2.cs.vu.nl/best/rdf/best.n3', 'format' => 'turtle'),
-			7 => array ('url' => 'http://eculture2.cs.vu.nl/best/rdf/test-mappings.n3', 'format' => 'turtle'),
+			// 7 => array ('url' => 'http://eculture2.cs.vu.nl/best/rdf/test-mappings.n3', 'format' => 'turtle'),
 			8 => array ('url' => 'http://eculture2.cs.vu.nl/best/rdf/rechtspraak.n3', 'format' => 'turtle'),
 			9 => array ('url' => 'http://www.w3.org/2009/08/skos-reference/skos.rdf', 'format' => 'rdfxml'),
 			10 => array ('url' => 'http://eculture2.cs.vu.nl/best/rdf/tort-vocabulary-new.n3', 'format' => 'turtle'),

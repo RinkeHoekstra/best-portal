@@ -133,7 +133,7 @@ class JSONMapping{
 					$oldvalue = $value;
 				} else {
 					$qs = rtrim($qs,"OR ");
-					$qs .= ") OR (\\\"".$label."\\\"^".$weight." OR ";
+					$qs .= ") AND (\\\"".$label."\\\"^".$weight." OR ";
 					$oldvalue = $value;
 				}
 			}		
