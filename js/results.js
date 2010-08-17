@@ -59,7 +59,6 @@ function getResults(){
         var postData = 'q=';
     }
     
-    div.innerHTML += mr.query;
     
 	window.setTimeout(function() {
 			var request = YAHOO.util.Connect.asyncRequest('POST', 'getresults.php', callback, postData);
