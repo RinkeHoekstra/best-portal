@@ -127,6 +127,9 @@ class JSONMapping{
 				$label = $row['label'];
 				$value = $row['subject'];
 				$weight = $row['weight']/100;
+				
+				// Remove colons as the JSON parser does not swallow them, resulting in HTTP 500 responses
+				$label=str_replace(":", " ", $label);
 			
 				if($value == $oldvalue || $oldvalue == "") {
 					$qs .= "\\\"".$label."\\\"^".$weight." OR ";
