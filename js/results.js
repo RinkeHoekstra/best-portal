@@ -55,10 +55,12 @@ function getResults(){
 	
 	if(mr.query!=null) {
         var postData = 'q='+unescape(mr.query);
-        div.innerHTML += mr.query;
     } else {
         var postData = 'q=';
     }
+    
+    div.innerHTML += mr.query;
+    
 	window.setTimeout(function() {
 			var request = YAHOO.util.Connect.asyncRequest('POST', 'getresults.php', callback, postData);
 		}, 200);
