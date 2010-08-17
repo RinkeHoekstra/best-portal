@@ -55,6 +55,7 @@ function getResults(){
 	
 	if(mr.query!=null) {
         var postData = 'q='+unescape(mr.query);
+        div.innerHTML += mr.query;
     } else {
         var postData = 'q=';
     }
