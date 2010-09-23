@@ -7,11 +7,12 @@ require_once "lib/class.Namespaces.php";
 $solr = new Apache_Solr_Service('localhost',8983,'/solr/');
 $query = $_POST["q"];
 
+
 if($query == null) {
 	print '{"query":null,"solr":null,"timeline":null,"latestdate":null,"places":null,"courts":null}';	
 	exit(0);
 } 
-// print $query;
+print $query;
 
 
 $params['fl'] = 'score,rnl_ljn,ljn,datum_uitspraak,indicatie,instantie,procedure_soort,rechtsgebied_rechtspraak,rnl_instantie,rnl_procedure_soort,rnl_rechtsgebied_rechtspraak,rnl_status,sector_toon,zaaknummers,src';
