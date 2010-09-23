@@ -81,7 +81,7 @@ class JSONMapping{
 	
 	
 	public function getQuery($query_instance) {
-		$sparql_query = $this->ns->sparql."SELECT DISTINCT ?subject ?label ?weight WHERE { ?subject bm:describes ".$query_instance." . ?subject skos:inScheme ".$this->ns->tort_scheme_new." .  ?subject to:fingerprint ?fp . ?fp to:value ?label . ?fp to:weight ?weight .}";
+		$sparql_query = $this->ns->sparql."SELECT DISTINCT ?subject ?label ?weight ?distance WHERE { ?subject bm:describes ".$query_instance." . ?subject skos:inScheme ".$this->ns->tort_scheme_new." .  ?subject to:fingerprint ?fp . ?fp to:value ?label . ?fp to:weight ?weight . OPTIONAL {?fp to:distance ?distance .}}";
 		
 		return $this->getJSONQueryString($sparql_query);
 	}	
@@ -128,17 +128,34 @@ class JSONMapping{
 				$value = $row['subject'];
 				$weight = $row['weight']/100;
 				
-				// Remove colons as the JSON parser does not swallow them, resulting in HTTP 500 responses
 				$label=str_replace(":", " ", $label);
-			
-				if($value == $oldvalue || $oldvalue == "") {
-					$qs .= "\\\"".$label."\\\"^".$weight." OR ";
-					$oldvalue = $value;
+				
+				if($row['distance']!= null){
+					$distance = $row['distance'];
+					
+					if($value == $oldvalue || $oldvalue == "") {
+						$qs .= "(\\\"".$label."\\\"~".$distance.")^".$weight." OR ";
+						$oldvalue = $value;
+					} else {
+						$qs = rtrim($qs,"OR ");
+						$qs .= ") OR ((\\\"".$label."\\\"~".$distance.")^".$weight" OR ";
+						$oldvalue = $value;
+					}
 				} else {
-					$qs = rtrim($qs,"OR ");
-					$qs .= ") OR (\\\"".$label."\\\"^".$weight." OR ";
-					$oldvalue = $value;
+					if($value == $oldvalue || $oldvalue == "") {
+						$qs .= "\\\"".$label."\\\"^".$weight." OR ";
+						$oldvalue = $value;
+					} else {
+						$qs = rtrim($qs,"OR ");
+						$qs .= ") OR (\\\"".$label."\\\"^".$weight." OR ";
+						$oldvalue = $value;
+					}
 				}
+				
+				// Remove colons as the JSON parser does not swallow them, resulting in HTTP 500 responses
+
+			
+
 			}		
 		
 			$qs = rtrim($qs,"OR ");
