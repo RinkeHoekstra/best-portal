@@ -11,7 +11,10 @@ $query = $_POST["q"];
 if($query == null) {
 	print '{"query":null,"solr":null,"timeline":null,"latestdate":null,"places":null,"courts":null}';	
 	exit(0);
-} 
+} else {
+	// Remove excessive escapes that were needed for JSON syntactic compatibility
+	$query = str_replace("\\\"","\"",$query);
+}
 
 
 
