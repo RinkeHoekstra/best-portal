@@ -67,7 +67,7 @@ class Config {
 				'best:situation' => array('Speciale situatie','lv:bijzondere_omstandigheid','Een eventuele bijzondere omstandigheid die van toepassing was toen de handeling plaatshad.'),
 				'best:result'	=> array('Wat was het gevolg','lv:gevolg','Het gevolg van de handeling (bijv. de evt. schade).'),
 				'best:location'	=> array('Waar gebeurde het','lv:plaats','Waar de handeling plaatsvond.'),
-				'best:time'	 	=> array('Wanneer of hoelang','lv:tijdstip','Het tijdstip of de duur van de handeling.')
+				'best:time'	 	=> array('Wanneer of hoe lang','lv:tijdstip','Het tijdstip of de duur van de handeling.')
 		);
 
 		$this->tort_roles = array(
