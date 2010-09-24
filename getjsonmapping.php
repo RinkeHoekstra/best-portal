@@ -134,20 +134,20 @@ class JSONMapping{
 					$distance = $row['distance'];
 					
 					if($value == $oldvalue || $oldvalue == "") {
-						$qs .= "(\\\"".$label."\\\"~".$distance.")^".$weight." OR ";
+						$qs .= "(\"".$label."\"~".$distance.")^".$weight." OR ";
 						$oldvalue = $value;
 					} else {
 						$qs = rtrim($qs,"OR ");
-						$qs .= ") OR ((\\\"".$label."\\\"~".$distance.")^".$weight." OR ";
+						$qs .= ") OR ((\"".$label."\"~".$distance.")^".$weight." OR ";
 						$oldvalue = $value;
 					}
 				} else {
 					if($value == $oldvalue || $oldvalue == "") {
-						$qs .= "\\\"".$label."\\\"^".$weight." OR ";
+						$qs .= "\"".$label."\"^".$weight." OR ";
 						$oldvalue = $value;
 					} else {
 						$qs = rtrim($qs,"OR ");
-						$qs .= ") OR (\\\"".$label."\\\"^".$weight." OR ";
+						$qs .= ") OR (\"".$label."\"^".$weight." OR ";
 						$oldvalue = $value;
 					}
 				}
