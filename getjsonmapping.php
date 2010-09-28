@@ -53,7 +53,7 @@ class JSONMapping{
 				$turtle .=" ".$r." <".urldecode($c).">; ";
 			}
 		}
-		$turtle .= " a best:Query; best:timestamp \"".$timestamp."\"^^xsd:dateTime .";
+		$turtle .= " a best:Query; best:timestamp \"".$timestamp."\"^^xsd:dateTime; skos:note \"Evaluatie juristen\"@nl .";
 
 		// Add prefixes
 		$sparql_update_query = $this->ns->sparql."INSERT { ".$turtle." }";

@@ -25,6 +25,7 @@ if($query != null) {
 	$query = "ljn:".$ljn;
 }
 $query = str_replace("\\\"","\"",$query);
+
 $results = $solr->search($query,0,1,$params);
 
 // print_r($results);
