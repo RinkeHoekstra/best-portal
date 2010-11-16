@@ -54,7 +54,7 @@ class JSONMapping{
 			}
 		}
 		$ip=$_SERVER['REMOTE_ADDR'];
-		$turtle .= " a best:Query; best:timestamp \"".$timestamp."\"^^xsd:dateTime; skos:note \"Evaluatie juristen\"@nl; best:ip \"".$ip."\" .";
+		$turtle .= " a best:Query; best:timestamp \"".$timestamp."\"^^xsd:dateTime; skos:note \"Evaluatie WebKR\"@nl; best:ip \"".$ip."\" .";
 
 		// Add prefixes
 		$sparql_update_query = $this->ns->sparql."INSERT { ".$turtle." }";
